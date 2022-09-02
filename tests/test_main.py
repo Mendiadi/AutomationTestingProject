@@ -1,5 +1,9 @@
+import logging
 import pytest
 from pages import main_page
+
+LOGGER = logging.getLogger(__name__)
+
 
 
 @pytest.fixture
