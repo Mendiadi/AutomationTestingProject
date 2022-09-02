@@ -1,0 +1,7 @@
+{
+  "url": "http://google.com/",
+  "email": "exm1@walla.com",
+  "password": "12345",
+  "browser": "chrome",
+  "lib": "playwright"
+}
