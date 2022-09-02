@@ -11,5 +11,5 @@ class MainPage(BasePage):
     }
 
     def search(self,keys):
-        search = self._driver.find_element(*self._locators['search_bar'])
+        search = self._driver.locate_element(self._locators['search_bar'])
         self._driver.send_keys(search,self._driver.type)
