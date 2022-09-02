@@ -15,6 +15,7 @@ class TestsData:
     password: str
     browser: str
     lib: str
+    driver_path: str
 
     def __post_init__(self):
         if not isinstance(self.url, str):

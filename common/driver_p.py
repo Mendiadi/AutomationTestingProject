@@ -25,7 +25,7 @@ class Pdriver(Driver):
         else:
             raise LocatorWithError("unsolved With value given.")
 
-    def locate_element(self, locator: str, driver: [] = None) -> [Locator, ElementHandle]:
+    def locate_element(self, locator: tuple, driver: [] = None) -> [Locator, ElementHandle]:
         """
         Locating element with wait timeout and option to mark that element
         :param locator: tuple - (By,str) - locator
@@ -42,7 +42,7 @@ class Pdriver(Driver):
         finally:
             return element
 
-    def locate_elements(self, locator: str) -> [ElementHandle]:
+    def locate_elements(self, locator: tuple) -> [ElementHandle]:
         """
        Locating elements with wait timeout and option to mark that elements
        :param locator: tuple - (By,str) - locator
@@ -55,7 +55,7 @@ class Pdriver(Driver):
         # else:
         #     raise TimeoutError
 
-    def locate_frame(self, locator: str) -> FrameLocator:
+    def locate_frame(self, locator: tuple) -> FrameLocator:
         """
         Locate frame
         :param locator: frame locator

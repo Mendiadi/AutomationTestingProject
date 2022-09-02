@@ -3,6 +3,12 @@ from common.constant import *
 from common.driver_p import Pdriver
 from common.driver_s import Sdriver
 from enum import Enum
+from common.driver import Driver
+
+DRIVERS = {
+    SELENIUM: Sdriver,
+    PLAYWRIGHT: Pdriver
+}
 
 
 class With(Enum):
@@ -14,10 +20,7 @@ class With(Enum):
     CSS = "css"
 
 
-def create_driver(lib, driver):
-    if lib == PLAYWRIGHT:
-        return Pdriver(driver, PLAYWRIGHT)
-    elif lib == SELENIUM:
-        return Sdriver(driver, SELENIUM)
-    else:
+def create_driver(lib, driver) -> Driver:
+    if lib not in DRIVERS:
         raise LibNotSupport(f"lib must be {SELENIUM} or {PLAYWRIGHT} not {type(lib)}")
+    return DRIVERS[lib](driver, lib)

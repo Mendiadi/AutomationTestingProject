@@ -3,5 +3,6 @@
   "email": "exm1@walla.com",
   "password": "12345",
   "browser": "chrome",
-  "lib": "playwright"
+  "lib": "selenium",
+  "driver_path" : "C:\\Program Files\\chromedriver.exe"
 }
