@@ -1,8 +1,5 @@
 from common.constant import *
-from abc import ABC,abstractmethod
-
-
-
+from abc import ABC, abstractmethod
 
 
 class Driver(ABC):
@@ -18,6 +15,7 @@ class Driver(ABC):
     @abstractmethod
     def locate_elements(self, locator: tuple[[], str]) -> []:
         pass
+
     @abstractmethod
     def locate_frame(self, locator: tuple[[], str]) -> []:
         pass
@@ -30,7 +28,6 @@ class Driver(ABC):
     def get_screenshot(self) -> bytes:
         pass
 
-
     @property
     def title(self) -> str:
         if self._type == SELENIUM:
@@ -42,14 +39,13 @@ class Driver(ABC):
     def type(self) -> str:
         return self._type
 
-    def send_keys(self, locator, input):
+    def send_keys(self, locator, input_):
         if self._type == PLAYWRIGHT:
-            locator.fill(input)
+            locator.fill(input_)
         elif self._type == SELENIUM:
-            locator.send_keys(input)
+            locator.send_keys(input_)
 
-
-    def text(self,locator) -> str:
+    def text(self, locator) -> str:
         """
         getting text of locator
         :param locator: element/locator
@@ -59,7 +55,3 @@ class Driver(ABC):
             return locator.text_content()
         elif self._type == SELENIUM:
             return locator.text
-
-
-
-

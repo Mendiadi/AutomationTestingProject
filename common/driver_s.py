@@ -3,25 +3,36 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
+from common.exceptions_test import LocatorWithError
 
 
 class Sdriver(Driver):
-    def __init__(self, driver, type):
+    def __init__(self, driver, type_):
         self.wait = 5
-        super().__init__(driver, type)
+        super().__init__(driver, type_)
 
     @staticmethod
     def By(by, locator):
         if by.value == "name":
-            return (By.NAME, locator)
+            return By.NAME, locator
+        elif by.value == "class_name":
+            return By.CLASS_NAME, locator
+        elif by.value == "id":
+            return By.ID, locator
+        elif by.value == "xpath":
+            return By.XPATH, locator
+        elif by.value == "css":
+            return By.CSS_SELECTOR, locator
+        elif by.value == "tag_name":
+            return By.TAG_NAME, locator
+        else:
+            raise LocatorWithError("unsolved With value given.")
 
     def locate_element(self, locator: tuple[[], str], driver: [] = None) -> WebElement:
         """
         Locating element with wait timeout and option to mark that element
         :param locator: tuple - (By,str) - locator
         :param driver: optional - some WebElement to search inside
-        :param wait: timeout wait - int
-        :param mark: bool - True to mark , False to not mark
         :return: the element that found
         :rtype: WebElement
         """
@@ -35,7 +46,6 @@ class Sdriver(Driver):
         """
        Locating elements with wait timeout and option to mark that elements
        :param locator: tuple - (By,str) - locator
-       :param wait: timeout wait - int
        :return: the element that found
        :rtype: [WebElement]
         """
@@ -46,7 +56,6 @@ class Sdriver(Driver):
         """
        Locating frame with wait timeout
        :param locator: tuple - (By,str) - locator
-       :param wait: timeout wait - int
         """
         try:
             self._driver.switch_to.frame(locator)

@@ -9,6 +9,9 @@ class With(Enum):
     ID = "id"
     CLASS_NAME = "class_name"
     NAME = "name"
+    TAG_NAME = "tag_name"
+    XPATH = "xpath"
+    CSS = "css"
 
 
 def create_driver(lib, driver):

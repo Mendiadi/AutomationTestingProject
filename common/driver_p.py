@@ -1,16 +1,29 @@
 from common.driver import Driver
 from playwright.sync_api import Locator, ElementHandle, FrameLocator
 import os
+from common.exceptions_test import LocatorWithError
 
 
 class Pdriver(Driver):
-    def __init__(self, driver, type):
-        super().__init__(driver, type)
+    def __init__(self, driver, type_):
+        super().__init__(driver, type_)
 
     @staticmethod
     def By(by, locator):
         if by.value == "name":
             return f"[name={locator}]"
+        elif by.value == "class_name":
+            return f".{locator}"
+        elif by.value == "id":
+            return f"id={locator}"
+        elif by.value == "xpath":
+            return locator
+        elif by.value == "css":
+            return locator
+        elif by.value == "tag_name":
+            return locator
+        else:
+            raise LocatorWithError("unsolved With value given.")
 
     def locate_element(self, locator: str, driver: [] = None) -> [Locator, ElementHandle]:
         """

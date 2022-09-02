@@ -8,6 +8,6 @@ def get_main_page(init_driver):
     yield page
     del page
 
+
 def test_search(get_main_page):
     get_main_page.search("hello world")
-
