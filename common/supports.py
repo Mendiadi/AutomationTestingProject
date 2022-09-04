@@ -1,13 +1,13 @@
 from common.exceptions_test import *
 from common.constant import *
-from common.driver_p import Pdriver
-from common.driver_s import Sdriver
+from common.driver_p import PlayWright
+from common.driver_s import Selenium
 from enum import Enum
 from common.driver import Driver
 
 DRIVERS = {
-    SELENIUM: Sdriver,
-    PLAYWRIGHT: Pdriver
+    SELENIUM: Selenium,
+    PLAYWRIGHT: PlayWright
 }
 
 

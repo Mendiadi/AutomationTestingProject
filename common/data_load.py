@@ -27,9 +27,9 @@ class TestsData:
         if not isinstance(self.browser, str):
             raise TypeError(f"browser that given in init.json file are type  {type(self.url)} but needs to be str")
         if self.browser not in BROWSERS:
-            raise Exception(f"Browser {self.browser} is unrecognized. must be {CHROME} or {FIREFOX}")
+            raise BrowserNotSupport(f"Browser {self.browser} is unrecognized. must be {CHROME} or {FIREFOX}")
         if self.lib not in LIBS:
-            raise LibNotSupport(f"lib {self.browser} is unrecognized. must be {PLAYWRIGHT} or {SELENIUM}")
+            raise LibNotSupport(f"lib {self.lib} is unrecognized. must be {PLAYWRIGHT} or {SELENIUM}")
 
     @staticmethod
     def load(path: str) -> TestsData:

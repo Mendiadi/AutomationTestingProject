@@ -4,7 +4,7 @@ import os
 from common.exceptions_test import LocatorWithError
 
 
-class Pdriver(Driver):
+class PlayWright(Driver):
     def __init__(self, driver, type_):
         super().__init__(driver, type_)
 

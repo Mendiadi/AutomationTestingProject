@@ -6,7 +6,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from common.exceptions_test import LocatorWithError
 
 
-class Sdriver(Driver):
+class Selenium(Driver):
     def __init__(self, driver, type_):
         self.wait = 5
         super().__init__(driver, type_)
