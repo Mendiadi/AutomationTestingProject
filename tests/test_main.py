@@ -1,9 +1,10 @@
 import logging
+import time
 import pytest
 from pages import main_page
 
-LOGGER = logging.getLogger(__name__)
 
+LOGGER = logging.getLogger(__name__)
 
 
 
@@ -17,3 +18,5 @@ def get_main_page(init_driver):
 def test_search(get_main_page):
     LOGGER.info(f"executing test case: search valid")
     get_main_page.search("hello world")
+    time.sleep(5)
+

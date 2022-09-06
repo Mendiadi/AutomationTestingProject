@@ -8,19 +8,30 @@ from common.constant import DATA_FILE
 
 
 
-@pytest.fixture
-def get_test_data():
+
+def test_data():
     return data_load.TestsData.load(DATA_FILE)
 
-#
-# def pytest_addoption(parser):
-#     parser.addoption("--url", action="store", default=None)
-#     parser.addoption("--lib", action="store", default=None)
-#     parser.addoption("--browser", action="store", default=None)
+
+def pytest_addoption(parser):
+    data =  test_data()
+    parser.addoption("--url", action="store", default=data.url)
+    parser.addoption("--lib", action="store", default=data.lib)
+    parser.addoption("--browser", action="store", default=data.browser)
+
+@pytest.fixture
+def get_test_data(pytestconfig):
+    data = test_data()
+    data.url = pytestconfig.getoption("url")
+    data.lib = pytestconfig.getoption("lib")
+    data.browser = pytestconfig.getoption("browser")
+    return data
+
 
 
 @pytest.fixture
 def init_driver(get_test_data):
+    get_test_data.valid()
     if get_test_data.lib == "selenium":
         if get_test_data.browser == "chrome":
             page = Chrome(get_test_data.driver_path)

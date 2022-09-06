@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
-from common.exceptions_test import LocatorWithError
+from common.exceptions_ import LocatorWithError
 
 
 class Selenium(Driver):

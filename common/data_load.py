@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from common.constant import *
 import json
-from common.exceptions_test import *
+from common.exceptions_ import *
 
 
 @dataclass
@@ -17,7 +17,7 @@ class TestsData:
     lib: str
     driver_path: str
 
-    def __post_init__(self):
+    def valid(self):
         if not isinstance(self.url, str):
             raise TypeError(f"url that given in init.json file are {type(self.url)} but needs to be str")
         if not isinstance(self.email, str):
@@ -30,6 +30,8 @@ class TestsData:
             raise BrowserNotSupport(f"Browser {self.browser} is unrecognized. must be {CHROME} or {FIREFOX}")
         if self.lib not in LIBS:
             raise LibNotSupport(f"lib {self.lib} is unrecognized. must be {PLAYWRIGHT} or {SELENIUM}")
+
+
 
     @staticmethod
     def load(path: str) -> TestsData:

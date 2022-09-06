@@ -1,3 +1,5 @@
+import abc
+
 from common.constant import *
 from abc import ABC, abstractmethod
 
@@ -55,3 +57,4 @@ class Driver(ABC):
             return locator.text_content()
         elif self._type == SELENIUM:
             return locator.text
+

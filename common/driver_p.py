@@ -1,7 +1,7 @@
 from common.driver import Driver
 from playwright.sync_api import Locator, ElementHandle, FrameLocator
 import os
-from common.exceptions_test import LocatorWithError
+from common.exceptions_ import LocatorWithError
 
 
 class PlayWright(Driver):
