@@ -1,7 +1,7 @@
 import logging
 import time
 import pytest
-from pages import main_page
+from UI.pages import main_page
 
 
 LOGGER = logging.getLogger(__name__)

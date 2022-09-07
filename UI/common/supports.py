@@ -1,9 +1,9 @@
-from common.exceptions_ import *
-from common.constant import *
-from common.driver_p import PlayWright
-from common.driver_s import Selenium
+from UI.common.exceptions_ import *
+from UI.common.constant import *
+from UI.common.driver_p import PlayWright
+from UI.common.driver_s import Selenium
 from enum import Enum
-from common.driver import Driver
+from UI.common.driver import Driver
 
 DRIVERS = {
     SELENIUM: Selenium,

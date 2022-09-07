@@ -1,5 +1,5 @@
-from pages.base_page import BasePage
-from common.supports import With
+from UI.pages.base_page import BasePage
+from UI.common.supports import With
 
 
 class MainPage(BasePage):

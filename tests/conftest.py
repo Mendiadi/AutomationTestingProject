@@ -1,9 +1,9 @@
 import pytest
-from common.supports import create_driver
+from UI.common.supports import create_driver
 from playwright.sync_api import sync_playwright
 from selenium.webdriver import Chrome, Firefox
-from common import data_load
-from common.constant import DATA_FILE
+from UI.common import data_load
+from UI.common.constant import DATA_FILE
 
 
 

@@ -1,8 +1,8 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from common.constant import *
+from UI.common.constant import *
 import json
-from common.exceptions_ import *
+from UI.common.exceptions_ import *
 
 
 @dataclass
