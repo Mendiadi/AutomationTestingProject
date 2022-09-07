@@ -4,7 +4,7 @@ import logging
 
 LOGGER = logging.getLogger(__name__)
 
-URL = "https://petstore3.swagger.io/api/v3/pet"
+URL = "https://petstore3.swagger.io/api/v3/pet/"
 HEADERS = {'accept': 'application/json'}
 PET = {
     "id": 167,

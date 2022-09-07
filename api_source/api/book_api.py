@@ -10,7 +10,7 @@ class BookApi(base_api.BaseAPI):
     def __init__(self, url: str, headers):
         super().__init__(url, headers)
 
-    @Rest.post
+    @Rest.post()
     def post_pet(self, response):
         if response.ok:
             return Pet(**response.json())
@@ -24,11 +24,11 @@ class BookApi(base_api.BaseAPI):
         return Rest.res_dict(response.status_code, response.text)
 
 
-    @Rest.delete
+    @Rest.delete(param="id")
     def delete_pet(self, response):
         return Rest.res_dict(response.status_code, response.text)
 
-    @Rest.get(url='/findByStatus?status=',param="status")
+    @Rest.get(url='findByStatus?status=',param="status")
     def find_by_status(self,response):
 
         if response.ok:
