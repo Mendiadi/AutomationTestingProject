@@ -29,6 +29,13 @@ def test_get_pet(get_book_api):
     res = api.get_pet(id="167")
     LOGGER.info(res)
 
+def test_put_pet(get_book_api):
+    api = get_book_api
+    PET['name'] = "moshe"
+    res = api.put_pet(data=PET)
+    LOGGER.info(res)
+    pet = api.get_pet(id="167")
+    assert pet.name == "moshe"
 
 
 def test_delete_pet(get_book_api):
@@ -41,3 +48,5 @@ def test_find_by_status(get_book_api):
     api = get_book_api
     res = api.find_by_status(status='available')
     LOGGER.info(res)
+
+

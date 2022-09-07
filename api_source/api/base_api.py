@@ -1,4 +1,4 @@
-from api_source.core.requests_factory import Rest
+from api_source.core import rest
 
 
 class BaseAPI:
@@ -9,5 +9,6 @@ class BaseAPI:
         self._delete_url = url
         self._put_url = url
         self._headers = headers
-        self._session = Rest.get_session(self._headers)
+        self._session = rest.get_session(self._headers)
+
 

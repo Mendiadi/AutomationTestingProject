@@ -1,11 +1,13 @@
 import dataclasses
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass()
 class Pet():
-    id: int
+    id: str
     name: str= None
     category: dict = None
     photoUrls: list= None
     tags: [str]= None
     status: str= None
+
+
