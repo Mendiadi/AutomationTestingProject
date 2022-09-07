@@ -2,7 +2,7 @@ import json
 import requests
 
 
-def get_session(headers) -> requests.Session:
+def get_session(headers="") -> requests.Session:
     session__ = requests.session()
     session__.headers.update(headers)
     return session__
@@ -55,5 +55,5 @@ def put(url=None, param=None):
     return decorate
 
 
-def res_dict(code, msg):
+def as_dict(code, msg):
     return {"code": code, "msg": msg}
