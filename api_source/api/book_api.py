@@ -11,8 +11,6 @@ class BookApi(BaseAPI):
 
     @rest.post(url='Account/register')
     def register(self,response):
-        if response.ok:
-            return response.text
         return rest.res_dict(response.status_code,response.text)
 
 

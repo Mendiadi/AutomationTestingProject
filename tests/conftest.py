@@ -2,7 +2,7 @@ import pytest
 from ui_source.core.drivers.driver import Driver
 from playwright.sync_api import sync_playwright
 from selenium.webdriver import Chrome, Firefox
-from ui_source.core.common.data_load import  load_test_data
+from ui_source.core.common.data_load import load_test_data
 from ui_source.core.common.constant import DATA_FILE
 import allure
 
@@ -24,7 +24,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture
 def get_test_data(pytestconfig):
-    data =  load_test_data()
+    data = load_test_data()
     data.url = pytestconfig.getoption("url")
     data.lib = pytestconfig.getoption("lib")
     data.browser = pytestconfig.getoption("browser")

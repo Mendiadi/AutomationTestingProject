@@ -1,6 +1,7 @@
 import json
-class Model:
 
+
+class Model:
 
     def to_json(self) -> json:
         """

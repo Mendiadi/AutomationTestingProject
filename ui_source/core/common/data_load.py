@@ -17,7 +17,6 @@ class TestsData:
     lib: str
     driver_path: str
 
-
     def valid(self):
         if not isinstance(self.url, str):
             raise TypeError(f"url that given in init.json file are {type(self.url)} but needs to be str")
@@ -31,8 +30,6 @@ class TestsData:
             raise BrowserNotSupport(f"Browser {self.browser} is unrecognized. must be {CHROME} or {FIREFOX}")
         if self.lib not in LIBS:
             raise LibNotSupport(f"lib {self.lib} is unrecognized. must be {PLAYWRIGHT} or {SELENIUM}")
-
-
 
     @staticmethod
     def load(path: str) -> TestsData:
@@ -53,5 +50,5 @@ class TestsData:
         return TestsData(**json_file)
 
 
-def  load_test_data():
+def load_test_data():
     return TestsData.load(DATA_FILE)

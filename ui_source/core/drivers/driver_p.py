@@ -7,11 +7,8 @@ import os
 
 import allure
 
-
 from playwright.sync_api import Page
 from allure_commons.types import AttachmentType
-
-
 
 
 class PlayWright(Driver):
@@ -82,7 +79,7 @@ class PlayWright(Driver):
         """
         self._driver.evaluate(__script)
 
-    def get_screenshot(self) :
+    def get_screenshot(self):
         """
         Get driver screenshot
         :return: screenshot
@@ -95,5 +92,5 @@ class PlayWright(Driver):
 
         return self._driver.screenshot()
 
-    def is_visible(self,locator) -> bool:
+    def is_visible(self, locator) -> bool:
         return self._driver.is_visible(self.By(*locator))

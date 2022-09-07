@@ -3,9 +3,7 @@ import time
 import pytest
 from ui_source.pages import login_page
 
-
 LOGGER = logging.getLogger(__name__)
-
 
 
 @pytest.fixture
@@ -24,7 +22,8 @@ def test_page_open(get_main_page):
 
 def test_login(get_main_page):
     LOGGER.info("login valid")
-    get_main_page.login("adi@walla.c","1111")
+    get_main_page.login("adi@walla.c", "1111")
+
 
 def test_press_book_store(get_main_page):
     get_main_page.click_bookstore()

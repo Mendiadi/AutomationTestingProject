@@ -11,8 +11,6 @@ class Selenium(Driver):
         self.wait = 5
         super().__init__(driver, type_)
 
-
-
     def locate_element(self, locator: tuple[[], str], driver: [] = None) -> WebElement:
         """
         Locating element with wait timeout and option to mark that element
