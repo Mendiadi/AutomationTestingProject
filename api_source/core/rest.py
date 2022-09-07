@@ -1,3 +1,5 @@
+import json
+
 import requests
 
 def get_session(headers) -> requests.Session:
@@ -23,7 +25,7 @@ def delete(url=None,param=None):
         def wrapper(self,*args,**kwargs):
             data = kwargs['data'] if "data" in kwargs else None
             param_ = kwargs[param] if param else ""
-            url_ = self._delete_url + url if url else self._delete_url
+            url_ = self._base_url + url if url else self._base_url
             response = self._session.delete(url=url_ + param_, data=data)
             return func(self, response=response)
         return wrapper
@@ -35,8 +37,8 @@ def post(url=None,param=None):
         def wrapper(self,*args,**kwargs):
             data = kwargs['data'] if "data" in kwargs else None
             param_ = kwargs[param] if param else ""
-            url_ = self._delete_url + url if url else self._delete_url
-            response = self._session.post(url=url_ + param_, data=data)
+            url_ = self._base_url + url if url else self._base_url
+            response = self._session.post(url=url_ + param_, json=data)
             return func(self, response=response)
         return wrapper
     return decorate

@@ -1,52 +1,53 @@
 from api_source.api.book_api import BookApi
 import pytest
 import logging
-
+from api_source.core import utils
+from api_source.models.api_user_dto import ApiUserDto
 LOGGER = logging.getLogger(__name__)
 
-URL = "https://petstore3.swagger.io/api/v3/pet/"
+URL = 'http://localhost:7017/api/'
 HEADERS = {'accept': 'application/json'}
-PET = {
-    "id": 167,
-    "name": "omg",
-    "status": "available"
-}
 
 
 @pytest.fixture(scope="session")
 def get_book_api() -> BookApi:
     return BookApi(URL, HEADERS)
 
+@pytest.fixture(scope="session")
+def fix_user():
+    user = utils.json_read(r"./tests/data_api.json")
+    return ApiUserDto(**user)
 
-def test_post_pet(get_book_api):
+#############################################
+###########    INVALID CASES    #############
+#############################################
+
+def test_register(get_book_api,fix_user):
     api = get_book_api
-    res = api.post_pet(data=PET)
+    user = fix_user
+    LOGGER.info(user.to_json())
+    res = api.register(data=user.to_json())
+    LOGGER.info(res)
+    # assert res['code'] == 200
+
+def test_register_exists_user(get_book_api,fix_user):
+    api = get_book_api
+    user = fix_user
+    res = api.register(data=user.to_json())
+    LOGGER.info(res)
+    assert res['code'] == 400 and "DuplicateUserName" in res['msg']
+
+def test_login(get_book_api,fix_user):
+    api = get_book_api
+    res = api.login(data={"email": "adi@sela.co.il", "password": "string11",})
     LOGGER.info(res)
 
 
-def test_get_pet(get_book_api):
+def test_refresh_token(get_book_api,fix_user):
     api = get_book_api
-    res = api.get_pet(id="167")
+    res = api.refresh_token(data={
+  "userId": "string",
+  "token": "string",
+  "refreshToken": "string"
+})
     LOGGER.info(res)
-
-def test_put_pet(get_book_api):
-    api = get_book_api
-    PET['name'] = "moshe"
-    res = api.put_pet(data=PET)
-    LOGGER.info(res)
-    pet = api.get_pet(id="167")
-    assert pet.name == "moshe"
-
-
-def test_delete_pet(get_book_api):
-    api = get_book_api
-    res = api.delete_pet(id="167",data=None)
-    LOGGER.info(res)
-
-
-def test_find_by_status(get_book_api):
-    api = get_book_api
-    res = api.find_by_status(status='available')
-    LOGGER.info(res)
-
-
