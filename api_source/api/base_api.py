@@ -10,3 +10,4 @@ class BaseAPI:
         self._put_url = url
         self._headers = headers
         self._session = Rest.get_session(self._headers)
+
