@@ -1,5 +1,4 @@
 import dataclasses
-
 from api_source.models.base_model import Model
 
 
