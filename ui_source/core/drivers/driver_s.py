@@ -11,22 +11,7 @@ class Selenium(Driver):
         self.wait = 5
         super().__init__(driver, type_)
 
-    @staticmethod
-    def By(by, locator):
-        if by.value == "name":
-            return (By.NAME, locator)
-        elif by.value == "class name":
-            return (By.CLASS_NAME, locator)
-        elif by.value == "id":
-            return (By.ID, locator)
-        elif by.value == "xpath":
-            return (by.value, locator)
-        elif by.value == "css selector":
-            return (By.CSS_SELECTOR, locator)
-        elif by.value == "tag name":
-            return (By.TAG_NAME, locator)
-        else:
-            raise LocatorWithError("unsolved With value given.")
+
 
     def locate_element(self, locator: tuple[[], str], driver: [] = None) -> WebElement:
         """
@@ -39,7 +24,7 @@ class Selenium(Driver):
         if driver is None:
             driver = self._driver
         try:
-            element = driver.find_element(self.By(*locator))
+            element = driver.find_element(*locator)
         except TimeoutError:
             element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(self.By(*locator)))
         return element

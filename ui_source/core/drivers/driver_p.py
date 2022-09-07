@@ -20,17 +20,17 @@ class PlayWright(Driver):
 
     @staticmethod
     def By(by, locator):
-        if by.value == "name":
+        if by == "name":
             return f"[name={locator}]"
-        elif by.value == "class name":
+        elif by == "class name":
             return f".{locator}"
-        elif by.value == "id":
+        elif by == "id":
             return f"id={locator}"
-        elif by.value == "xpath":
+        elif by == "xpath":
             return locator
-        elif by.value == "css selector":
+        elif by == "css selector":
             return locator
-        elif by.value == "tag name":
+        elif by == "tag name":
             return locator
         else:
             raise LocatorWithError("unsolved With value given.")

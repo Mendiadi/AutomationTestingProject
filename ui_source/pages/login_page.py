@@ -1,15 +1,15 @@
 from ui_source.pages.base_page import BasePage
-from ui_source.core.drivers.supports import With
 
+from selenium.webdriver.common.by import By
 
 class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
     _locators = {
-        "email_entry":(With.ID,'email'),
-        "password_entry":(With.ID,'password'),
-        "submit":(With.XPATH,'//*[@id="root"]/div/form/button')
+        "email_entry":(By.ID,'email'),
+        "password_entry":(By.ID,'password'),
+        "submit":(By.XPATH,'//*[@id="root"]/div/form/button')
     }
 
     def send_email(self,email:str):

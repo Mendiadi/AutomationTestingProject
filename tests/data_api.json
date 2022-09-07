@@ -1,6 +1,11 @@
 {
-    "email": "adi@sela.co.il",
+    "main_user": {"email": "adi@sela.co.il",
     "password": "string11",
     "firstName": "adi",
-    "lastName": "mendel"
+    "lastName": "mendel"},
+    "new_user": {"email": "adim%@walla.co.il",
+    "password": "string",
+    "firstName": "exm",
+    "lastName": "israeli"
+    }
 }
