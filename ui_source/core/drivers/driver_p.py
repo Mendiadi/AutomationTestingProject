@@ -1,7 +1,7 @@
-from UI.common.driver import Driver
+from ui_source.core.drivers.driver import Driver
 from playwright.sync_api import Locator, ElementHandle, FrameLocator
 import os
-from UI.common.exceptions_ import LocatorWithError
+from ui_source.core.common.exceptions_ import LocatorWithError
 
 
 class PlayWright(Driver):

@@ -1,9 +1,9 @@
-from UI.common.driver import Driver
+from ui_source.core.drivers.driver import Driver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
-from UI.common.exceptions_ import LocatorWithError
+from ui_source.core.common.exceptions_ import LocatorWithError
 
 
 class Selenium(Driver):

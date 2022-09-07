@@ -1,4 +1,4 @@
-from UI.common.driver import Driver
+from ui_source.core.drivers.driver import Driver
 
 
 class BasePage:

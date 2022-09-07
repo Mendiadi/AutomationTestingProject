@@ -1,4 +1,4 @@
-from UI.common.constant import *
+from ui_source.core.common.constant import *
 from abc import ABC, abstractmethod
 
 

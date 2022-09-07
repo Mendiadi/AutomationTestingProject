@@ -1,5 +1,5 @@
-from UI.pages.base_page import BasePage
-from UI.common.supports import With
+from ui_source.pages.base_page import BasePage
+from ui_source.core.drivers.supports import With
 
 
 class MainPage(BasePage):
