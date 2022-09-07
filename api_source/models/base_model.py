@@ -8,4 +8,6 @@ class Model:
         convert object dict to json data
         :return: json dormat of object
         """
+
         return self.__dict__
+
