@@ -3,6 +3,16 @@ from playwright.sync_api import Locator, ElementHandle, FrameLocator
 import os
 from ui_source.core.common.exceptions_ import LocatorWithError
 
+import os
+
+import allure
+
+
+from playwright.sync_api import Page
+from allure_commons.types import AttachmentType
+
+
+
 
 class PlayWright(Driver):
     def __init__(self, driver, type_):
@@ -12,15 +22,15 @@ class PlayWright(Driver):
     def By(by, locator):
         if by.value == "name":
             return f"[name={locator}]"
-        elif by.value == "class_name":
+        elif by.value == "class name":
             return f".{locator}"
         elif by.value == "id":
             return f"id={locator}"
         elif by.value == "xpath":
             return locator
-        elif by.value == "css":
+        elif by.value == "css selector":
             return locator
-        elif by.value == "tag_name":
+        elif by.value == "tag name":
             return locator
         else:
             raise LocatorWithError("unsolved With value given.")
@@ -72,10 +82,18 @@ class PlayWright(Driver):
         """
         self._driver.evaluate(__script)
 
-    def get_screenshot(self) -> bytes:
+    def get_screenshot(self) :
         """
         Get driver screenshot
         :return: screenshot
         :rtype: bytes
         """
-        return self._driver.screenshot(type="png", path=os.path.join("ui_with_page_object", "img_.png"))
+        image = f"{__name__}.png"
+        os.makedirs(os.path.join("ScreenShots", os.path.dirname(image)), exist_ok=True)
+        allure.attach(self._driver.screenshot(
+            path=os.path.join("ScreenShots", image)), name=__name__, attachment_type=AttachmentType.PNG)
+
+        return self._driver.screenshot()
+
+    def is_visible(self,locator) -> bool:
+        return self._driver.is_visible(self.By(*locator))

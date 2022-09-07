@@ -13,11 +13,11 @@ DRIVERS = {
 
 class With(Enum):
     ID = "id"
-    CLASS_NAME = "class_name"
+    CLASS_NAME = "class name"
     NAME = "name"
-    TAG_NAME = "tag_name"
+    TAG_NAME = "tag name"
     XPATH = "xpath"
-    CSS = "css"
+    CSS = "css selector"
 
 
 def create_driver(lib, driver) -> Driver:

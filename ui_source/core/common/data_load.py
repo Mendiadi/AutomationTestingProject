@@ -17,6 +17,7 @@ class TestsData:
     lib: str
     driver_path: str
 
+
     def valid(self):
         if not isinstance(self.url, str):
             raise TypeError(f"url that given in init.json file are {type(self.url)} but needs to be str")
@@ -50,3 +51,7 @@ class TestsData:
                 json_file = json.load(json_file)
 
         return TestsData(**json_file)
+
+
+def  load_test_data():
+    return TestsData.load(DATA_FILE)

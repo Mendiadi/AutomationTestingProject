@@ -15,7 +15,7 @@ def get_book_api() -> BookApi:
 
 @pytest.fixture(scope="session")
 def fix_user():
-    user = utils.json_read(r"./tests/data_api.json")
+    user = utils.json_read(r"data_api.json")
     return ApiUserDto(**user)
 
 #############################################
@@ -28,6 +28,7 @@ def test_register(get_book_api,fix_user):
     LOGGER.info(user.to_json())
     res = api.register(data=user.to_json())
     LOGGER.info(res)
+
     # assert res['code'] == 200
 
 def test_register_exists_user(get_book_api,fix_user):
@@ -40,7 +41,8 @@ def test_register_exists_user(get_book_api,fix_user):
 def test_login(get_book_api,fix_user):
     api = get_book_api
     res = api.login(data={"email": "adi@sela.co.il", "password": "string11",})
-    LOGGER.info(res)
+    LOGGER.info(res.userId)
+
 
 
 def test_refresh_token(get_book_api,fix_user):

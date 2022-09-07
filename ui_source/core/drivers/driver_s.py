@@ -14,17 +14,17 @@ class Selenium(Driver):
     @staticmethod
     def By(by, locator):
         if by.value == "name":
-            return By.NAME, locator
-        elif by.value == "class_name":
-            return By.CLASS_NAME, locator
+            return (By.NAME, locator)
+        elif by.value == "class name":
+            return (By.CLASS_NAME, locator)
         elif by.value == "id":
-            return By.ID, locator
+            return (By.ID, locator)
         elif by.value == "xpath":
-            return By.XPATH, locator
-        elif by.value == "css":
-            return By.CSS_SELECTOR, locator
-        elif by.value == "tag_name":
-            return By.TAG_NAME, locator
+            return (by.value, locator)
+        elif by.value == "css selector":
+            return (By.CSS_SELECTOR, locator)
+        elif by.value == "tag name":
+            return (By.TAG_NAME, locator)
         else:
             raise LocatorWithError("unsolved With value given.")
 
@@ -38,8 +38,10 @@ class Selenium(Driver):
         """
         if driver is None:
             driver = self._driver
-        element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(self.By(*locator)))
-
+        try:
+            element = driver.find_element(self.By(*locator))
+        except TimeoutError:
+            element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(self.By(*locator)))
         return element
 
     def locate_elements(self, locator: tuple[[], str]) -> [WebElement]:
@@ -49,6 +51,7 @@ class Selenium(Driver):
        :return: the element that found
        :rtype: [WebElement]
         """
+
         elements = WebDriverWait(self._driver, self.wait).until(EC.presence_of_all_elements_located(self.By(*locator)))
         return elements
 
