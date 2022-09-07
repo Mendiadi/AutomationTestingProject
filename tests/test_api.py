@@ -2,9 +2,9 @@ from api_source.api.book_api import BookApi
 import pytest
 import logging
 import random
-from api_source.core import utils
+from commons import utils
 from api_source.models.api_user_dto import ApiUserDto
-from api_source.core.utils import json_read
+from commons.utils import json_read
 
 LOGGER = logging.getLogger(__name__)
 

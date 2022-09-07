@@ -1,13 +1,11 @@
 from ui_source.core.drivers.driver import Driver
 from playwright.sync_api import Locator, ElementHandle, FrameLocator
-import os
-from ui_source.core.common.exceptions_ import LocatorWithError
+from ui_source.core.exceptions_ import LocatorWithError
 
 import os
 
 import allure
 
-from playwright.sync_api import Page
 from allure_commons.types import AttachmentType
 
 

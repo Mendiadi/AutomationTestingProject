@@ -1,9 +1,8 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from ui_source.core.common.constant import *
-import json
-from ui_source.core.common.exceptions_ import *
-
+from ui_source.core.constant import *
+from ui_source.core.exceptions_ import *
+from commons.utils import json_read
 
 @dataclass
 class TestsData:
@@ -40,14 +39,7 @@ class TestsData:
         :return: object with the data
         :rtype: TestsData
         """
-        try:
-            with open(path, "r") as json_file:
-                json_file = json.load(json_file)
-        except FileNotFoundError:
-            with open(rf"{PACKAGE_NAME}\{path}", "r") as json_file:
-                json_file = json.load(json_file)
-
-        return TestsData(**json_file)
+        return TestsData(**json_read(path))
 
 
 def load_test_data():

@@ -1,7 +1,7 @@
 from __future__ import annotations
-from ui_source.core.common.constant import *
+from ui_source.core.constant import *
 from abc import ABC, abstractmethod
-from ui_source.core.common.exceptions_ import LibNotSupport
+from ui_source.core.exceptions_ import LibNotSupport
 
 class Driver(ABC):
 
