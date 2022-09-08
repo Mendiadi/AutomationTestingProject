@@ -79,16 +79,18 @@ class Req(enum.Enum):
     PUT = "PUT"
     DELETE = "DELETE"
 
+
 # Define constant global variables
 
 JSON = "json"
 DATA = "data"
 
+
 # functions starts here:
 
 def get_session(
-        headers:str=""
-        ) -> requests.Session:
+        headers: str = ""
+) -> requests.Session:
     """
         Return new session object
     :param headers: default nothing | the headers to current session
@@ -102,8 +104,8 @@ def get_session(
 
 def parse_method(
         type_: Req,
-        ptr__:requests.Session
-        ) -> []:
+        ptr__: requests.Session
+) -> []:
     """
         take type and pointer to obj
         and return the function its related
@@ -125,12 +127,12 @@ def parse_method(
 
 
 def get_response(
-        type_:Req,
-        ptr__:requests.Session,
-        url:str,
-        data:[],
-        data_t:str
-        ) -> requests.Response:
+        type_: Req,
+        ptr__: requests.Session,
+        url: str,
+        data: [],
+        data_t: str
+) -> requests.Response:
     """
         get the response from request session
     :param type_: type of requests see Req class
@@ -147,10 +149,10 @@ def get_response(
 
 def parse(
         url: str,
-        kw : dict,
+        kw: dict,
         param: str,
         self: []
-        ) -> tuple:
+) -> tuple:
     """
     get all data from the decorator and configure
     how its need to be sent to request
@@ -163,11 +165,11 @@ def parse(
 
 
 def request(
-        type_:Req,
-        url:str=None,
-        param:str=None,
-        data_t:str="data"
-        ) -> []:
+        type_: Req,
+        url: str = None,
+        param: str = None,
+        data_t: str = "data"
+) -> []:
     """
     Decorator with two nasted function to crate the magic function!
     the first function initial the second with same args->
@@ -177,25 +179,26 @@ def request(
     that use this decorator properly-> and then returns user func-> then
     return second and after all of that circle the fist will return
     :param type_: type of requests see Req class
-    :param ptr__: pointer to object->session
     :param url: link to send request
-    :param data: data to send with request
     :param data_t: data type json or data
     """
+
     def decorate(func, **kwargs) -> []:
         def wrapper(self, *args, **kwargs) -> []:
             data, param_, url_ = parse(url, kwargs, param, self)
             response = get_response(type_, self._session, url_, data, data_t)
             return func(self, response=response)
+
         return wrapper
+
     return decorate
 
 
 def get(
-        url:str=None,
-        param:str=None,
-        data_t:str="data"
-        ):
+        url: str = None,
+        param: str = None,
+        data_t: str = "data"
+):
     """
     Create GET request and returns the response
     :param url: url or part of it
@@ -208,10 +211,10 @@ def get(
 
 
 def delete(
-        url:str=None,
-        param:str=None,
-        data_t:str="data"
-           ):
+        url: str = None,
+        param: str = None,
+        data_t: str = "data"
+):
     """
         Create DELETE request and returns the response
         :param url: url or part of it
@@ -224,10 +227,10 @@ def delete(
 
 
 def post(
-        url:str=None,
-        param:str=None,
-        data_t:str="data"
-         ):
+        url: str = None,
+        param: str = None,
+        data_t: str = "data"
+):
     """
         Create POST request and returns the response
         :param url: url or part of it
@@ -240,10 +243,10 @@ def post(
 
 
 def put(
-        url:str=None,
-        param:str=None,
-        data_t:str="data"
-        ):
+        url: str = None,
+        param: str = None,
+        data_t: str = "data"
+):
     """
         Create PUT request and returns the response
         :param url: url or part of it
