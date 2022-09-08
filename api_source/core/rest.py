@@ -83,11 +83,11 @@ def get_response(type, ptr__, url, data, data_t):
     if type is POST:
         return ptr__.post(url=url, json=data) if data_t == "json" else ptr__.post(url=url, data=data)
     elif type is GET:
-        return ptr__.post(url=url, json=data) if data_t == "json" else ptr__.post(url=url, data=data)
+        return ptr__.get(url=url, json=data) if data_t == "json" else ptr__.get(url=url, data=data)
     elif type is DELETE:
-        return ptr__.post(url=url, json=data) if data_t == "json" else ptr__.post(url=url, data=data)
+        return ptr__.delete(url=url, json=data) if data_t == "json" else ptr__.delete(url=url, data=data)
     elif type is PUT:
-        return ptr__.post(url=url, json=data) if data_t == "json" else ptr__.post(url=url, data=data)
+        return ptr__.put(url=url, json=data) if data_t == "json" else ptr__.put(url=url, data=data)
     else:
         raise
 
