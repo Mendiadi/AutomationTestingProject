@@ -7,4 +7,8 @@ class BaseAPI:
         self._headers = headers
         self._session = session
 
+    def as_dict(self,code, msg):
+        return {"code": code, "msg": msg}
+
+
 

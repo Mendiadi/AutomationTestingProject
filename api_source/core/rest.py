@@ -89,7 +89,7 @@ DATA = "data"
 # functions starts here:
 
 def get_session(
-        headers: str = ""
+        headers: [] = ""
 ) -> requests.Session:
     """
         Return new session object
@@ -186,7 +186,7 @@ def request(
     def decorate(func, **kwargs) -> []:
         def wrapper(self, *args, **kwargs) -> []:
             data, param_, url_ = parse(url, kwargs, param, self)
-            response = get_response(type_, self._session, url_, data, data_t)
+            response = get_response(type_, self._session,f"{url_}/{param_}", data, data_t)
             return func(self, response=response)
 
         return wrapper
@@ -258,5 +258,3 @@ def put(
     return request(Req.PUT, url, param, data_t)
 
 
-def as_dict(code, msg):
-    return {"code": code, "msg": msg}
