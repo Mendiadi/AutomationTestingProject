@@ -55,7 +55,8 @@
 
     after im showed you how to use it and example also
     you can simply try and use it its very cool decorators.
-
+    if u get issues with the json= param or data= param u can easy config it
+    and change it or add more parameter that say json= or data= depend on your needs
     more will come out soon, adi.
 """
 
