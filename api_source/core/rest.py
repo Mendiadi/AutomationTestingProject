@@ -144,8 +144,10 @@ def get_response(
     :return: response object
     :rtype: requests.Response
     """
-    return parse_method(type_, ptr__)(url=url, json=data) if \
-        data_t == "json" else parse_method(type_, ptr__)(url=url, data=data)
+    data_temp = json_temp = None
+    if data_t == JSON: json_temp = data
+    else: data_temp = data
+    return parse_method(type_, ptr__)(url=url, json=json_temp, data=data_temp)
 
 
 def parse(
