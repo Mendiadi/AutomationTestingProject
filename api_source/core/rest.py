@@ -66,65 +66,193 @@
 """
 
 import requests
-
-GET = "GET"
-POST = "POST"
-PUT = "PUT"
-DELETE = "DELETE"
+import enum
 
 
-def get_session(headers="") -> requests.Session:
+class Req(enum.Enum):
+    """
+        Enum class to store REST operations
+
+    """
+    GET = "GET"
+    POST = "POST"
+    PUT = "PUT"
+    DELETE = "DELETE"
+
+# Define constant global variables
+
+JSON = "json"
+DATA = "data"
+
+# functions starts here:
+
+def get_session(
+        headers:str=""
+        ) -> requests.Session:
+    """
+        Return new session object
+    :param headers: default nothing | the headers to current session
+    :return: new session with the headers arguments
+    :rtype: requests.Session
+    """
     session__ = requests.session()
     session__.headers.update(headers)
     return session__
 
 
-def get_response(type, ptr__, url, data, data_t):
-    if type is POST:
-        return ptr__.post(url=url, json=data) if data_t == "json" else ptr__.post(url=url, data=data)
-    elif type is GET:
-        return ptr__.get(url=url, json=data) if data_t == "json" else ptr__.get(url=url, data=data)
-    elif type is DELETE:
-        return ptr__.delete(url=url, json=data) if data_t == "json" else ptr__.delete(url=url, data=data)
-    elif type is PUT:
-        return ptr__.put(url=url, json=data) if data_t == "json" else ptr__.put(url=url, data=data)
+def parse_method(
+        type_: Req,
+        ptr__:requests.Session
+        ) -> []:
+    """
+        take type and pointer to obj
+        and return the function its related
+    :param type_: type of request
+    :param ptr__: pointer to object
+    :return: function
+    :rtype: function
+    """
+    if type_ is Req.POST:
+        return ptr__.post
+    elif type_ is Req.GET:
+        return ptr__.get
+    elif type_ is Req.DELETE:
+        return ptr__.delete
+    elif type_ is Req.PUT:
+        return ptr__.put
     else:
         raise
 
 
-def parse(url, kw, param, self):
+def get_response(
+        type_:Req,
+        ptr__:requests.Session,
+        url:str,
+        data:[],
+        data_t:str
+        ) -> requests.Response:
+    """
+        get the response from request session
+    :param type_: type of requests see Req class
+    :param ptr__: pointer to object->session
+    :param url: link to send request
+    :param data: data to send with request
+    :param data_t: data type json or data
+    :return: response object
+    :rtype: requests.Response
+    """
+    return parse_method(type_, ptr__)(url=url, json=data) if \
+        data_t == "json" else parse_method(type_, ptr__)(url=url, data=data)
+
+
+def parse(
+        url: str,
+        kw : dict,
+        param: str,
+        self: []
+        ) -> tuple:
+    """
+    get all data from the decorator and configure
+    how its need to be sent to request
+    :rtype:tuple
+    """
     data = kw['data'] if "data" in kw else None
     param_ = kw[param] if param else ""
     url_ = self._base_url + url if url else self._base_url
     return data, param_, url_
 
 
-def request(type_, url=None, param=None, data_t="data"):
-    def decorate(func, **kwargs):
-        def wrapper(self, *args, **kwargs):
+def request(
+        type_:Req,
+        url:str=None,
+        param:str=None,
+        data_t:str="data"
+        ) -> []:
+    """
+    Decorator with two nasted function to crate the magic function!
+    the first function initial the second with same args->
+    the second initial the third with same args as well->
+    the third runs the first logic-> parse all data params and finally
+    crate a request-> the response will send as argument to user defined function
+    that use this decorator properly-> and then returns user func-> then
+    return second and after all of that circle the fist will return
+    :param type_: type of requests see Req class
+    :param ptr__: pointer to object->session
+    :param url: link to send request
+    :param data: data to send with request
+    :param data_t: data type json or data
+    """
+    def decorate(func, **kwargs) -> []:
+        def wrapper(self, *args, **kwargs) -> []:
             data, param_, url_ = parse(url, kwargs, param, self)
             response = get_response(type_, self._session, url_, data, data_t)
             return func(self, response=response)
-
         return wrapper
-
     return decorate
 
 
-def get(url=None, param=None, data_t="data"):
-    return request(GET, url, param, data_t)
+def get(
+        url:str=None,
+        param:str=None,
+        data_t:str="data"
+        ):
+    """
+    Create GET request and returns the response
+    :param url: url or part of it
+    :param param: the user defined parameter name
+    :param data_t: type of data default is "data" you can pass "json" too
+    :return: response with fun that use this decorator
+    :rtype: Any
+    """
+    return request(Req.GET, url, param, data_t)
 
 
-def delete(url=None, param=None, data_t="data"):
-    return request(DELETE, url, param, data_t)
+def delete(
+        url:str=None,
+        param:str=None,
+        data_t:str="data"
+           ):
+    """
+        Create DELETE request and returns the response
+        :param url: url or part of it
+        :param param: the user defined parameter name
+        :param data_t: type of data default is "data" you can pass "json" too
+        :return: response with fun that use this decorator
+        :rtype: Any
+        """
+    return request(Req.DELETE, url, param, data_t)
 
 
-def post(url=None, param=None, data_t="data"):
-    return request(POST, url, param, data_t)
+def post(
+        url:str=None,
+        param:str=None,
+        data_t:str="data"
+         ):
+    """
+        Create POST request and returns the response
+        :param url: url or part of it
+        :param param: the user defined parameter name
+        :param data_t: type of data default is "data" you can pass "json" too
+        :return: response with fun that use this decorator
+        :rtype: Any
+    """
+    return request(Req.POST, url, param, data_t)
 
 
-def put(url=None, param=None, data_t="data"):
-    return request(PUT, url, param, data_t)
+def put(
+        url:str=None,
+        param:str=None,
+        data_t:str="data"
+        ):
+    """
+        Create PUT request and returns the response
+        :param url: url or part of it
+        :param param: the user defined parameter name
+        :param data_t: type of data default is "data" you can pass "json" too
+        :return: response with fun that use this decorator
+        :rtype: Any
+    """
+    return request(Req.PUT, url, param, data_t)
 
 
 def as_dict(code, msg):
