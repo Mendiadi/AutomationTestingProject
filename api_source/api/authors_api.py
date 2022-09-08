@@ -5,9 +5,10 @@ from api_source.api.base_api import BaseAPI
 from api_source.core.constant import api_links
 from api_source.models.author import Author
 
+
 class AuthorsApi(BaseAPI):
-    def __init__(self, url: str, headers,session):
-        super().__init__(url, headers,session)
+    def __init__(self, url: str, session):
+        super().__init__(url, session)
 
     @rest.post(data_t=rest.JSON)
     def post_authors(self, response):
@@ -25,5 +26,5 @@ class AuthorsApi(BaseAPI):
         return self.as_dict(response.status_code, response.text)
 
     @rest.delete(param="id")
-    def delete_author(self,response):
+    def delete_author(self, response):
         return self.as_dict(response.status_code, response.text)
