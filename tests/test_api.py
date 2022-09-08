@@ -1,4 +1,4 @@
-from api_source.api.book_api import BookApi
+from api_source.api.account_api import AccountApi
 import pytest
 import logging
 import random
@@ -7,10 +7,10 @@ from api_source.models.api_user_dto import ApiUserDto
 from commons.utils import json_read
 from api_source.core.rest import get_session
 from api_source.api.authors_api import Authors
-
+from api_source.core.constant import URL
 LOGGER = logging.getLogger(__name__)
 
-URL = 'http://localhost:7017/api/'
+
 HEADERS = {'accept': 'application/json'}
 
 
@@ -39,8 +39,9 @@ def generate_new_user():
 
 
 @pytest.fixture(scope="session")
-def get_book_api(generate_token) -> BookApi:
-    return BookApi(URL, HEADERS, generate_token)
+def get_book_api(generate_token) -> AccountApi:
+    url =  URL + '/api/Account'
+    return AccountApi(url, HEADERS, generate_token)
 
 
 @pytest.fixture(scope="session")
@@ -51,7 +52,8 @@ def fix_user():
 
 @pytest.fixture(scope="session")
 def authors_api(generate_token):
-    return Authors(URL, HEADERS, generate_token)
+    url = URL + '/api/Authors'
+    return Authors(url , HEADERS, generate_token)
 
 
 #############################################

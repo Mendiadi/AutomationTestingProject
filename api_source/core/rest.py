@@ -1,11 +1,28 @@
-import json
 import requests
+
+GET = "GET"
+POST = "POST"
+PUT = "PUT"
+DELETE = "DELETE"
 
 
 def get_session(headers="") -> requests.Session:
     session__ = requests.session()
     session__.headers.update(headers)
     return session__
+
+
+def get_response(type, ptr__, url, data):
+    if type is POST:
+        return ptr__.post(url=url, json=data)
+    elif type is GET:
+        return ptr__.get(url=url, data=data)
+    elif type is DELETE:
+        return ptr__.delet(url=url, data=data)
+    elif type is PUT:
+        return ptr__.put(url=url, data=data)
+    else:
+        raise
 
 
 def parse(url, kw, param, self):
@@ -15,44 +32,32 @@ def parse(url, kw, param, self):
     return data, param_, url_
 
 
-def get(url=None, param=None):
+def request(type_, url=None, param=None):
     def decorate(func, **kwargs):
         def wrapper(self, *args, **kwargs):
             data, param_, url_ = parse(url, kwargs, param, self)
-            response = self._session.get(url=url_ + param_, data=data)
+            response = get_response(type_, self._session, url_, data)
             return func(self, response=response)
+
         return wrapper
+
     return decorate
+
+
+def get(url=None, param=None):
+    return request(GET, url, param)
 
 
 def delete(url=None, param=None):
-    def decorate(func, **kwargs):
-        def wrapper(self, *args, **kwargs):
-            data, param_, url_ = parse(url, kwargs, param, self)
-            response = self._session.delete(url=url_ + param_, data=data)
-            return func(self, response=response)
-        return wrapper
-    return decorate
+    return request(DELETE, url, param)
 
 
 def post(url=None, param=None):
-    def decorate(func, **kwargs):
-        def wrapper(self, *args, **kwargs):
-            data, param_, url_ = parse(url, kwargs, param, self)
-            response = self._session.post(url=url_ + param_, json=data)
-            return func(self, response=response)
-        return wrapper
-    return decorate
+    return request(POST, url, param)
 
 
 def put(url=None, param=None):
-    def decorate(func, **kwargs):
-        def wrapper(self, *args, **kwargs):
-            data, param_, url_ = parse(url, kwargs, param, self)
-            response = self._session.put(url=url_ + param_, data=data)
-            return func(self, response=response)
-        return wrapper
-    return decorate
+    return request(PUT, url, param)
 
 
 def as_dict(code, msg):

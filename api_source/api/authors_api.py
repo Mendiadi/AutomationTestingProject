@@ -9,6 +9,6 @@ class Authors(BaseAPI):
     def __init__(self, url: str, headers,session):
         super().__init__(url, headers,session)
 
-    @rest.post(url='Authors')
+    @rest.post()
     def post_au(self, response):
         return rest.as_dict(response.status_code, response.text)

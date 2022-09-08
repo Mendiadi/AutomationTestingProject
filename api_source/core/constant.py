@@ -1,8 +1,8 @@
 
 
-
+URL = 'http://localhost:7017'
 api_links = {
-    "register":"Account/register",
-    "login":'Account/login',
-    "token":'Account/refreshtoken'
+    "register":"/register",
+    "login":'/login',
+    "token":'/refreshtoken'
 }

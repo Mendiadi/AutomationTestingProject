@@ -5,7 +5,7 @@ from api_source.core.constant import api_links
 
 
 
-class BookApi(BaseAPI):
+class AccountApi(BaseAPI):
 
     def __init__(self, url: str, headers,session):
         super().__init__(url, headers,session)
