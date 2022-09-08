@@ -64,6 +64,7 @@
 
     more will come out soon, adi.
 """
+# implement code start:
 
 import requests
 import enum
@@ -161,7 +162,7 @@ def parse(
     data = kw['data'] if "data" in kw else None
     param_ = kw[param] if param else ""
     url_ = self._base_url + url if url else self._base_url
-    return data, param_, url_
+    return data, f"{url_}/{param_}"
 
 
 def request(
@@ -185,12 +186,10 @@ def request(
 
     def decorate(func, **kwargs) -> []:
         def wrapper(self, *args, **kwargs) -> []:
-            data, param_, url_ = parse(url, kwargs, param, self)
-            response = get_response(type_, self._session,f"{url_}/{param_}", data, data_t)
+            data, url_ = parse(url, kwargs, param, self)
+            response = get_response(type_, self._session, url_, data, data_t)
             return func(self, response=response)
-
         return wrapper
-
     return decorate
 
 
@@ -198,7 +197,7 @@ def get(
         url: str = None,
         param: str = None,
         data_t: str = "data"
-):
+        ):
     """
     Create GET request and returns the response
     :param url: url or part of it
@@ -214,7 +213,7 @@ def delete(
         url: str = None,
         param: str = None,
         data_t: str = "data"
-):
+        ):
     """
         Create DELETE request and returns the response
         :param url: url or part of it
@@ -230,7 +229,7 @@ def post(
         url: str = None,
         param: str = None,
         data_t: str = "data"
-):
+        ):
     """
         Create POST request and returns the response
         :param url: url or part of it
@@ -246,7 +245,7 @@ def put(
         url: str = None,
         param: str = None,
         data_t: str = "data"
-):
+        ):
     """
         Create PUT request and returns the response
         :param url: url or part of it
@@ -256,5 +255,3 @@ def put(
         :rtype: Any
     """
     return request(Req.PUT, url, param, data_t)
-
-

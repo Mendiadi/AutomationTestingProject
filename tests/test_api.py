@@ -8,9 +8,8 @@ from commons.utils import json_read
 from api_source.core.rest import get_session
 from api_source.api.authors_api import AuthorsApi
 from api_source.core.constant import URL
-from api_source.models.author import Author
-LOGGER = logging.getLogger(__name__)
 
+LOGGER = logging.getLogger(__name__)
 
 HEADERS = {'accept': 'application/json'}
 
@@ -41,7 +40,7 @@ def generate_new_user():
 
 @pytest.fixture(scope="session")
 def get_book_api(generate_token) -> AccountApi:
-    url =  URL + '/api/Account'
+    url = URL + '/api/Account'
     return AccountApi(url, HEADERS, generate_token)
 
 
@@ -85,23 +84,25 @@ def test_login(get_book_api, fix_user):
 
 
 def test_post_authors(authors_api):
-    author = authors_api.post_authors(data={"name": "adi","homeLatitude": 0,"homeLongitude": 0})
+    author = authors_api.post_authors(data={"name": "adi", "homeLatitude": 0, "homeLongitude": 0})
     LOGGER.info(author)
     authors = authors_api.get_authors()
     assert author in authors
     authors_api.delete_author(id=author.id)
 
+
 def test_delete_author(authors_api):
     api = authors_api
-    author = api.post_authors(data={"name": "test","homeLatitude": 0,"homeLongitude": 0})
+    author = api.post_authors(data={"name": "test", "homeLatitude": 0, "homeLongitude": 0})
     res = api.delete_author(id=author.id)
     LOGGER.info(res)
     authors = api.get_authors()
     assert author not in authors
 
+
 def test_get_authors(authors_api):
     api = authors_api
-    author = api.post_authors(data={"name": "david","homeLatitude": 0,"homeLongitude": 0})
+    author = api.post_authors(data={"name": "david", "homeLatitude": 0, "homeLongitude": 0})
     authors = api.get_authors()
     LOGGER.info(authors)
     assert author in authors
@@ -111,10 +112,7 @@ def test_get_authors(authors_api):
     assert author not in authors
 
 
-
-
 def test_refresh_token(get_book_api, fix_user):
     api = get_book_api
     res = api.refresh_token(data=fix_user.to_json())
     LOGGER.info(res)
-
