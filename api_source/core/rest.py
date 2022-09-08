@@ -53,10 +53,15 @@
 
                 # as you can see you can always send or ignore and then data will be None
 
+    (5) you can choose if you send data by "data=" or "json=" using the data_t arg:
+    example (5):
+            @rest.post(data_t="json") # for json, its will be default "data" if not sending anything
+            def post_user_id(self,response):
+                return response # to return the result or return any manipulation
+
     after im showed you how to use it and example also
     you can simply try and use it its very cool decorators.
-    if u get issues with the json= param or data= param u can easy config it
-    and change it or add more parameter that say json= or data= depend on your needs
+
     more will come out soon, adi.
 """
 
@@ -74,15 +79,15 @@ def get_session(headers="") -> requests.Session:
     return session__
 
 
-def get_response(type, ptr__, url, data):
+def get_response(type, ptr__, url, data, data_t):
     if type is POST:
-        return ptr__.post(url=url, json=data)
+        return ptr__.post(url=url, json=data) if data_t == "json" else ptr__.post(url=url, data=data)
     elif type is GET:
-        return ptr__.get(url=url, data=data)
+        return ptr__.post(url=url, json=data) if data_t == "json" else ptr__.post(url=url, data=data)
     elif type is DELETE:
-        return ptr__.delet(url=url, data=data)
+        return ptr__.post(url=url, json=data) if data_t == "json" else ptr__.post(url=url, data=data)
     elif type is PUT:
-        return ptr__.put(url=url, data=data)
+        return ptr__.post(url=url, json=data) if data_t == "json" else ptr__.post(url=url, data=data)
     else:
         raise
 
@@ -94,11 +99,11 @@ def parse(url, kw, param, self):
     return data, param_, url_
 
 
-def request(type_, url=None, param=None):
+def request(type_, url=None, param=None, data_t="data"):
     def decorate(func, **kwargs):
         def wrapper(self, *args, **kwargs):
             data, param_, url_ = parse(url, kwargs, param, self)
-            response = get_response(type_, self._session, url_, data)
+            response = get_response(type_, self._session, url_, data, data_t)
             return func(self, response=response)
 
         return wrapper
@@ -106,20 +111,20 @@ def request(type_, url=None, param=None):
     return decorate
 
 
-def get(url=None, param=None):
-    return request(GET, url, param)
+def get(url=None, param=None, data_t="data"):
+    return request(GET, url, param, data_t)
 
 
-def delete(url=None, param=None):
-    return request(DELETE, url, param)
+def delete(url=None, param=None, data_t="data"):
+    return request(DELETE, url, param, data_t)
 
 
-def post(url=None, param=None):
-    return request(POST, url, param)
+def post(url=None, param=None, data_t="data"):
+    return request(POST, url, param, data_t)
 
 
-def put(url=None, param=None):
-    return request(PUT, url, param)
+def put(url=None, param=None, data_t="data"):
+    return request(PUT, url, param, data_t)
 
 
 def as_dict(code, msg):

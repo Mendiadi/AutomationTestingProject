@@ -10,17 +10,17 @@ class AccountApi(BaseAPI):
     def __init__(self, url: str, headers,session):
         super().__init__(url, headers,session)
 
-    @rest.post(url=api_links["register"])
+    @rest.post(url=api_links["register"],data_t="json")
     def register(self, response):
         return rest.as_dict(response.status_code, response.text)
 
-    @rest.post(url=api_links['login'])
+    @rest.post(url=api_links['login'],data_t="json")
     def login(self, response) -> AuthResponseDto:
         if response.ok:
             return AuthResponseDto(**response.json())
         return rest.as_dict(response.status_code, response.text)
 
-    @rest.post(url=api_links['token'])
+    @rest.post(url=api_links['token'],data_t="json")
     def refresh_token(self, response):
         if response.ok:
             return response.text
