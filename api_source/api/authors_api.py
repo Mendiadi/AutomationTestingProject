@@ -1,8 +1,5 @@
-from api_source.api.base_api import BaseAPI
 from api_source.core import rest
-from api_source.models.auth_response_dto import AuthResponseDto
 from api_source.api.base_api import BaseAPI
-from api_source.core.constant import api_links
 from api_source.models.author import Author
 
 

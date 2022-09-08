@@ -12,16 +12,20 @@ from api_source.core.constant import URL
 LOGGER = logging.getLogger(__name__)
 
 
+LOGGER.info("Starting executing API tests")
+
+
 @pytest.fixture(scope="session")
-def generate_token():
-    user = {
-        "email": "adi@sela.co.il",
-        "password": "string11",
-        "firstName": "adi",
-        "lastName": "mendel"
-    }
+def fix_user():
+    user = utils.json_read(r"data_api.json")
+    return ApiUserDto(**user['main_user'])
+
+
+@pytest.fixture(scope="session")
+def generate_token(fix_user):
+    user_dict = fix_user.to_json()
     new_session = rest.get_session()
-    res = new_session.post(url='http://localhost:7017/api/Account/login', json=user)
+    res = new_session.post(url='http://localhost:7017/api/Account/login', json=user_dict)
     token = res.json()['token']
     headers = {'Authorization': f'Bearer {token}'}
     new_session.headers.update(headers)
@@ -42,12 +46,6 @@ def get_book_api(generate_token) -> AccountApi:
     url = URL + '/api/Account'
     session = generate_token
     return AccountApi(url, session)
-
-
-@pytest.fixture(scope="session")
-def fix_user():
-    user = utils.json_read(r"data_api.json")
-    return ApiUserDto(**user['main_user'])
 
 
 @pytest.fixture(scope="session")
@@ -98,6 +96,7 @@ def test_delete_author(authors_api):
     res = api.delete_author(id=author.id)
     LOGGER.info(res)
     authors = api.get_authors()
+    LOGGER.info(authors)
     assert author not in authors
 
 
