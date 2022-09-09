@@ -73,7 +73,7 @@ def test_register(get_account_api, generate_new_user):
 def test_register_exists_user(get_account_api, fix_user):
     api = get_account_api
     user = fix_user
-    res = api.register(data=user.to_json())
+    res = api.register(data=user)
     LOGGER.info(res)
     assert res['code'] == 400 and "DuplicateUserName" in res['msg']
 
@@ -124,5 +124,5 @@ def test_get_authors(authors_api):
 
 def test_refresh_token(get_account_api, fix_user):
     api = get_account_api
-    res = api.refresh_token(data=fix_user.to_json())
+    res = api.refresh_token(data=fix_user)
     LOGGER.info(res)

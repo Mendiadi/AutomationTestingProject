@@ -70,8 +70,6 @@ import requests
 import enum
 
 
-
-
 class Req(enum.Enum):
     """
         Enum class to store REST operations
@@ -129,6 +127,13 @@ def parse_method(
         raise
 
 
+def try_to_json(data):
+    try:
+        return data.to_json()
+    except (AttributeError, TypeError):
+        return data
+
+
 def get_response(
         type_: Req,
         ptr__: requests.Session,
@@ -147,8 +152,10 @@ def get_response(
     :rtype: requests.Response
     """
     data_temp = json_temp = None
-    if data_t == JSON: json_temp = data
-    else: data_temp = data
+    if data_t == JSON:
+        json_temp = data
+    else:
+        data_temp = data
     return parse_method(type_, ptr__)(url=url, json=json_temp, data=data_temp)
 
 
@@ -166,7 +173,7 @@ def parse(
     data = kw['data'] if "data" in kw else None
     param_ = kw[param] if param else ""
     url_ = self._base_url + url + param_ if url else self._base_url
-
+    data = try_to_json(data)
     return data, f"{url_}/{param_}"
 
 
@@ -192,9 +199,12 @@ def request(
     def decorate(func, **kwargs) -> []:
         def wrapper(self, *args, **kwargs) -> []:
             data, url_ = parse(url, kwargs, param, self)
-            self._response =  get_response(type_, self._session, url_, data, data_t)
+
+            self._response = get_response(type_, self._session, url_, data, data_t)
             return func(self)
+
         return wrapper
+
     return decorate
 
 
@@ -202,7 +212,7 @@ def get(
         url: str = None,
         param: str = None,
         data_t: str = "data"
-        ):
+):
     """
     Create GET request and returns the response
     :param url: url or part of it
@@ -218,7 +228,7 @@ def delete(
         url: str = None,
         param: str = None,
         data_t: str = "data"
-        ):
+):
     """
         Create DELETE request and returns the response
         :param url: url or part of it
@@ -234,7 +244,7 @@ def post(
         url: str = None,
         param: str = None,
         data_t: str = "data"
-        ):
+):
     """
         Create POST request and returns the response
         :param url: url or part of it
@@ -250,7 +260,7 @@ def put(
         url: str = None,
         param: str = None,
         data_t: str = "data"
-        ):
+):
     """
         Create PUT request and returns the response
         :param url: url or part of it
