@@ -178,7 +178,7 @@ def request(
     the first function initial the second with same args->
     the second initial the third with same args as well->
     the third runs the first logic-> parse all data params and finally
-    crate a request-> the response will send as argument to user defined function
+    crate a request-> the response will update the user defined func\var
     that use this decorator properly-> and then returns user func-> then
     return second and after all of that circle the fist will return
     :param type_: type of requests see Req class
@@ -189,8 +189,8 @@ def request(
     def decorate(func, **kwargs) -> []:
         def wrapper(self, *args, **kwargs) -> []:
             data, url_ = parse(url, kwargs, param, self)
-            response = get_response(type_, self._session, url_, data, data_t)
-            return func(self, response=response)
+            self.__response =  get_response(type_, self._session, url_, data, data_t)
+            return func(self)
         return wrapper
     return decorate
 

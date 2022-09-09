@@ -42,7 +42,7 @@ def generate_new_user():
 
 
 @pytest.fixture(scope="session")
-def get_book_api(generate_token) -> AccountApi:
+def get_account_api(generate_token) -> AccountApi:
     url = URL + '/api/Account'
     session = generate_token
     return AccountApi(url, session)
@@ -59,31 +59,40 @@ def authors_api(generate_token):
 ###########    INVALID CASES    #############
 #############################################
 
-def test_register(get_book_api, generate_new_user):
-    api = get_book_api
+def test_register(get_account_api, generate_new_user):
+    api = get_account_api
     user = generate_new_user
     LOGGER.info(user)
     res = api.register(data=user)
     LOGGER.info(res)
+
     assert res['code'] == 200
 
 
-def test_register_exists_user(get_book_api, fix_user):
-    api = get_book_api
+def test_register_exists_user(get_account_api, fix_user):
+    api = get_account_api
     user = fix_user
     res = api.register(data=user.to_json())
     LOGGER.info(res)
     assert res['code'] == 400 and "DuplicateUserName" in res['msg']
 
+def test_login_user_not_exists(get_account_api):
+    api = get_account_api
 
-def test_login(get_book_api, fix_user):
-    api = get_book_api
+    res = api.login(data={
+        "email": "",
+        "password": ""
+            })
+    LOGGER.info(res)
+
+def test_login(get_account_api, fix_user):
+    api = get_account_api
     res = api.login(data={"email": "adi@sela.co.il", "password": "string11", })
     LOGGER.info(res.userId)
 
 
 def test_post_authors(authors_api):
-    author = authors_api.post_authors(data={"name": "adi", "homeLatitude": 0, "homeLongitude": 0})
+    author = authors_api.post_authors(data={"name": "test", "homeLatitude": 0, "homeLongitude": 0})
     LOGGER.info(author)
     authors = authors_api.get_authors()
     assert author in authors
@@ -112,7 +121,7 @@ def test_get_authors(authors_api):
     assert author not in authors
 
 
-def test_refresh_token(get_book_api, fix_user):
-    api = get_book_api
+def test_refresh_token(get_account_api, fix_user):
+    api = get_account_api
     res = api.refresh_token(data=fix_user.to_json())
     LOGGER.info(res)
