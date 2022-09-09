@@ -13,16 +13,16 @@ def get_main_page(init_driver):
     del page
 
 
-# def test_page_open(get_main_page):
-#     LOGGER.info(f"executing test case: search valid")
-#     excepted_title = "React App"
-#     LOGGER.info(f"actual: {get_main_page.title} | excepted: {excepted_title}")
-#     assert get_main_page.title == excepted_title
-#
-#
-# def test_login(get_main_page):
-#     LOGGER.info("login valid")
-#     get_main_page.login("adi@walla.c", "1111")
+def test_page_open(get_main_page):
+    LOGGER.info(f"executing test case: search valid")
+    excepted_title = "React App"
+    LOGGER.info(f"actual: {get_main_page.title} | excepted: {excepted_title}")
+    assert get_main_page.title == excepted_title
+
+
+def test_login(get_main_page):
+    LOGGER.info("login valid")
+    get_main_page.login("adi@walla.c", "1111")
 
 
 

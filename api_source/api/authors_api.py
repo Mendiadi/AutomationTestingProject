@@ -9,19 +9,19 @@ class AuthorsApi(BaseAPI):
 
     @rest.post(data_t=rest.JSON)
     def post_authors(self):
-        if self.__response.ok:
-            return Author(**self.__response.json())
-        return self.as_dict(self.__response.status_code, self.__response.text)
+        if self._response.ok:
+            return Author(**self._response.json())
+        return self.as_dict(self._response.status_code, self._response.text)
 
     @rest.get()
     def get_authors(self):
-        if self.__response.ok:
+        if self._response.ok:
             authors_list = []
-            for author in self.__response.json():
+            for author in self._response.json():
                 authors_list.append(Author(**author))
             return authors_list
-        return self.as_dict(self.__response.status_code, self.__response.text)
+        return self.as_dict(self._response.status_code, self._response.text)
 
     @rest.delete(param="id")
     def delete_author(self):
-        return self.as_dict(self.__response.status_code, self.__response.text)
+        return self.as_dict(self._response.status_code, self._response.text)

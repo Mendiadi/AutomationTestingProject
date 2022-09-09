@@ -11,6 +11,4 @@ class ApiUserDto(Model):
     lastName: str
 
 
-s = {"email": "adi@sela.co.il", "password": "string11", "firstName": "adi", "lastName": "mendel"}
-print(s)
-print(ApiUserDto(**s).to_json())
+

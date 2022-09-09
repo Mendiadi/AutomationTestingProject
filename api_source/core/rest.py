@@ -70,6 +70,8 @@ import requests
 import enum
 
 
+
+
 class Req(enum.Enum):
     """
         Enum class to store REST operations
@@ -163,7 +165,8 @@ def parse(
     """
     data = kw['data'] if "data" in kw else None
     param_ = kw[param] if param else ""
-    url_ = self._base_url + url if url else self._base_url
+    url_ = self._base_url + url + param_ if url else self._base_url
+
     return data, f"{url_}/{param_}"
 
 
@@ -189,7 +192,7 @@ def request(
     def decorate(func, **kwargs) -> []:
         def wrapper(self, *args, **kwargs) -> []:
             data, url_ = parse(url, kwargs, param, self)
-            self.__response =  get_response(type_, self._session, url_, data, data_t)
+            self._response =  get_response(type_, self._session, url_, data, data_t)
             return func(self)
         return wrapper
     return decorate

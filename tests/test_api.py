@@ -7,12 +7,13 @@ from api_source.models.api_user_dto import ApiUserDto
 from commons.utils import json_read
 from api_source.core import rest
 from api_source.api.authors_api import AuthorsApi
-from api_source.core.constant import URL
+from api_source.core.constant import *
 
 LOGGER = logging.getLogger(__name__)
 
 
 LOGGER.info("Starting executing API tests")
+
 
 
 @pytest.fixture(scope="session")
@@ -25,7 +26,7 @@ def fix_user():
 def generate_token(fix_user):
     user_dict = fix_user.to_json()
     new_session = rest.get_session()
-    res = new_session.post(url='http://localhost:7017/api/Account/login', json=user_dict)
+    res = new_session.post(url=f'http://localhost:7017/api/Account/login', json=user_dict)
     token = res.json()['token']
     headers = {'Authorization': f'Bearer {token}'}
     new_session.headers.update(headers)
@@ -43,14 +44,14 @@ def generate_new_user():
 
 @pytest.fixture(scope="session")
 def get_account_api(generate_token) -> AccountApi:
-    url = URL + '/api/Account'
+    url =  URL+ACCOUNT_URL
     session = generate_token
     return AccountApi(url, session)
 
 
 @pytest.fixture(scope="session")
 def authors_api(generate_token):
-    url = URL + '/api/Authors'
+    url = URL+AUTHORS_URL
     session = generate_token
     return AuthorsApi(url, session)
 
