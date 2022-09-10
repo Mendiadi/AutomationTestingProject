@@ -3,6 +3,8 @@ import allure
 import pytest
 from ui_source.pages import login_page
 from ui_source.pages import register_page
+from commons.generate_data import RandomData
+
 LOGGER = logging.getLogger(__name__)
 
 LOGGER.info("Starting executing UI tests")
@@ -17,6 +19,7 @@ def get_main_page(init_driver):
 
 @allure.epic("UI tests")
 class TestUI:
+    data = RandomData()
 
     @allure.title("verify open page")
     def test_page_open(self, get_main_page):
@@ -35,4 +38,4 @@ class TestUI:
     @allure.title("verify register")
     def test_register(self, get_main_page):
         register_page = get_main_page.click_register()
-        register_page.register("adad","asdas","asda","asdas")
+        register_page.register(self.data.email(), self.data.password(), self.data.firstname(), self.data.lastname())

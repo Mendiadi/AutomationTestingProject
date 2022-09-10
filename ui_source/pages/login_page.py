@@ -11,12 +11,10 @@ class LoginPage(AutenticationPage):
         "register": (By.XPATH, '//*[@id="root"]/div/button')
     }
 
-    @allure.step("login")
     def login(self, email: str, password: str):
         self.send_email(email)
         self.send_password(password)
         self.on_submit()
-
 
     @allure.step("Click Register")
     def click_register(self):

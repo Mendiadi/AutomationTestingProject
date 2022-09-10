@@ -8,8 +8,12 @@ from commons.utils import json_read
 from api_source.core import rest
 from api_source.api.authors_api import AuthorsApi
 from api_source.core.constant import *
+from commons.generate_data import RandomData
 
 
+@pytest.fixture(scope="session")
+def random_data():
+    return RandomData()
 
 
 @pytest.fixture(scope="session")
@@ -30,12 +34,14 @@ def generate_token(fix_user):
 
 
 @pytest.fixture(scope="session")
-def generate_new_user():
-    key = random.randint(0, 1000)
-    data = json_read("data_api.json")
-    new_user = data['new_user']
-    new_user['email'] = new_user['email'].replace("%", str(key))
-    return new_user
+def generate_new_user(random_data):
+    user = {
+        "email": random_data.email(),
+        "password": random_data.password(),
+        "firstName": random_data.firstname(),
+        "lastName": random_data.lastname()
+    }
+    return user
 
 
 @pytest.fixture(scope="session")
@@ -86,14 +92,12 @@ class TestAPI:
             "password": ""
         })
 
-
     @pytest.mark.smoke
     @allure.feature("Feature: Login")
     @allure.title("Login valid")
     def test_login(self, get_account_api, fix_user):
         api = get_account_api
         res = api.login(data={"email": "adi@sela.co.il", "password": "string11", })
-
 
     @pytest.mark.smoke
     @allure.title("Add author")
@@ -129,4 +133,3 @@ class TestAPI:
     def test_refresh_token(self, get_account_api, fix_user):
         api = get_account_api
         res = api.refresh_token(data=fix_user)
-

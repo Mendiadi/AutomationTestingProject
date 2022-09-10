@@ -5,12 +5,5 @@
         "password": "string11",
         "firstName": "adi",
         "lastName": "mendel"
-    },
-    "new_user":
-    {
-        "email": "adim%@walla.co.il",
-        "password": "string",
-        "firstName": "exm",
-        "lastName": "israeli"
     }
 }
