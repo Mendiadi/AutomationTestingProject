@@ -1,21 +1,13 @@
 import logging
 import allure
-import pytest
-from ui_source.pages import login_page
-from ui_source.pages import register_page
 from commons.generate_data import RandomData
 
 LOGGER = logging.getLogger(__name__)
 
-
-@pytest.fixture
-def get_main_page(init_driver):
-    page = login_page.LoginPage(init_driver)
-    yield page
-    del page
-
-@allure.epic("UI tests")
+@allure.epic("UI Readability")
 class TestReadability:
+
+
     @allure.title("verify buttons readability")
     def test_readability_of_buttons(self, get_main_page):
         submit_btn_text = get_main_page.get_submit_btn_text()
@@ -27,8 +19,7 @@ class TestReadability:
         assert back_to_login_text == "Back To Login"
 
 
-@allure.epic("UI tests")
-@allure.story("Authentication system")
+@allure.epic("UI Authentication system")
 class TestAuthentication:
     data = RandomData()
 
