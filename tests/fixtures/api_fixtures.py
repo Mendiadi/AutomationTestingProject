@@ -6,7 +6,7 @@ from api_source.api.authors_api import AuthorsApi
 from api_source.core.constant import *
 from commons.generate_data import RandomData
 import pytest
-
+from api_source.models.get_author_dto import GetAuthorDto
 @pytest.fixture(scope="session")
 def random_data():
     return RandomData()
@@ -38,7 +38,7 @@ def generate_new_user(random_data):
         "firstName": random_data.firstname(),
         "lastName": random_data.lastname()
     }
-    return user
+    return ApiUserDto(**user)
 
 
 @pytest.fixture(scope="session")
@@ -53,3 +53,8 @@ def authors_api(generate_token):
     url = URL + AUTHORS_URL
     session = generate_token
     return AuthorsApi(url, session)
+
+# @pytest.fixture(scope="session")
+# def get_author_dto_():
+#     dto = {"name":"adi", "homeLatitude": 0, "homeLongitude": 0, "id": author.id}
+#     return GetAuthorDto()

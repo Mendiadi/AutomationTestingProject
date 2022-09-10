@@ -10,7 +10,7 @@ LOGGER = logging.getLogger(__name__)
 class TestReadability:
 
 
-    @allure.title("verify buttons readability")
+    @allure.title("verify login section buttons readability")
     def test_readability_of_buttons(self, get_main_page):
         submit_btn_text = get_main_page.get_submit_btn_text()
         register_btn_text = get_main_page.get_register_btn_text()
@@ -31,6 +31,7 @@ class TestAuthentication:
         excepted_title = "React App"
         LOGGER.info(f"actual: {get_main_page.title} | excepted: {excepted_title}")
         assert get_main_page.title == excepted_title
+
 
     @allure.feature("Feature: Login")
     @allure.title("verify Login")

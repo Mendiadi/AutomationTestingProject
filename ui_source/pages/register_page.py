@@ -1,7 +1,5 @@
 import allure
-
 from ui_source.pages.authorized_pages import AutenticationPage
-
 from selenium.webdriver.common.by import By
 
 

@@ -1,6 +1,7 @@
 from api_source.core import rest
 from api_source.api.base_api import BaseAPI
 from api_source.models.author import Author
+from api_source.models.get_author_dto import GetAuthorDto
 import allure
 
 class AuthorsApi(BaseAPI):
@@ -28,3 +29,16 @@ class AuthorsApi(BaseAPI):
     @rest.delete(param="id")
     def delete_author(self):
         return self.as_dict()
+
+    @rest.get(param="id")
+    def get_author_by_id(self):
+        if self._response.ok:
+            return Author(**self._response.json())
+        return self.as_dict()
+
+    @rest.put(param="id",data_t=rest.JSON)
+    def put_author_by_id(self):
+
+        return self.as_dict()
+
+

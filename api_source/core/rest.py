@@ -203,9 +203,7 @@ def request(
             self._response = get_response(type_, self._session, url_, data, data_t)
             lg.info(f'{func.__name__} -> DATA: {data}\n params: {param} RESPONSE: {self.as_dict()} ')
             return func(self)
-
         return wrapper
-
     return decorate
 
 

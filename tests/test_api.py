@@ -1,6 +1,7 @@
+import logging
+
 import pytest
 import allure
-
 
 
 @allure.epic("API Authentication system")
@@ -104,11 +105,12 @@ class TestAuthors:
 
     @pytest.mark.smoke
     @allure.title("case Add author")
-    def test_post_authors(self, authors_api):
-        author = authors_api.post_authors(data={"name": "test", "homeLatitude": 0, "homeLongitude": 0})
+    def test_post_authors(self, authors_api,random_data):
+        author = authors_api.post_authors(data={"name": random_data.firstname(), "homeLatitude": 0, "homeLongitude": 0})
         authors = authors_api.get_authors()
         assert author in authors
         authors_api.delete_author(id=author.id)
+
 
     @pytest.mark.smoke
     @allure.title("case Delete author")
@@ -130,3 +132,29 @@ class TestAuthors:
         api.delete_author(id=author.id)
         authors = api.get_authors()
         assert author not in authors
+
+    @allure.title("case get by id")
+    def test_author_by_id(self,authors_api,random_data):
+        api = authors_api
+        author = api.post_authors(data={"name": random_data.firstname(), "homeLatitude": 0, "homeLongitude": 0})
+        author2 = api.get_author_by_id(id=author.id)
+        assert author2 == author
+        api.delete_author(id=author.id)
+
+    @allure.title("case put by id")
+    def test_put_author_by_id(self, authors_api):
+        api = authors_api
+        author = api.post_authors(data={"name": "adi", "homeLatitude": 0, "homeLongitude": 0})
+        api.put_author_by_id(data={"name":"eyal", "homeLatitude": 0, "homeLongitude": 0,"id":author.id},id=author.id)
+        assert author.name != "eyal"
+        api.delete_author(id=author.id)
+
+
+    @pytest.skip
+    def test_delete_all_authors(self,authors_api):
+        api = authors_api
+        authors = api.get_authors()
+        for author in authors:
+            if author.id > 3:
+                res = api.delete_author(id=author.id)
+        a = api.get_authors()

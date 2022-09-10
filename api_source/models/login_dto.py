@@ -5,3 +5,5 @@ import dataclasses
 class LoginDto(Model):
     email:str
     password:str
+
+
