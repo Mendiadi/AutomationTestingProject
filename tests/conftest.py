@@ -41,24 +41,35 @@ def init_driver(get_test_data, request):
             page = Firefox(get_test_data.driver_path)
         page.get(get_test_data.url)
         yield Driver.create_driver(get_test_data.lib, page)
+
+        if request.node.rep_call.failed:
+            try:
+                init_driver.script_execute("document.body.bgColor = 'white';")
+                allure.attach(init_driver.get_screenshot(),
+                              name=request.function.__name__,
+                              attachment_type=allure.attachment_type.PNG)
+            except:
+
+                pass
         page.close()
     elif get_test_data.lib == "playwright":
         with sync_playwright() as p:
             if get_test_data.browser == "chrome":
-                page = p.chromium.launch(headless=False)
+                driver = p.chromium.launch(headless=False)
             elif get_test_data.browser == "firefox":
-                page = p.firefox.launch(headless=False)
-            new_page = page.new_page()
-            new_page.goto(get_test_data.url)
-            yield Driver.create_driver(get_test_data.lib, new_page)
-            new_page.close()
-    if request.node.rep_call.failed:
-        try:
-            init_driver.script_execute("document.body.bgColor = 'white';")
-            allure.attach(init_driver.get_screenshot(),
-                          name=request.function.__name__,
-                          attachment_type=allure.attachment_type.PNG)
+                driver = p.firefox.launch(headless=False)
+            page = driver.new_page()
+            page.goto(get_test_data.url)
+            yield Driver.create_driver(get_test_data.lib, page)
+            if request.node.rep_call.failed:
+                try:
+                    init_driver.script_execute("document.body.bgColor = 'white';")
+                    allure.attach(init_driver.get_screenshot(),
+                                  name=request.function.__name__,
+                                  attachment_type=allure.attachment_type.PNG)
+                except:
 
-        except:
+                    pass
+            page.close()
 
-            pass
+

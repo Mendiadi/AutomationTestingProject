@@ -2,7 +2,7 @@ import logging
 import allure
 import pytest
 from ui_source.pages import login_page
-
+from ui_source.pages import register_page
 LOGGER = logging.getLogger(__name__)
 
 LOGGER.info("Starting executing UI tests")
@@ -34,4 +34,5 @@ class TestUI:
     @allure.feature("Feature: Register")
     @allure.title("verify register")
     def test_register(self, get_main_page):
-        get_main_page.click_register()
+        register_page = get_main_page.click_register()
+        register_page.register("adad","asdas","asda","asdas")
