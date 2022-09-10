@@ -1,4 +1,7 @@
 import json
+import allure
+import yaml
+import os
 
 
 def json_read(path) -> json:
@@ -13,7 +16,7 @@ def json_read(path) -> json:
         return json_file
 
 
-import yaml
+
 
 
 def parse_yaml():
@@ -22,3 +25,17 @@ def parse_yaml():
             return yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
+
+
+
+def screenshot_if_failed(driver,request):
+    if request.node.rep_call.failed:
+        try:
+            driver.script_execute("document.body.bgColor = 'white';")
+            allure.attach(driver.get_screenshot(),
+                          name=request.function.__name__,
+                          attachment_type=allure.attachment_type.PNG)
+        except:
+
+            pass
+

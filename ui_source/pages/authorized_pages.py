@@ -23,3 +23,8 @@ class AutenticationPage(BasePage):
     @allure.step("Click Submit")
     def on_submit(self):
         self._driver.locate_element(self._au_locators["submit"]).click()
+
+
+    def get_submit_btn_text(self) -> str:
+        btn = self._driver.locate_element(self._au_locators['submit'])
+        return self._driver.text(btn)

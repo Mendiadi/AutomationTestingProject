@@ -7,8 +7,6 @@ from commons.generate_data import RandomData
 
 LOGGER = logging.getLogger(__name__)
 
-LOGGER.info("Starting executing UI tests")
-
 
 @pytest.fixture
 def get_main_page(init_driver):
@@ -16,9 +14,22 @@ def get_main_page(init_driver):
     yield page
     del page
 
+@allure.epic("UI tests")
+class TestReadability:
+    @allure.title("verify buttons readability")
+    def test_readability_of_buttons(self, get_main_page):
+        submit_btn_text = get_main_page.get_submit_btn_text()
+        register_btn_text = get_main_page.get_register_btn_text()
+        register_page = get_main_page.click_register()
+        back_to_login_text = register_page.get_back_login_btn_text()
+        assert submit_btn_text == "Submit"
+        assert register_btn_text == "Register!"
+        assert back_to_login_text == "Back To Login"
+
 
 @allure.epic("UI tests")
-class TestUI:
+@allure.story("Authentication system")
+class TestAuthentication:
     data = RandomData()
 
     @allure.title("verify open page")
@@ -39,3 +50,5 @@ class TestUI:
     def test_register(self, get_main_page):
         register_page = get_main_page.click_register()
         register_page.register(self.data.email(), self.data.password(), self.data.firstname(), self.data.lastname())
+
+

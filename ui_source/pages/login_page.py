@@ -21,3 +21,7 @@ class LoginPage(AutenticationPage):
         self._driver.locate_element(self._locators['register']).click()
         from ui_source.pages.register_page import RegisterPage
         return RegisterPage(self._driver)
+
+    def get_register_btn_text(self) -> str:
+        btn = self._driver.locate_element(self._locators['register'])
+        return self._driver.text(btn)

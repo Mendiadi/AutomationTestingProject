@@ -3,8 +3,7 @@ from ui_source.core.drivers.driver import Driver
 from playwright.sync_api import sync_playwright
 from selenium.webdriver import Chrome, Firefox
 from ui_source.core.data_load import load_test_data
-import allure
-
+from commons.utils import screenshot_if_failed
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item, call):
@@ -41,16 +40,7 @@ def init_driver(get_test_data, request):
             page = Firefox(get_test_data.driver_path)
         page.get(get_test_data.url)
         yield Driver.create_driver(get_test_data.lib, page)
-
-        if request.node.rep_call.failed:
-            try:
-                init_driver.script_execute("document.body.bgColor = 'white';")
-                allure.attach(init_driver.get_screenshot(),
-                              name=request.function.__name__,
-                              attachment_type=allure.attachment_type.PNG)
-            except:
-
-                pass
+        screenshot_if_failed(page,request)
         page.close()
     elif get_test_data.lib == "playwright":
         with sync_playwright() as p:
@@ -61,15 +51,7 @@ def init_driver(get_test_data, request):
             page = driver.new_page()
             page.goto(get_test_data.url)
             yield Driver.create_driver(get_test_data.lib, page)
-            if request.node.rep_call.failed:
-                try:
-                    init_driver.script_execute("document.body.bgColor = 'white';")
-                    allure.attach(init_driver.get_screenshot(),
-                                  name=request.function.__name__,
-                                  attachment_type=allure.attachment_type.PNG)
-                except:
-
-                    pass
+            screenshot_if_failed(page, request)
             page.close()
 
 

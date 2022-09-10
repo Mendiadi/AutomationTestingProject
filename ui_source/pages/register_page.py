@@ -13,7 +13,7 @@ class RegisterPage(AutenticationPage):
     _locators = {
         "firstname_field": (By.ID, "firstName"),
         "lastname_field": (By.ID, "lastName"),
-        "back_login": (By.ID, '//*[@id="root"]/div/button')
+        "back_login": (By.XPATH, '//*[@id="root"]/div/button')
     }
 
     @allure.step("send firstname")
@@ -32,3 +32,7 @@ class RegisterPage(AutenticationPage):
         self.send_firstname(firstname)
         self.send_lastname(lastname)
         self.on_submit()
+
+    def get_back_login_btn_text(self) -> str:
+        btn = self._driver.locate_element(self._locators["back_login"])
+        return self._driver.text(btn)
