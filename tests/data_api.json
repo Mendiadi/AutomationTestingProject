@@ -5,5 +5,6 @@
         "password": "string11",
         "firstName": "adi",
         "lastName": "mendel"
-    }
+    },
+    "main_user_id": "5d4c3ccf-dca3-420e-be5f-b1bb11efc850"
 }

@@ -19,26 +19,65 @@ class TestAPI:
     @allure.title("Register exists account")
     def test_register_exists_user(self, get_account_api, fix_user):
         api = get_account_api
-        user = fix_user
+        user = fix_user['user']
         res = api.register(data=user)
         assert res['code'] == 400 and "DuplicateUserName" in res['msg']
 
     @pytest.mark.smoke
     @allure.feature("Feature: Login")
     @allure.title("Login user not exists")
-    def test_login_user_not_exists(self, get_account_api):
+    def test_login_user_not_exists(self, get_account_api,random_data):
         api = get_account_api
         res = api.login(data={
-            "email": "",
-            "password": ""
+            "email": random_data.email(),
+            "password": random_data.password()
         })
+        assert res['code'] == 401 and "Unauthorized" in res['msg']
+
+    @pytest.mark.smoke
+    @allure.feature("Feature: Login")
+    @allure.title("Login without email")
+    def test_login_no_email(self, get_account_api,random_data):
+        api = get_account_api
+        res = api.login(data={
+            "password": random_data.password()
+        })
+        assert res['code'] == 400 and "The Email field is required" in res['msg']
+
+    @pytest.mark.smoke
+    @allure.feature("Feature: Login")
+    @allure.title("Login without password")
+    def test_login_no_password(self, get_account_api,random_data):
+        api = get_account_api
+        res = api.login(data={
+            "email": random_data.email()
+        })
+        assert res['code'] == 400 and "The Password field is required" in res['msg']
+
+    @pytest.mark.smoke
+    @pytest.mark.parametrize("password,excepted",
+                             [(("aaa"),("Your password is limited to 4 to 15 characters" ))
+                            ,(("asdfdsasdfdsdfss"),("Your password is limited to 4 to 15 characters"))])
+    @allure.feature("Feature: Login")
+    @allure.title("Login invalid  password")
+    def test_login_invalid_password(self, get_account_api, random_data,excepted,password):
+        api = get_account_api
+        res = api.login(data={
+            "email": random_data.email(),
+            "password": password
+        })
+        assert res['code'] == 400 and excepted in res['msg']
+
 
     @pytest.mark.smoke
     @allure.feature("Feature: Login")
     @allure.title("Login valid")
     def test_login(self, get_account_api, fix_user):
+        login_user = fix_user['user'].convert_to_login_dto_obj()
+        excepted_userid = fix_user['userid']
         api = get_account_api
-        res = api.login(data={"email": "adi@sela.co.il", "password": "string11", })
+        user = api.login(data=login_user)
+        assert user.userId == excepted_userid
 
     @pytest.mark.smoke
     @allure.title("Add author")
@@ -73,4 +112,4 @@ class TestAPI:
     @allure.title("Refresh token")
     def test_refresh_token(self, get_account_api, fix_user):
         api = get_account_api
-        res = api.refresh_token(data=fix_user)
+        res = api.refresh_token(data=fix_user['user'])

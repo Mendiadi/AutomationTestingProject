@@ -1,7 +1,7 @@
 from ui_source.pages.authorized_pages import AutenticationPage
 import allure
 from selenium.webdriver.common.by import By
-
+from ui_source.pages import store_page
 
 class LoginPage(AutenticationPage):
     def __init__(self, driver):
@@ -15,6 +15,7 @@ class LoginPage(AutenticationPage):
         self.send_email(email)
         self.send_password(password)
         self.on_submit()
+        return store_page.StorePage(self._driver)
 
     @allure.step("Click Register")
     def click_register(self):

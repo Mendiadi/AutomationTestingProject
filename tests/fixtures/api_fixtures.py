@@ -15,12 +15,13 @@ def random_data():
 @pytest.fixture(scope="session")
 def fix_user():
     user = utils.json_read(r"data_api.json")
-    return ApiUserDto(**user['main_user'])
+    userid = user['main_user_id']
+    return {"user":ApiUserDto(**user['main_user']),"userid":userid}
 
 
 @pytest.fixture(scope="session")
 def generate_token(fix_user):
-    user_dict = fix_user.to_json()
+    user_dict = fix_user['user'].to_json()
     new_session = rest.get_session()
     res = new_session.post(url=f'http://localhost:7017/api/Account/login', json=user_dict)
     token = res.json()['token']

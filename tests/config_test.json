@@ -1,7 +1,7 @@
 {
   "url": "http://localhost/",
-  "email": "exm1@walla.com",
-  "password": "12345",
+  "email": "adii@sela.co.il",
+  "password": "string11",
   "browser": "chrome",
   "lib": "selenium",
   "driver_path" : "C:\\Program Files\\chromedriver.exe"

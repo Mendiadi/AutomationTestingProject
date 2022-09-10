@@ -22,7 +22,7 @@ class Selenium(Driver):
         try:
             element = driver.find_element(*locator)
         except TimeoutError:
-            element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(self.By(*locator)))
+            element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(*locator))
         return element
 
     def locate_elements(self, locator: tuple[[], str]) -> [WebElement]:
@@ -33,7 +33,7 @@ class Selenium(Driver):
        :rtype: [WebElement]
         """
 
-        elements = WebDriverWait(self._driver, self.wait).until(EC.presence_of_all_elements_located(self.By(*locator)))
+        elements = WebDriverWait(self._driver, self.wait).until(EC.presence_of_all_elements_located(*locator))
         return elements
 
     def locate_frame(self, locator: tuple[[], str]):
@@ -44,7 +44,7 @@ class Selenium(Driver):
         try:
             self._driver.switch_to.frame(locator)
         except Exception:
-            WebDriverWait(self._driver, self.wait).until(EC.frame_to_be_available_and_switch_to_it(self.By(*locator)))
+            WebDriverWait(self._driver, self.wait).until(EC.frame_to_be_available_and_switch_to_it(*locator))
 
     def switch_to_default(self):
         """

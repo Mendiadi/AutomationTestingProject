@@ -1,4 +1,6 @@
 import logging
+import time
+
 import allure
 from commons.generate_data import RandomData
 
@@ -32,9 +34,13 @@ class TestAuthentication:
 
     @allure.feature("Feature: Login")
     @allure.title("verify Login")
-    def test_login(self, get_main_page):
+    def test_login(self, get_main_page,get_test_data):
         LOGGER.info("login valid")
-        get_main_page.login("adi@walla.c", "1111")
+        store_page = get_main_page.login(get_test_data.email, get_test_data.password)
+        time.sleep(5)
+        text = store_page.get_label_h1_text()
+        LOGGER.info(text)
+        assert text == 'Welcome to our store'
 
     @allure.feature("Feature: Register")
     @allure.title("verify register")
