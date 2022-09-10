@@ -2,7 +2,8 @@ import pytest
 import allure
 
 
-@allure.epic("API")
+
+@allure.epic("API Authentication system")
 class TestAPI:
 
     @pytest.mark.smoke
@@ -79,8 +80,30 @@ class TestAPI:
         user = api.login(data=login_user)
         assert user.userId == excepted_userid
 
+
     @pytest.mark.smoke
-    @allure.title("Add author")
+    @allure.title("Refresh token valid")
+    def test_refresh_token(self, get_account_api, fix_user):
+        api = get_account_api
+        user = fix_user['user'].convert_to_login_dto_obj()
+        user_res = api.login(data=user)
+        res = api.refresh_token(data=user_res)
+        assert res['code'] == 200
+        assert res['res'].userId == user_res.userId
+        assert res['res'].token != user_res.token
+
+    @pytest.mark.smoke
+    @allure.title("Refresh token invalid data")
+    def test_refresh_invalid_token(self, get_account_api):
+        api = get_account_api
+        res = api.refresh_token(data="i")
+        assert res['code'] == 400
+
+@allure.epic("Authors testing from api")
+class TestAuthors:
+
+    @pytest.mark.smoke
+    @allure.title("case Add author")
     def test_post_authors(self, authors_api):
         author = authors_api.post_authors(data={"name": "test", "homeLatitude": 0, "homeLongitude": 0})
         authors = authors_api.get_authors()
@@ -88,7 +111,7 @@ class TestAPI:
         authors_api.delete_author(id=author.id)
 
     @pytest.mark.smoke
-    @allure.title("Delete author")
+    @allure.title("case Delete author")
     def test_delete_author(self, authors_api):
         api = authors_api
         author = api.post_authors(data={"name": "test", "homeLatitude": 0, "homeLongitude": 0})
@@ -98,7 +121,7 @@ class TestAPI:
         assert author not in authors
 
     @pytest.mark.smoke
-    @allure.title("Get authors")
+    @allure.title("case Get authors")
     def test_get_authors(self, authors_api):
         api = authors_api
         author = api.post_authors(data={"name": "david", "homeLatitude": 0, "homeLongitude": 0})
@@ -107,9 +130,3 @@ class TestAPI:
         api.delete_author(id=author.id)
         authors = api.get_authors()
         assert author not in authors
-
-    @pytest.mark.smoke
-    @allure.title("Refresh token")
-    def test_refresh_token(self, get_account_api, fix_user):
-        api = get_account_api
-        res = api.refresh_token(data=fix_user['user'])
