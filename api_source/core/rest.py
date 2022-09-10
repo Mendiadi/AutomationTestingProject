@@ -128,10 +128,10 @@ def parse_method(
 
 
 def try_to_json(data):
-    try:
+    from api_source.models.base_model import Model
+    if isinstance(data,Model):
         return data.to_json()
-    except (AttributeError, TypeError):
-        return data
+    return data
 
 
 def get_response(
