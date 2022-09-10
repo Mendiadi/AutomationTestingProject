@@ -1,4 +1,3 @@
-from api_source.core import rest
 
 
 class BaseAPI:
@@ -7,8 +6,8 @@ class BaseAPI:
         self._session = session
         self._response = None
 
-    def as_dict(self,code, msg):
-        return {"code": code, "msg": msg}
+    def as_dict(self):
+        return {"code": self._response.status_code, "msg": self._response.text}
 
 
 

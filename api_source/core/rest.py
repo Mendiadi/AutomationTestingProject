@@ -68,6 +68,7 @@
 
 import requests
 import enum
+import logging as lg
 
 
 class Req(enum.Enum):
@@ -129,7 +130,7 @@ def parse_method(
 
 def try_to_json(data):
     from api_source.models.base_model import Model
-    if isinstance(data,Model):
+    if isinstance(data, Model):
         return data.to_json()
     return data
 
@@ -199,8 +200,8 @@ def request(
     def decorate(func, **kwargs) -> []:
         def wrapper(self, *args, **kwargs) -> []:
             data, url_ = parse(url, kwargs, param, self)
-
             self._response = get_response(type_, self._session, url_, data, data_t)
+            lg.info(f'{func.__name__} -> DATA: {data}\n params: {param} RESPONSE: {self.as_dict()} ')
             return func(self)
 
         return wrapper

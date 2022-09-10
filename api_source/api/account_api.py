@@ -12,19 +12,19 @@ class AccountApi(BaseAPI):
     @allure.step("Register from api")
     @rest.post(url=api_links["register"], data_t=rest.JSON)
     def register(self):
-        return self.as_dict(self._response.status_code, self._response.text)
+        return self.as_dict()
 
     @allure.step("Login from api")
     @rest.post(url=api_links['login'], data_t=rest.JSON)
     def login(self) -> AuthResponseDto:
         if self._response.ok:
             return AuthResponseDto(**self._response.json())
-        return self.as_dict(self._response.status_code, self._response.text)
+        return self.as_dict()
 
     @allure.step("refresh from api")
     @rest.post(url=api_links['token'], data_t=rest.JSON)
     def refresh_token(self):
         if self._response.ok:
             return self._response.text
-        return self.as_dict(self._response.status_code, self._response.text)
+        return self.as_dict()
 

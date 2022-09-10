@@ -12,7 +12,7 @@ class AuthorsApi(BaseAPI):
     def post_authors(self):
         if self._response.ok:
             return Author(**self._response.json())
-        return self.as_dict(self._response.status_code, self._response.text)
+        return self.as_dict()
 
     @allure.step("get authors from api")
     @rest.get()
@@ -22,9 +22,9 @@ class AuthorsApi(BaseAPI):
             for author in self._response.json():
                 authors_list.append(Author(**author))
             return authors_list
-        return self.as_dict(self._response.status_code, self._response.text)
+        return self.as_dict()
 
     @allure.step("delete authors from api")
     @rest.delete(param="id")
     def delete_author(self):
-        return self.as_dict(self._response.status_code, self._response.text)
+        return self.as_dict()
