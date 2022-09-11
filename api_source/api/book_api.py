@@ -1,6 +1,7 @@
 from api_source.api.base_api import BaseAPI
 from api_source.core import rest
 from api_source.models.book import Book
+from api_source.models.book_dto import BookDto
 import allure
 class BookApi(BaseAPI):
     def __init__(self, url: str, session):
@@ -8,10 +9,23 @@ class BookApi(BaseAPI):
 
     @allure.step("get books from api")
     @rest.get()
-    def get_books(self) -> list[Book]:
+    def get_books(self) -> list[BookDto]:
         if self._response.ok:
             books = []
             for book in self._response.json():
-                books.append(book)
+                books.append(BookDto(**book))
             return books
         return self.as_dict()
+
+
+    @rest.post(data_t=rest.JSON)
+    def post_books(self,book) -> Book:
+        with allure.step(f"post book: {book}"):
+            if self._response.ok:
+                return Book(**self._response.json())
+            return self.as_dict(book)
+
+    @rest.delete(param="id")
+    def delete_book(self,id:int):
+        with allure.step(f"delete book: {id}"):
+            return self.as_dict()

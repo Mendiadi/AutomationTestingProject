@@ -1,8 +1,11 @@
+
+
 from api_source.core import rest
 from api_source.api.base_api import BaseAPI
 from api_source.models.author import Author
 from api_source.models.get_author_dto import GetAuthorDto
 import allure
+from api_source.models.book import Book
 
 
 class AuthorsApi(BaseAPI):
@@ -22,8 +25,15 @@ class AuthorsApi(BaseAPI):
         if self._response.ok:
             authors_list = []
             for author in self._response.json():
-                authors_list.append(Author(**author))
-
+                author_obj = Author(**author)
+                authors_list.append(author_obj)
+                if author_obj.books is None:
+                    pass
+                else:
+                    books_ = []
+                    for book in author_obj.books:
+                        books_.append( Book(**book.to_json()))
+                    author_obj.books = books_
             return authors_list
         return self.as_dict()
 

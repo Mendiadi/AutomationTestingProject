@@ -164,9 +164,28 @@ class TestAuthors:
 class TestBook:
 
     @allure.title("get books")
-    def test_get_books(self,book_api):
+    def test_get_books(self,book_api,random_data):
         api = book_api
+        book = random_data.generate_book()
         books = api.get_books()
+
+
+
+
+    @allure.title("case post books")
+    def test_post_book(self,book_api,random_data,authors_api):
+        new_author = random_data.generate_author()
+        author = authors_api.post_authors(new_author)
+        new_book = random_data.generate_book(authorid=author.id)
+        book = book_api.post_books(new_book)
+        books = book_api.get_books()
+        author = authors_api.get_author_by_id(id=author.id)
+        logging.info(f"book - ,{author},{author.books}")
+        assert [book.id == b.id for b in books]
+        assert [book.id == b['id'] for b in author.books]
+        logging.info(f"book - {books},{author},{author.books}")
+        book_api.delete_book(id=book.id)
+        authors_api.delete_author(id=author.id)
 
 
 def test_delete_all_authors(authors_api):
