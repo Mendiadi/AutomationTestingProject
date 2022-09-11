@@ -160,8 +160,6 @@ def get_response(
     return parse_method(type_, ptr__)(url=url, json=json_temp, data=data_temp)
 
 
-
-
 def parse(
         url: str,
         kw: dict,
@@ -177,7 +175,7 @@ def parse(
     param_ = str(kw[param]) if param else ""
     url_ = self._base_url + url + param_ if url else self._base_url
     data = try_to_json(data)
-    return data, url_ if url_.find(param_) > 1 or not url_ else  f"{url_}/{param_}"
+    return data, url_ if url_.find(param_) > 1 or not url_ else f"{url_}/{param_}"
 
 
 def request(
@@ -205,7 +203,9 @@ def request(
             self._response = get_response(type_, self._session, url_, data, data_t)
             lg.info(f'{func.__name__} -> DATA: {data}\n params: {param} RESPONSE: {self.as_dict()} ')
             return func(self)
+
         return wrapper
+
     return decorate
 
 

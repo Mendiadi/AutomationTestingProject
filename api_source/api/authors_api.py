@@ -4,6 +4,7 @@ from api_source.models.author import Author
 from api_source.models.get_author_dto import GetAuthorDto
 import allure
 
+
 class AuthorsApi(BaseAPI):
     def __init__(self, url: str, session):
         super().__init__(url, session)
@@ -36,17 +37,13 @@ class AuthorsApi(BaseAPI):
             return Author(**self._response.json())
         return self.as_dict()
 
-    @rest.put(param="id",data_t=rest.JSON)
+    @rest.put(param="id", data_t=rest.JSON)
     def put_author_by_id(self):
-
         return self.as_dict()
 
-    @rest.get(url='/search/',param='query')
+    @rest.get(url='/search/', param='query')
     def search(self):
         authors = list()
         for author in self._response.json():
             authors.append(Author(**author))
         return authors if len(authors) > 0 else self.as_dict()
-
-
-

@@ -28,7 +28,7 @@ class TestAPI:
     @pytest.mark.smoke
     @allure.feature("Feature: Login")
     @allure.title("Login user not exists")
-    def test_login_user_not_exists(self, get_account_api,random_data):
+    def test_login_user_not_exists(self, get_account_api, random_data):
         api = get_account_api
         res = api.login(data={
             "email": random_data.email(),
@@ -39,7 +39,7 @@ class TestAPI:
     @pytest.mark.smoke
     @allure.feature("Feature: Login")
     @allure.title("Login without email")
-    def test_login_no_email(self, get_account_api,random_data):
+    def test_login_no_email(self, get_account_api, random_data):
         api = get_account_api
         res = api.login(data={
             "password": random_data.password()
@@ -49,7 +49,7 @@ class TestAPI:
     @pytest.mark.smoke
     @allure.feature("Feature: Login")
     @allure.title("Login without password")
-    def test_login_no_password(self, get_account_api,random_data):
+    def test_login_no_password(self, get_account_api, random_data):
         api = get_account_api
         res = api.login(data={
             "email": random_data.email()
@@ -58,18 +58,17 @@ class TestAPI:
 
     @pytest.mark.smoke
     @pytest.mark.parametrize("password,excepted",
-                             [(("aaa"),("Your password is limited to 4 to 15 characters" ))
-                            ,(("asdfdsasdfdsdfss"),("Your password is limited to 4 to 15 characters"))])
+                             [(("aaa"), ("Your password is limited to 4 to 15 characters"))
+                                 , (("asdfdsasdfdsdfss"), ("Your password is limited to 4 to 15 characters"))])
     @allure.feature("Feature: Login")
     @allure.title("Login invalid  password")
-    def test_login_invalid_password(self, get_account_api, random_data,excepted,password):
+    def test_login_invalid_password(self, get_account_api, random_data, excepted, password):
         api = get_account_api
         res = api.login(data={
             "email": random_data.email(),
             "password": password
         })
         assert res['code'] == 400 and excepted in res['msg']
-
 
     @pytest.mark.smoke
     @allure.feature("Feature: Login")
@@ -80,7 +79,6 @@ class TestAPI:
         api = get_account_api
         user = api.login(data=login_user)
         assert user.userId == excepted_userid
-
 
     @pytest.mark.smoke
     @allure.title("Refresh token valid")
@@ -100,21 +98,21 @@ class TestAPI:
         res = api.refresh_token(data="i")
         assert res['code'] == 400
 
+
 @allure.epic("Authors testing from api")
 class TestAuthors:
 
     @pytest.mark.smoke
     @allure.title("case Add author")
-    def test_post_authors(self, authors_api,create_author_dto_):
+    def test_post_authors(self, authors_api, create_author_dto_):
         author = authors_api.post_authors(data=create_author_dto_)
         authors = authors_api.get_authors()
         assert author in authors
         authors_api.delete_author(id=author.id)
 
-
     @pytest.mark.smoke
     @allure.title("case Delete author")
-    def test_delete_author(self, authors_api,create_author_dto_):
+    def test_delete_author(self, authors_api, create_author_dto_):
         api = authors_api
         author = api.post_authors(data=create_author_dto_)
         res = api.delete_author(id=author.id)
@@ -124,7 +122,7 @@ class TestAuthors:
 
     @pytest.mark.smoke
     @allure.title("case Get authors")
-    def test_get_authors(self, authors_api,create_author_dto_):
+    def test_get_authors(self, authors_api, create_author_dto_):
         api = authors_api
         author = api.post_authors(data=create_author_dto_)
         authors = api.get_authors()
@@ -134,7 +132,7 @@ class TestAuthors:
         assert author not in authors
 
     @allure.title("case get by id")
-    def test_author_by_id(self,authors_api,create_author_dto_):
+    def test_author_by_id(self, authors_api, create_author_dto_):
         api = authors_api
         author = api.post_authors(data=create_author_dto_)
         author2 = api.get_author_by_id(id=author.id)
@@ -142,7 +140,7 @@ class TestAuthors:
         api.delete_author(id=author.id)
 
     @allure.title("case put by id")
-    def test_put_author_by_id(self, authors_api,create_author_dto_):
+    def test_put_author_by_id(self, authors_api, create_author_dto_):
         api = authors_api
         author = api.post_authors(data=create_author_dto_)
         author.name = "eyal"
@@ -151,20 +149,16 @@ class TestAuthors:
         assert author.name == "eyal"
         api.delete_author(id=author.id)
 
-
-    @allure.title("search by query and by substring")
-    def test_search(self,authors_api,create_author_dto_):
+    @allure.title("search by query")
+    def test_search(self, authors_api, create_author_dto_):
         api = authors_api
         a = create_author_dto_
         api.post_authors(data=a)
         authors = api.search(query="moshe")
-        assert [a.name == "moshe" or a.name.find("moshe") >= 1 for a in authors]
-
-
+        assert [a.name == "moshe" for a in authors]
 
 
 def test_delete_all_authors(authors_api):
-
     api = authors_api
     authors = api.get_authors()
     if len(authors) < 50:

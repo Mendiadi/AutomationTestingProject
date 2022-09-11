@@ -3,6 +3,7 @@ import allure
 from selenium.webdriver.common.by import By
 from ui_source.pages import store_page
 
+
 class LoginPage(AutenticationPage):
     def __init__(self, driver):
         super().__init__(driver)
