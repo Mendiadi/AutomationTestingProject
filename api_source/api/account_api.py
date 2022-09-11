@@ -25,6 +25,7 @@ class AccountApi(BaseAPI):
     @allure.step("refresh from api")
     @rest.post(url=api_links['token'], data_t=rest.JSON)
     def refresh_token(self):
+
         if self._response.ok:
             return {'res': AuthResponseDto(**self._response.json()), 'code': self._response.status_code}
         return self.as_dict()

@@ -10,9 +10,9 @@ class TestAPI:
     @pytest.mark.smoke
     @allure.feature("Feature: Register")
     @allure.title("test register valid")
-    def test_register(self, get_account_api, generate_new_user):
+    def test_register(self, get_account_api, random_data):
         api = get_account_api
-        user = generate_new_user
+        user = random_data.generate_account()
         res = api.register(data=user)
         assert res['code'] == 200
 
@@ -104,17 +104,17 @@ class TestAuthors:
 
     @pytest.mark.smoke
     @allure.title("case Add author")
-    def test_post_authors(self, authors_api, create_author_dto_):
-        author = authors_api.post_authors(data=create_author_dto_)
+    def test_post_authors(self, authors_api, random_data):
+        author = authors_api.post_authors(data=random_data.generate_author())
         authors = authors_api.get_authors()
         assert author in authors
         authors_api.delete_author(id=author.id)
 
     @pytest.mark.smoke
     @allure.title("case Delete author")
-    def test_delete_author(self, authors_api, create_author_dto_):
+    def test_delete_author(self, authors_api, random_data):
         api = authors_api
-        author = api.post_authors(data=create_author_dto_)
+        author = api.post_authors(data=random_data.generate_author())
         res = api.delete_author(id=author.id)
         assert res['code'] is 204
         authors = api.get_authors()
@@ -122,9 +122,9 @@ class TestAuthors:
 
     @pytest.mark.smoke
     @allure.title("case Get authors")
-    def test_get_authors(self, authors_api, create_author_dto_):
+    def test_get_authors(self, authors_api, random_data):
         api = authors_api
-        author = api.post_authors(data=create_author_dto_)
+        author = api.post_authors(data=random_data.generate_author())
         authors = api.get_authors()
         assert author in authors
         api.delete_author(id=author.id)
@@ -132,39 +132,43 @@ class TestAuthors:
         assert author not in authors
 
     @allure.title("case get by id")
-    def test_author_by_id(self, authors_api, create_author_dto_):
+    def test_author_by_id(self, authors_api, random_data):
         api = authors_api
-        author = api.post_authors(data=create_author_dto_)
+        author = api.post_authors(data=random_data.generate_author())
         author2 = api.get_author_by_id(id=author.id)
         assert author2 == author
         api.delete_author(id=author.id)
 
     @allure.title("case put by id")
-    def test_put_author_by_id(self, authors_api, create_author_dto_):
+    def test_put_author_by_id(self, authors_api, random_data):
         api = authors_api
-        author = api.post_authors(data=create_author_dto_)
+        author = api.post_authors(data=random_data.generate_author())
         author.name = "eyal"
         author_obj = GetAuthorDto.create_from_author(author)
         api.put_author_by_id(data=author_obj, id=author.id)
         assert author.name == "eyal"
         api.delete_author(id=author.id)
 
-    @allure.title("search by query")
-    def test_search(self, authors_api, create_author_dto_):
+    @pytest.mark.parametrize("query",[("m"),("at"),("geroge"),("l")])
+    @allure.title("case valid search given true results")
+    def test_search(self, authors_api, query):
         api = authors_api
-        a = create_author_dto_
-        api.post_authors(data=a)
-        authors = api.search(query="moshe")
-        assert [a.name == "moshe" for a in authors]
+        authors_get = api.get_authors()
+        authors = api.search(query=query)
+        if len(authors) > 0:
+            assert [author.name == query or query in author.name for author in authors]
+        else:
+            assert [query not in author.name for author in authors_get]
 
 
 def test_delete_all_authors(authors_api):
-    api = authors_api
-    authors = api.get_authors()
-    if len(authors) < 50:
-        pytest.skip(reason="not too many moshes")
+    with pytest.skip():
+        api = authors_api
+        authors = api.get_authors()
+        if len(authors) < 50:
+            pytest.skip(reason="not too many moshes")
 
-    for author in authors:
-        if author.id > 3:
-            res = api.delete_author(id=author.id)
-    a = api.get_authors()
+        for author in authors:
+            if author.id > 3:
+                res = api.delete_author(id=author.id)
+        a = api.get_authors()

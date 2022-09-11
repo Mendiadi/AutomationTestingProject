@@ -23,23 +23,13 @@ def fix_user():
 @pytest.fixture(scope="session")
 def generate_token(fix_user):
     user_dict = fix_user['user'].to_json()
-    new_session = rest.get_session()
-    res = new_session.post(url=f'http://localhost:7017/api/Account/login', json=user_dict)
-    token = res.json()['token']
-    headers = {'Authorization': f'Bearer {token}'}
-    new_session.headers.update(headers)
-    return new_session
+    with rest.Session() as new_session:
+        res = new_session.post(url=f'http://localhost:7017/api/Account/login', json=user_dict)
+        token = res.json()['token']
+        headers = {'Authorization': f'Bearer {token}'}
+        new_session.headers.update(headers)
+        yield new_session
 
-
-@pytest.fixture(scope="session")
-def generate_new_user(random_data):
-    user = {
-        "email": random_data.email(),
-        "password": random_data.password(),
-        "firstName": random_data.firstname(),
-        "lastName": random_data.lastname()
-    }
-    return ApiUserDto(**user)
 
 
 @pytest.fixture(scope="session")
@@ -55,7 +45,4 @@ def authors_api(generate_token):
     session = generate_token
     return AuthorsApi(url, session)
 
-@pytest.fixture(scope="session")
-def create_author_dto_(random_data):
-    name = random_data.firstname()
-    return CreateAuthorDto(name,2,4)
+

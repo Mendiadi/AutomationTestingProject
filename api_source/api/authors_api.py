@@ -43,7 +43,7 @@ class AuthorsApi(BaseAPI):
 
     @rest.get(url='/search/', param='query')
     def search(self):
-        authors = list()
+        authors = []
         for author in self._response.json():
             authors.append(Author(**author))
-        return authors if len(authors) > 0 else self.as_dict()
+        return authors

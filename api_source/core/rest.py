@@ -90,49 +90,26 @@ DATA = "data"
 
 # functions starts here:
 
-def get_session(
-        headers: [] = ""
-) -> requests.Session:
-    """
-        Return new session object
-    :param headers: default nothing | the headers to current session
-    :return: new session with the headers arguments
-    :rtype: requests.Session
-    """
-    session__ = requests.session()
-    session__.headers.update(headers)
-    return session__
+#context meneger
+class Session:
+    def __init__(self,headers:[] = ""):
+        self._headers = headers
+        self._session = requests.session()
+    def __enter__(self):
+        self._session.headers.update(self._headers)
+        return self._session
 
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        lg.info(f"""session closed.. cookies = {self._session.cookies.items()}
+               auth = {self._session.auth} headers = {self._session.headers.items()}
+                 exe_type: {exc_type},exe_val {exc_val}, exe_tb {exc_tb}""")
+        self._session.close()
 
-def parse_method(
-        type_: Req,
-        ptr__: requests.Session
-) -> []:
-    """
-        take type and pointer to obj
-        and return the function its related
-    :param type_: type of request
-    :param ptr__: pointer to object
-    :return: function
-    :rtype: function
-    """
-    if type_ is Req.POST:
-        return ptr__.post
-    elif type_ is Req.GET:
-        return ptr__.get
-    elif type_ is Req.DELETE:
-        return ptr__.delete
-    elif type_ is Req.PUT:
-        return ptr__.put
-    else:
-        raise
 
 
 def try_to_json(data):
-    from api_source.models.base_model import Model
-    if isinstance(data, Model):
-        return data.to_json()
-    return data
+    try:return data.__dict__
+    except AttributeError: return data
 
 
 def get_response(
@@ -157,7 +134,8 @@ def get_response(
         json_temp = data
     else:
         data_temp = data
-    return parse_method(type_, ptr__)(url=url, json=json_temp, data=data_temp)
+    return ptr__.request(method=type_.value,url=url,json=json_temp,data=data_temp)
+
 
 
 def parse(
