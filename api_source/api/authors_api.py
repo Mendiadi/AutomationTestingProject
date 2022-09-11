@@ -11,10 +11,10 @@ class AuthorsApi(BaseAPI):
 
     @allure.step("post authors from api")
     @rest.post(data_t=rest.JSON)
-    def post_authors(self):
+    def post_authors(self,author:GetAuthorDto):
         if self._response.ok:
             return Author(**self._response.json())
-        return self.as_dict()
+        return self.as_dict(author)
 
     @allure.step("get authors from api")
     @rest.get()
@@ -26,24 +26,29 @@ class AuthorsApi(BaseAPI):
             return authors_list
         return self.as_dict()
 
-    @allure.step("delete authors from api")
+
     @rest.delete(param="id")
-    def delete_author(self):
-        return self.as_dict()
+    def delete_author(self,id:int):
+        with allure.step(f"delete author id={id}"):
+            return self.as_dict(id)
 
     @rest.get(param="id")
-    def get_author_by_id(self):
+    def get_author_by_id(self,id:int):
         if self._response.ok:
             return Author(**self._response.json())
-        return self.as_dict()
+        return self.as_dict(id)
+
 
     @rest.put(param="id", data_t=rest.JSON)
-    def put_author_by_id(self):
-        return self.as_dict()
+    def put_author_by_id(self,author,id:int):
+        with allure.step(f"update author {id}"):
+            return self.as_dict(author)
 
-    @rest.get(url='/search/', param='query')
-    def search(self):
-        authors = []
-        for author in self._response.json():
-            authors.append(Author(**author))
-        return authors
+
+    @rest.get(url='/search/',param="query")
+    def search(self,query:str):
+        with allure.step(f"search for {query}"):
+            authors = []
+            for author in self._response.json():
+                authors.append(Author(**author))
+            return authors

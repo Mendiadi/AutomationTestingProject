@@ -6,8 +6,8 @@ class BaseAPI:
         self._session = session
         self._response = None
 
-    def as_dict(self):
-        return {"code": self._response.status_code, "msg": self._response.text}
+    def as_dict(self,obj=None):
+        return {"code": self._response.status_code, "msg": self._response.text,"obj":obj}
 
 
 

@@ -88,103 +88,112 @@ JSON = "json"
 DATA = "data"
 
 
+class RestError(Exception):
+    def __init__(self, message, session: requests.Session):
+        self.message = f"Session {session.headers['Connection']} stopped reason: {message}"
+        super().__init__(self.message)
+
+
+class ParamNotSigned(RestError):
+    def __init__(self, session, param, arg, func):
+        self.msg = f"""param '{param}' is not signed when first call from '{func.__name__}' with '{arg}'
+                   consider if you use 'param' argument for our decorators you should
+                   call like {func.__name__}({param}={arg})"""
+        super().__init__(self.msg, session)
+
+
 # functions starts here:
 
-#context meneger
-class Session:
-    def __init__(self,headers:[] = ""):
-        self._headers = headers
-        self._session = requests.session()
-    def __enter__(self):
-        self._session.headers.update(self._headers)
-        return self._session
+# context manager
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        lg.info(f"""session closed.. cookies = {self._session.cookies.items()}
-               auth = {self._session.auth} headers = {self._session.headers.items()}
-                 exe_type: {exc_type},exe_val {exc_val}, exe_tb {exc_tb}""")
-        self._session.close()
+class Rest:
 
+    @staticmethod
+    def try_to_json(data):
+        try:
+            return data.__dict__
+        except AttributeError:
+            return data
 
+    @staticmethod
+    def get_response(
+            type_: Req,
+            ptr__: requests.Session,
+            url: str,
+            data: [],
+            data_t: str
+    ) -> requests.Response:
+        """
+            get the response from request session
+        :param type_: type of requests see Req class
+        :param ptr__: pointer to object->session
+        :param url: link to send request
+        :param data: data to send with request
+        :param data_t: data type json or data
+        :return: response object
+        :rtype: requests.Response
+        """
+        data_temp = json_temp = None
+        if data_t == JSON:
+            json_temp = data
+        else:
+            data_temp = data
+        return ptr__.request(method=type_.value, url=url, json=json_temp, data=data_temp)
 
-def try_to_json(data):
-    try:return data.__dict__
-    except AttributeError: return data
+    @staticmethod
+    def parse(
+            url: str,
+            kw: dict,
+            param: str,
+            self: [],
+            args,
+            func
+    ) -> tuple:
+        """
+        get all data from the decorator and configure
+        how its need to be sent to request
+        :rtype:tuple
+        """
+        data = kw['data'] if "data" in kw else None
+        if data is None: data = args[0] if len(args) != 0 else None
+        try:
+            param_ = str(kw[param]) if param else ""
+        except KeyError:
+            raise ParamNotSigned(self._session, param, data, func)
+        url_ = self._base_url + url + param_ if url else self._base_url
+        data = Rest.try_to_json(data)
+        return data, url_ if url_.find(param_) > 1 or not url_ else f"{url_}/{param_}"
 
+    @staticmethod
+    def request(
+            type_: Req,
+            url: str = None,
+            param: str = None,
+            data_t: str = "data"
+    ) -> []:
+        """
+        Decorator with two nasted function to crate the magic function!
+        the first function initial the second with same args->
+        the second initial the third with same args as well->
+        the third runs the first logic-> parse all data params and finally
+        crate a request-> the response will update the user defined func\var
+        that use this decorator properly-> and then returns user func-> then
+        return second and after all of that circle the fist will return
+        :param type_: type of requests see Req class
+        :param url: link to send request
+        :param data_t: data type json or data
+        """
 
-def get_response(
-        type_: Req,
-        ptr__: requests.Session,
-        url: str,
-        data: [],
-        data_t: str
-) -> requests.Response:
-    """
-        get the response from request session
-    :param type_: type of requests see Req class
-    :param ptr__: pointer to object->session
-    :param url: link to send request
-    :param data: data to send with request
-    :param data_t: data type json or data
-    :return: response object
-    :rtype: requests.Response
-    """
-    data_temp = json_temp = None
-    if data_t == JSON:
-        json_temp = data
-    else:
-        data_temp = data
-    return ptr__.request(method=type_.value,url=url,json=json_temp,data=data_temp)
+        def decorate(func, **kwargs) -> []:
+            def wrapper(self, *args, **kwargs) -> []:
+                data, url_ = Rest.parse(url, kwargs, param, self, args, func)
+                self._response = Rest.get_response(type_, self._session, url_, data, data_t)
+                lg.info(f'{func.__name__} -> DATA: {data}\n params: {param} RESPONSE: {self.as_dict()} ')
+                return func(self, *args, **kwargs)
 
+            return wrapper
 
-
-def parse(
-        url: str,
-        kw: dict,
-        param: str,
-        self: []
-) -> tuple:
-    """
-    get all data from the decorator and configure
-    how its need to be sent to request
-    :rtype:tuple
-    """
-    data = kw['data'] if "data" in kw else None
-    param_ = str(kw[param]) if param else ""
-    url_ = self._base_url + url + param_ if url else self._base_url
-    data = try_to_json(data)
-    return data, url_ if url_.find(param_) > 1 or not url_ else f"{url_}/{param_}"
-
-
-def request(
-        type_: Req,
-        url: str = None,
-        param: str = None,
-        data_t: str = "data"
-) -> []:
-    """
-    Decorator with two nasted function to crate the magic function!
-    the first function initial the second with same args->
-    the second initial the third with same args as well->
-    the third runs the first logic-> parse all data params and finally
-    crate a request-> the response will update the user defined func\var
-    that use this decorator properly-> and then returns user func-> then
-    return second and after all of that circle the fist will return
-    :param type_: type of requests see Req class
-    :param url: link to send request
-    :param data_t: data type json or data
-    """
-
-    def decorate(func, **kwargs) -> []:
-        def wrapper(self, *args, **kwargs) -> []:
-            data, url_ = parse(url, kwargs, param, self)
-            self._response = get_response(type_, self._session, url_, data, data_t)
-            lg.info(f'{func.__name__} -> DATA: {data}\n params: {param} RESPONSE: {self.as_dict()} ')
-            return func(self)
-
-        return wrapper
-
-    return decorate
+        return decorate
 
 
 def get(
@@ -200,7 +209,7 @@ def get(
     :return: response with fun that use this decorator
     :rtype: Any
     """
-    return request(Req.GET, url, param, data_t)
+    return Rest.request(Req.GET, url, param, data_t)
 
 
 def delete(
@@ -216,7 +225,7 @@ def delete(
         :return: response with fun that use this decorator
         :rtype: Any
         """
-    return request(Req.DELETE, url, param, data_t)
+    return Rest.request(Req.DELETE, url, param, data_t)
 
 
 def post(
@@ -232,7 +241,7 @@ def post(
         :return: response with fun that use this decorator
         :rtype: Any
     """
-    return request(Req.POST, url, param, data_t)
+    return Rest.request(Req.POST, url, param, data_t)
 
 
 def put(
@@ -248,4 +257,24 @@ def put(
         :return: response with fun that use this decorator
         :rtype: Any
     """
-    return request(Req.PUT, url, param, data_t)
+    return Rest.request(Req.PUT, url, param, data_t)
+
+
+#####################################################
+
+
+class Session:
+    def __init__(self, headers: [] = ""):
+        self._headers = headers
+        self._session = requests.session()
+
+    def __enter__(self):
+        self._session.headers.update(self._headers)
+        lg.info(f"session started... {self._session.headers.items()}")
+        return self._session
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self._session.close()
+        lg.info(f"""session closed.. cookies = {self._session.cookies.items()}
+                       auth = {self._session.auth} headers = {self._session.headers.items()}
+                         exe_type: {exc_type},exe_val {exc_val}, exe_tb {exc_tb}""")

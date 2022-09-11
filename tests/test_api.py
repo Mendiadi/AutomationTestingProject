@@ -13,7 +13,7 @@ class TestAPI:
     def test_register(self, get_account_api, random_data):
         api = get_account_api
         user = random_data.generate_account()
-        res = api.register(data=user)
+        res = api.register(user)
         assert res['code'] == 200
 
     @pytest.mark.smoke
@@ -22,7 +22,7 @@ class TestAPI:
     def test_register_exists_user(self, get_account_api, fix_user):
         api = get_account_api
         user = fix_user['user']
-        res = api.register(data=user)
+        res = api.register(user)
         assert res['code'] == 400 and "DuplicateUserName" in res['msg']
 
     @pytest.mark.smoke
@@ -30,7 +30,7 @@ class TestAPI:
     @allure.title("Login user not exists")
     def test_login_user_not_exists(self, get_account_api, random_data):
         api = get_account_api
-        res = api.login(data={
+        res = api.login({
             "email": random_data.email(),
             "password": random_data.password()
         })
@@ -41,7 +41,7 @@ class TestAPI:
     @allure.title("Login without email")
     def test_login_no_email(self, get_account_api, random_data):
         api = get_account_api
-        res = api.login(data={
+        res = api.login({
             "password": random_data.password()
         })
         assert res['code'] == 400 and "The Email field is required" in res['msg']
@@ -51,7 +51,7 @@ class TestAPI:
     @allure.title("Login without password")
     def test_login_no_password(self, get_account_api, random_data):
         api = get_account_api
-        res = api.login(data={
+        res = api.login({
             "email": random_data.email()
         })
         assert res['code'] == 400 and "The Password field is required" in res['msg']
@@ -64,7 +64,7 @@ class TestAPI:
     @allure.title("Login invalid  password")
     def test_login_invalid_password(self, get_account_api, random_data, excepted, password):
         api = get_account_api
-        res = api.login(data={
+        res = api.login({
             "email": random_data.email(),
             "password": password
         })
@@ -77,7 +77,7 @@ class TestAPI:
         login_user = fix_user['user'].convert_to_login_dto_obj()
         excepted_userid = fix_user['userid']
         api = get_account_api
-        user = api.login(data=login_user)
+        user = api.login(login_user)
         assert user.userId == excepted_userid
 
     @pytest.mark.smoke
@@ -85,8 +85,8 @@ class TestAPI:
     def test_refresh_token(self, get_account_api, fix_user):
         api = get_account_api
         user = fix_user['user'].convert_to_login_dto_obj()
-        user_res = api.login(data=user)
-        res = api.refresh_token(data=user_res)
+        user_res = api.login(user)
+        res = api.refresh_token(user_res)
         assert res['code'] == 200
         assert res['res'].userId == user_res.userId
         assert res['res'].token != user_res.token
@@ -95,7 +95,7 @@ class TestAPI:
     @allure.title("Refresh token invalid data")
     def test_refresh_invalid_token(self, get_account_api):
         api = get_account_api
-        res = api.refresh_token(data="i")
+        res = api.refresh_token("i")
         assert res['code'] == 400
 
 
@@ -105,7 +105,7 @@ class TestAuthors:
     @pytest.mark.smoke
     @allure.title("case Add author")
     def test_post_authors(self, authors_api, random_data):
-        author = authors_api.post_authors(data=random_data.generate_author())
+        author = authors_api.post_authors(random_data.generate_author())
         authors = authors_api.get_authors()
         assert author in authors
         authors_api.delete_author(id=author.id)
@@ -114,7 +114,7 @@ class TestAuthors:
     @allure.title("case Delete author")
     def test_delete_author(self, authors_api, random_data):
         api = authors_api
-        author = api.post_authors(data=random_data.generate_author())
+        author = api.post_authors(random_data.generate_author())
         res = api.delete_author(id=author.id)
         assert res['code'] is 204
         authors = api.get_authors()
@@ -124,7 +124,7 @@ class TestAuthors:
     @allure.title("case Get authors")
     def test_get_authors(self, authors_api, random_data):
         api = authors_api
-        author = api.post_authors(data=random_data.generate_author())
+        author = api.post_authors(random_data.generate_author())
         authors = api.get_authors()
         assert author in authors
         api.delete_author(id=author.id)
@@ -134,7 +134,7 @@ class TestAuthors:
     @allure.title("case get by id")
     def test_author_by_id(self, authors_api, random_data):
         api = authors_api
-        author = api.post_authors(data=random_data.generate_author())
+        author = api.post_authors(random_data.generate_author())
         author2 = api.get_author_by_id(id=author.id)
         assert author2 == author
         api.delete_author(id=author.id)
@@ -142,14 +142,14 @@ class TestAuthors:
     @allure.title("case put by id")
     def test_put_author_by_id(self, authors_api, random_data):
         api = authors_api
-        author = api.post_authors(data=random_data.generate_author())
+        author = api.post_authors(random_data.generate_author())
         author.name = "eyal"
         author_obj = GetAuthorDto.create_from_author(author)
-        api.put_author_by_id(data=author_obj, id=author.id)
+        api.put_author_by_id(author_obj, id=author.id)
         assert author.name == "eyal"
         api.delete_author(id=author.id)
 
-    @pytest.mark.parametrize("query",[("m"),("at"),("geroge"),("l")])
+    @pytest.mark.parametrize("query", [("m"), ("at"), ("geroge"), ("l")])
     @allure.title("case valid search given true results")
     def test_search(self, authors_api, query):
         api = authors_api
