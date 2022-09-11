@@ -3,10 +3,10 @@ from selenium.webdriver.common.by import By
 import allure
 
 
-
 class AutenticationPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
+
     _au_locators = {
         "email_entry": (By.ID, 'email'),
         "password_entry": (By.ID, 'password'),
@@ -26,7 +26,6 @@ class AutenticationPage(BasePage):
     @allure.step("Click Submit")
     def on_submit(self):
         self._driver.locate_element(self._au_locators["submit"]).click()
-
 
     def get_submit_btn_text(self) -> str:
         btn = self._driver.locate_element(self._au_locators['submit'])

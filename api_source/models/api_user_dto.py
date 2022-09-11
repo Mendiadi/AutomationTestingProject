@@ -10,8 +10,5 @@ class ApiUserDto(Model):
     firstName: str
     lastName: str
 
-
     def convert_to_login_dto_obj(self) -> LoginDto:
-        return LoginDto(self.email,self.password)
-
-
+        return LoginDto(self.email, self.password)

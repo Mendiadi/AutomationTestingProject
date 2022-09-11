@@ -15,7 +15,3 @@ def pytest_addoption(parser):
     parser.addoption("--url", action="store", default=data.url)
     parser.addoption("--lib", action="store", default=data.lib)
     parser.addoption("--browser", action="store", default=data.browser)
-
-
-
-

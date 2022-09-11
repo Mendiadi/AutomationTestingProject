@@ -6,9 +6,9 @@ from commons.generate_data import RandomData
 
 LOGGER = logging.getLogger(__name__)
 
+
 @allure.epic("UI Readability")
 class TestReadability:
-
 
     @allure.title("verify login section buttons readability")
     def test_readability_of_buttons(self, get_main_page):
@@ -32,10 +32,9 @@ class TestAuthentication:
         LOGGER.info(f"actual: {get_main_page.title} | excepted: {excepted_title}")
         assert get_main_page.title == excepted_title
 
-
     @allure.feature("Feature: Login")
     @allure.title("verify Login")
-    def test_login(self, get_main_page,get_test_data):
+    def test_login(self, get_main_page, get_test_data):
         LOGGER.info("login valid")
         store_page = get_main_page.login(get_test_data.email, get_test_data.password)
         time.sleep(5)
@@ -48,5 +47,3 @@ class TestAuthentication:
     def test_register(self, get_main_page):
         register_page = get_main_page.click_register()
         register_page.register(self.data.email(), self.data.password(), self.data.firstname(), self.data.lastname())
-
-

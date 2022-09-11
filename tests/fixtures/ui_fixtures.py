@@ -6,6 +6,7 @@ from playwright.sync_api import sync_playwright
 from selenium.webdriver import Chrome, Firefox
 from commons.utils import screenshot_if_failed
 
+
 @pytest.fixture
 def get_test_data(pytestconfig):
     data = load_test_data()
@@ -25,7 +26,7 @@ def init_driver(get_test_data, request):
             page = Firefox(get_test_data.driver_path)
         page.get(get_test_data.url)
         yield Driver.create_driver(get_test_data.lib, page)
-        screenshot_if_failed(page,request)
+        screenshot_if_failed(page, request)
         page.close()
     elif get_test_data.lib == "playwright":
         with sync_playwright() as p:

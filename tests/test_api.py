@@ -58,8 +58,8 @@ class TestAPI:
 
     @pytest.mark.smoke
     @pytest.mark.parametrize("password,excepted",
-                             [(("aaa"), ("Your password is limited to 4 to 15 characters"))
-                                 , (("asdfdsasdfdsdfss"), ("Your password is limited to 4 to 15 characters"))])
+                             [("aaa", "Your password is limited to 4 to 15 characters")
+                                 , ("asdfdsasdfdsdfss", "Your password is limited to 4 to 15 characters")])
     @allure.feature("Feature: Login")
     @allure.title("Login invalid  password")
     def test_login_invalid_password(self, get_account_api, random_data, excepted, password):
@@ -149,7 +149,7 @@ class TestAuthors:
         assert author.name == "eyal"
         api.delete_author(id=author.id)
 
-    @pytest.mark.parametrize("query", [("m"), ("at"), ("geroge"), ("l")])
+    @pytest.mark.parametrize("query", ["m", "at", "geroge", "l"])
     @allure.title("case valid search given true results")
     def test_search(self, authors_api, query):
         api = authors_api
@@ -170,5 +170,4 @@ def test_delete_all_authors(authors_api):
 
         for author in authors:
             if author.id > 3:
-                res = api.delete_author(id=author.id)
-        a = api.get_authors()
+                api.delete_author(id=author.id)

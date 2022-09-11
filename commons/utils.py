@@ -4,8 +4,6 @@ import yaml
 import os
 
 
-
-
 def json_read(path) -> json:
     try:
         with open(path, "r") as json_file:
@@ -18,9 +16,6 @@ def json_read(path) -> json:
         return json_file
 
 
-
-
-
 def parse_yaml():
     with open("./api_manage.yaml", "r") as stream:
         try:
@@ -29,8 +24,7 @@ def parse_yaml():
             print(exc)
 
 
-
-def screenshot_if_failed(driver,request):
+def screenshot_if_failed(driver, request):
     if request.node.rep_call.failed:
         try:
             driver.script_execute("document.body.bgColor = 'white';")
@@ -40,4 +34,3 @@ def screenshot_if_failed(driver,request):
         except:
 
             pass
-
