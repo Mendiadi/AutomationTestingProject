@@ -154,7 +154,7 @@ class Rest:
         how its need to be sent to request
         :rtype:tuple
         """
-        data = kw['data'] if "data" in kw else None
+        data = kw[DATA] if DATA in kw else None
         if data is None: data = args[0] if len(args) != 0 else None
         try:
             param_ = str(kw[param]) if param else ""
@@ -169,7 +169,7 @@ class Rest:
             type_: Req,
             url: str = None,
             param: str = None,
-            data_t: str = "data"
+            data_t: str = DATA
     ) -> []:
         """
         Decorator with two nasted function to crate the magic function!
@@ -199,7 +199,7 @@ class Rest:
 def get(
         url: str = None,
         param: str = None,
-        data_t: str = "data"
+        data_t: str = DATA
 ):
     """
     Create GET request and returns the response
@@ -215,7 +215,7 @@ def get(
 def delete(
         url: str = None,
         param: str = None,
-        data_t: str = "data"
+        data_t: str = DATA
 ):
     """
         Create DELETE request and returns the response
@@ -231,7 +231,7 @@ def delete(
 def post(
         url: str = None,
         param: str = None,
-        data_t: str = "data"
+        data_t: str = DATA
 ):
     """
         Create POST request and returns the response
@@ -247,7 +247,7 @@ def post(
 def put(
         url: str = None,
         param: str = None,
-        data_t: str = "data"
+        data_t: str = DATA
 ):
     """
         Create PUT request and returns the response
