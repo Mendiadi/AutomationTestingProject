@@ -7,6 +7,7 @@ from api_source.core.constant import *
 from commons.generate_data import RandomData
 import pytest
 from api_source.models.get_author_dto import GetAuthorDto
+from api_source.models.create_author_dto import CreateAuthorDto
 @pytest.fixture(scope="session")
 def random_data():
     return RandomData()
@@ -54,7 +55,7 @@ def authors_api(generate_token):
     session = generate_token
     return AuthorsApi(url, session)
 
-# @pytest.fixture(scope="session")
-# def get_author_dto_():
-#     dto = {"name":"adi", "homeLatitude": 0, "homeLongitude": 0, "id": author.id}
-#     return GetAuthorDto()
+@pytest.fixture(scope="session")
+def create_author_dto_(random_data):
+    name = random_data.firstname()
+    return CreateAuthorDto(name,2,4)

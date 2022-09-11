@@ -1,5 +1,5 @@
 import logging
-
+from api_source.models.get_author_dto import GetAuthorDto
 import pytest
 import allure
 
@@ -105,8 +105,8 @@ class TestAuthors:
 
     @pytest.mark.smoke
     @allure.title("case Add author")
-    def test_post_authors(self, authors_api,random_data):
-        author = authors_api.post_authors(data={"name": random_data.firstname(), "homeLatitude": 0, "homeLongitude": 0})
+    def test_post_authors(self, authors_api,create_author_dto_):
+        author = authors_api.post_authors(data=create_author_dto_)
         authors = authors_api.get_authors()
         assert author in authors
         authors_api.delete_author(id=author.id)
@@ -114,9 +114,9 @@ class TestAuthors:
 
     @pytest.mark.smoke
     @allure.title("case Delete author")
-    def test_delete_author(self, authors_api):
+    def test_delete_author(self, authors_api,create_author_dto_):
         api = authors_api
-        author = api.post_authors(data={"name": "test", "homeLatitude": 0, "homeLongitude": 0})
+        author = api.post_authors(data=create_author_dto_)
         res = api.delete_author(id=author.id)
         assert res['code'] is 204
         authors = api.get_authors()
@@ -124,9 +124,9 @@ class TestAuthors:
 
     @pytest.mark.smoke
     @allure.title("case Get authors")
-    def test_get_authors(self, authors_api):
+    def test_get_authors(self, authors_api,create_author_dto_):
         api = authors_api
-        author = api.post_authors(data={"name": "david", "homeLatitude": 0, "homeLongitude": 0})
+        author = api.post_authors(data=create_author_dto_)
         authors = api.get_authors()
         assert author in authors
         api.delete_author(id=author.id)
@@ -134,27 +134,43 @@ class TestAuthors:
         assert author not in authors
 
     @allure.title("case get by id")
-    def test_author_by_id(self,authors_api,random_data):
+    def test_author_by_id(self,authors_api,create_author_dto_):
         api = authors_api
-        author = api.post_authors(data={"name": random_data.firstname(), "homeLatitude": 0, "homeLongitude": 0})
+        author = api.post_authors(data=create_author_dto_)
         author2 = api.get_author_by_id(id=author.id)
         assert author2 == author
         api.delete_author(id=author.id)
 
     @allure.title("case put by id")
-    def test_put_author_by_id(self, authors_api):
+    def test_put_author_by_id(self, authors_api,create_author_dto_):
         api = authors_api
-        author = api.post_authors(data={"name": "adi", "homeLatitude": 0, "homeLongitude": 0})
-        api.put_author_by_id(data={"name":"eyal", "homeLatitude": 0, "homeLongitude": 0,"id":author.id},id=author.id)
-        assert author.name != "eyal"
+        author = api.post_authors(data=create_author_dto_)
+        author.name = "eyal"
+        author_obj = GetAuthorDto.create_from_author(author)
+        api.put_author_by_id(data=author_obj, id=author.id)
+        assert author.name == "eyal"
         api.delete_author(id=author.id)
 
 
-    @pytest.skip
-    def test_delete_all_authors(self,authors_api):
+    @allure.title("search by query and by substring")
+    def test_search(self,authors_api,create_author_dto_):
         api = authors_api
-        authors = api.get_authors()
-        for author in authors:
-            if author.id > 3:
-                res = api.delete_author(id=author.id)
-        a = api.get_authors()
+        a = create_author_dto_
+        api.post_authors(data=a)
+        authors = api.search(query="moshe")
+        assert [a.name == "moshe" or a.name.find("moshe") >= 1 for a in authors]
+
+
+
+
+def test_delete_all_authors(authors_api):
+
+    api = authors_api
+    authors = api.get_authors()
+    if len(authors) < 50:
+        pytest.skip(reason="not too many moshes")
+
+    for author in authors:
+        if author.id > 3:
+            res = api.delete_author(id=author.id)
+    a = api.get_authors()

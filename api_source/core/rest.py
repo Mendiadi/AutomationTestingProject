@@ -160,6 +160,8 @@ def get_response(
     return parse_method(type_, ptr__)(url=url, json=json_temp, data=data_temp)
 
 
+
+
 def parse(
         url: str,
         kw: dict,
@@ -172,10 +174,10 @@ def parse(
     :rtype:tuple
     """
     data = kw['data'] if "data" in kw else None
-    param_ = kw[param] if param else ""
+    param_ = str(kw[param]) if param else ""
     url_ = self._base_url + url + param_ if url else self._base_url
     data = try_to_json(data)
-    return data, f"{url_}/{param_}"
+    return data, url_ if url_.find(param_) > 1 or not url_ else  f"{url_}/{param_}"
 
 
 def request(

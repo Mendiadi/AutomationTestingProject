@@ -41,4 +41,12 @@ class AuthorsApi(BaseAPI):
 
         return self.as_dict()
 
+    @rest.get(url='/search/',param='query')
+    def search(self):
+        authors = list()
+        for author in self._response.json():
+            authors.append(Author(**author))
+        return authors if len(authors) > 0 else self.as_dict()
+
+
 
