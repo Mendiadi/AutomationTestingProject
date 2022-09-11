@@ -169,8 +169,36 @@ class TestBook:
         book = random_data.generate_book()
         books = api.get_books()
 
+    @allure.title("case delete book")
+    def test_delete_book(self,book_api,random_data,authors_api):
+        author_dto = random_data.generate_author("moshiko")
+        author = authors_api.post_authors(author_dto)
+        author = authors_api.get_author_by_id(id=author.id)
+        book_dto = random_data.generate_book(authorid=author.id,name="shay")
+        book = book_api.post_books(book_dto)
+        books = book_api.get_books()
+        book = book.convert_to_book_dto()
+        assert book in books
+        book_api.delete_book(id=book.id)
+        books = book_api.get_books()
+        assert book not in books
 
+    @allure.title("case delete book invalid id")
+    def test_delete_book_invalid_id(self,book_api,random_data,authors_api):
+        res = book_api.delete_book(id="sds")
+        assert res['code'] > 200
 
+    @allure.title("case post book invalid data")
+    def test_post_book_invalid_data(self,book_api):
+        res = book_api.post_books("{moshe:123,tamir:adi}")
+        assert res['code'] == 400
+        assert 'The JSON value could not be converted' in res['msg']
+
+    def test_post_book_invalid_id(self):
+        pass
+
+    def test_post_book_no_name(self):
+        pass
 
     @allure.title("case post books")
     def test_post_book(self,book_api,random_data,authors_api):
@@ -184,26 +212,15 @@ class TestBook:
         assert [book.id == b.id for b in books]
         assert [book.id == b['id'] for b in author.books]
         logging.info(f"book - {books},{author},{author.books}")
-        book_api.delete_book(id=book.id)
         authors_api.delete_author(id=author.id)
-
-    @allure.title("make book")
-    def test_add_books(self,random_data,authors_api,book_api):
-        author_new = random_data.generate_author("moshe")
-        author = authors_api.post_authors(author_new)
-        book_created  = random_data.generate_book(name="moshe is hot",authorid=author.id)
-        book = book_api.post_books(book_created)
-
 
 
 
 def test_delete_all_authors(authors_api):
-    with pytest.skip():
         api = authors_api
         authors = api.get_authors()
         if len(authors) < 50:
             pytest.skip(reason="not too many moshes")
-
         for author in authors:
             if author.id > 3:
                 api.delete_author(id=author.id)

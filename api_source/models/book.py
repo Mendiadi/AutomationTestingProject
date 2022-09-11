@@ -14,4 +14,14 @@ class Book(Model):
     authorId: int
     author: dict
 
+    def convert_to_book_dto(self):
+        from api_source.models.book_dto import BookDto
+        name = self.name
+        description = self.description
+        price = self.price
+        amountInStock = self.amountInStock
+        imageUrl = self.imageUrl
+        authorId = self.authorId
 
+        id = self.id
+        return BookDto(name,description,price,amountInStock,imageUrl,authorId,id)
