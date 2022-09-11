@@ -3,7 +3,7 @@ from ui_source.pages import login_page
 from ui_source.core.data_load import load_test_data
 from ui_source.core.drivers.driver import Driver
 from playwright.sync_api import sync_playwright
-from selenium.webdriver import Chrome, Firefox
+from selenium import webdriver
 from commons.utils import screenshot_if_failed
 
 
@@ -20,11 +20,27 @@ def get_test_data(pytestconfig):
 def init_driver(get_test_data, request):
     get_test_data.valid()
     if get_test_data.lib == "selenium":
-        if get_test_data.browser == "chrome":
-            page = Chrome(get_test_data.driver_path)
-        elif get_test_data.browser == "firefox":
-            page = Firefox(get_test_data.driver_path)
-        page.get(get_test_data.url)
+        if get_test_data.selenium_grid:
+            # 'http://127.0.0.1:4444/wd/hub'
+            capabilities = webdriver.ChromeOptions()
+            page =  webdriver.Remote(
+                command_executor='http://127.0.0.1:4444/wd/hub',
+                desired_capabilities={
+                    'browserName':"Chrome",
+                    'javascriptEnabled': True
+                },options=capabilities
+            )
+            page.get(get_test_data.url )
+        else:
+            if get_test_data.browser == "chrome":
+
+
+                page =  webdriver.Chrome(get_test_data.driver_path)
+            elif get_test_data.browser == "firefox":
+
+
+                page =  webdriver.Firefox(get_test_data.driver_path)
+            page.get(get_test_data.url)
         page.maximize_window()
         yield Driver.create_driver(get_test_data.lib, page)
         screenshot_if_failed(page, request)

@@ -16,6 +16,8 @@ class TestsData:
     browser: str
     lib: str
     driver_path: str
+    selenium_grid:bool
+
 
     def valid(self):
         if not isinstance(self.url, str):

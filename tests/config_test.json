@@ -4,5 +4,10 @@
   "password": "string11",
   "browser": "chrome",
   "lib": "selenium",
+  "selenium_grid": false,
+
   "driver_path" : "C:\\Program Files\\chromedriver.exe"
 }
+
+
+
