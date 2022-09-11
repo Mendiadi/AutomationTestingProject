@@ -25,6 +25,7 @@ def init_driver(get_test_data, request):
         elif get_test_data.browser == "firefox":
             page = Firefox(get_test_data.driver_path)
         page.get(get_test_data.url)
+        page.maximize_window()
         yield Driver.create_driver(get_test_data.lib, page)
         screenshot_if_failed(page, request)
         page.close()
@@ -36,6 +37,8 @@ def init_driver(get_test_data, request):
                 driver = p.firefox.launch(headless=False)
             page = driver.new_page()
             page.goto(get_test_data.url)
+            screensize = {"width":1920, "height": 1080}
+            page.set_viewport_size(viewport_size=screensize)
             yield Driver.create_driver(get_test_data.lib, page)
             screenshot_if_failed(page, request)
             page.close()

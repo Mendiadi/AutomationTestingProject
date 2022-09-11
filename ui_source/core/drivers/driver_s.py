@@ -33,7 +33,7 @@ class Selenium(Driver):
        :rtype: [WebElement]
         """
 
-        elements = WebDriverWait(self._driver, self.wait).until(EC.presence_of_all_elements_located(*locator))
+        elements = WebDriverWait(self._driver, self.wait).until(EC.presence_of_all_elements_located(locator))
         return elements
 
     def locate_frame(self, locator: tuple[[], str]):

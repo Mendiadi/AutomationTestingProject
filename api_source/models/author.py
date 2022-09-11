@@ -1,5 +1,5 @@
 import dataclasses
-
+from api_source.models import book
 from api_source.models.base_model import Model
 
 
@@ -9,7 +9,7 @@ class Author(Model):
     name: str
     homeLatitude: float
     homeLongitude: float
-    books: [] = None
+    books: [book.Book] = None
 
     def __eq__(self, other):
         return (self.id == other.id) and \

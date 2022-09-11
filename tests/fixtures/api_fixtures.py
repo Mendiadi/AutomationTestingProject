@@ -5,6 +5,7 @@ from api_source.core import rest
 from api_source.api.authors_api import AuthorsApi
 from api_source.core.constant import *
 from commons.generate_data import RandomData
+from api_source.api.book_api import BookApi
 import pytest
 
 
@@ -40,6 +41,10 @@ def get_account_api(bearer_au_session) -> AccountApi:
     session = bearer_au_session
     return AccountApi(url, session)
 
+@pytest.fixture(scope="session")
+def book_api(bearer_au_session):
+    url = URL + "Books"
+    return BookApi(url,bearer_au_session)
 
 @pytest.fixture(scope="session")
 def authors_api(bearer_au_session):

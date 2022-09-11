@@ -10,7 +10,7 @@ from allure_commons.types import AttachmentType
 
 
 class PlayWright(Driver):
-    def __init__(self, driver, type_):
+    def __init__(self, driver:Locator, type_):
         super().__init__(driver, type_)
 
     @staticmethod
@@ -89,6 +89,9 @@ class PlayWright(Driver):
             path=os.path.join("ScreenShots", image)), name=__name__, attachment_type=AttachmentType.PNG)
 
         return self._driver.screenshot()
+
+    def alert(self):
+        self._driver.on("dialog", lambda dialog: dialog.accept())
 
     def is_visible(self, locator) -> bool:
         return self._driver.is_visible(self.By(*locator))

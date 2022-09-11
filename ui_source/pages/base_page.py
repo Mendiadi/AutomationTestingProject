@@ -19,7 +19,10 @@ class BasePage:
         return login_page.LoginPage(self._driver)
 
     def click_bookstore(self):
+        from ui_source.pages.store_page import StorePage
         self._driver.locate_element(self._common_locators["book_store_btn"]).click()
+        return StorePage(self._driver)
+
 
     @property
     def title(self) -> str:

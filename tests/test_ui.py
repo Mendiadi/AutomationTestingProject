@@ -47,3 +47,42 @@ class TestAuthentication:
     def test_register(self, get_main_page):
         register_page = get_main_page.click_register()
         register_page.register(self.data.email(), self.data.password(), self.data.firstname(), self.data.lastname())
+
+
+@allure.epic("UI store page")
+class TestStore:
+
+    @allure.title("get book by title")
+    def test_get_book(self, get_main_page):
+        store_page = get_main_page.click_bookstore()
+        time.sleep(3)
+        book = store_page.get_book(title="1984")
+        time.sleep(3)
+        book_title = store_page.get_book_title(book)
+        book_author = store_page.get_book_author(book)
+        LOGGER.info(f"title: {book_title} author: {book_author}")
+        assert "George Orwell" in book_author
+
+    @allure.title("case buy book without login")
+    def test_buy_no_login_book(self, get_main_page):
+        store_page = get_main_page.click_bookstore()
+        time.sleep(3)
+        book = store_page.get_book(title="1984")
+        time.sleep(3)
+
+        book_price = store_page.get_book_price(book)
+        LOGGER.info(book_price)
+        store_page.purchase(book)
+        assert "50" in book_price
+
+    @allure.title("get books by author")
+    def test_get_books_by_author(self, get_main_page):
+        store_page = get_main_page.click_bookstore()
+        time.sleep(3)
+        books = store_page.get_books_by_author("George Orwell")
+        for book in books:
+            book_title = store_page.get_book_title(book)
+            LOGGER.info(book_title)
+            assert book_title == "1984" or "Animal Farm"
+
+

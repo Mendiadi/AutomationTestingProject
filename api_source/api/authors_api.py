@@ -23,6 +23,7 @@ class AuthorsApi(BaseAPI):
             authors_list = []
             for author in self._response.json():
                 authors_list.append(Author(**author))
+
             return authors_list
         return self.as_dict()
 

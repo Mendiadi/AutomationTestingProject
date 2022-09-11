@@ -160,6 +160,14 @@ class TestAuthors:
         else:
             assert [query not in author.name for author in authors_get]
 
+@allure.epic("books from api")
+class TestBook:
+
+    @allure.title("get books")
+    def test_get_books(self,book_api):
+        api = book_api
+        books = api.get_books()
+
 
 def test_delete_all_authors(authors_api):
     with pytest.skip():
