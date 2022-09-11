@@ -2,12 +2,20 @@ from ui_source.core.drivers.driver import Driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
-
+from selenium.webdriver.common.action_chains import ActionChains
 
 class Selenium(Driver):
     def __init__(self, driver, type_):
         self.wait = 5
         super().__init__(driver, type_)
+
+    def switch_to_alert(self,input__=""):
+        alert_var = self._driver.switch_to.alert
+        t = alert_var.text
+        alert_var.accept()
+        return t
+
+
 
     def locate_element(self, locator: tuple[[], str], driver: [] = None) -> WebElement:
         """

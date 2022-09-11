@@ -187,6 +187,15 @@ class TestBook:
         book_api.delete_book(id=book.id)
         authors_api.delete_author(id=author.id)
 
+    @allure.title("make book")
+    def test_add_books(self,random_data,authors_api,book_api):
+        author_new = random_data.generate_author("moshe")
+        author = authors_api.post_authors(author_new)
+        book_created  = random_data.generate_book(name="moshe is hot",authorid=author.id)
+        book = book_api.post_books(book_created)
+
+
+
 
 def test_delete_all_authors(authors_api):
     with pytest.skip():

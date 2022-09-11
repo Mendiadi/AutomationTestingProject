@@ -3,6 +3,7 @@ from api_source.core import rest
 from api_source.models.book import Book
 from api_source.models.book_dto import BookDto
 import allure
+
 class BookApi(BaseAPI):
     def __init__(self, url: str, session):
         super().__init__(url, session)

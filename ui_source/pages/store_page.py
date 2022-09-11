@@ -1,5 +1,4 @@
 import allure
-
 from ui_source.pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 
@@ -19,6 +18,15 @@ class StorePage(BasePage):
         "book_price_cap":(By.CLASS_NAME,'card-footer')
     }
 
+
+
+
+
+    def purcashe_message(self) -> str:
+        alert_var = self._driver.switch_to_alert()
+        return alert_var
+
+
     def get_label_h1_text(self) -> str:
         label = self._driver.locate_element(self._locators["h1_label"])
         return self._driver.text(label)
@@ -28,6 +36,7 @@ class StorePage(BasePage):
         books = self._driver.locate_elements(self._locators['book_cont'])
         return books
 
+    @allure.step("check books authors")
     def get_books_by_author(self,author:str):
         books = self.get_books()
         res_list = []
@@ -53,7 +62,7 @@ class StorePage(BasePage):
     def purchase(self,book):
         self._driver.locate_element(self._locators['buy_btn'],book).click()
 
-    @allure.step("check book author")
+
     def get_book_author(self,book) -> str:
         text =self._driver.locate_element(self._locators[ "book_author"],book)
         return self._driver.text(text)

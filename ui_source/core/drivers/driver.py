@@ -68,3 +68,11 @@ class Driver(ABC):
             return locator.text_content()
         elif self._type == SELENIUM:
             return locator.text
+
+    def alert_text(self, alert_var) -> str:
+        pass
+
+    def switch_to_alert(self, input__=""):
+        pass
+    def alert_accepted(self,alert_var):
+        pass

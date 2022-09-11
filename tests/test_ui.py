@@ -1,9 +1,7 @@
 import logging
 import time
-
 import allure
 from commons.generate_data import RandomData
-
 LOGGER = logging.getLogger(__name__)
 
 
@@ -69,11 +67,10 @@ class TestStore:
         time.sleep(3)
         book = store_page.get_book(title="1984")
         time.sleep(3)
-
-        book_price = store_page.get_book_price(book)
-        LOGGER.info(book_price)
         store_page.purchase(book)
-        assert "50" in book_price
+        text = store_page.purcashe_message()
+        LOGGER.info(text)
+        assert "Must be signed in to purchase." in text
 
     @allure.title("get books by author")
     def test_get_books_by_author(self, get_main_page):
@@ -85,4 +82,16 @@ class TestStore:
             LOGGER.info(book_title)
             assert book_title == "1984" or "Animal Farm"
 
+
+    @allure.title("case post books and see if they apear at screen")
+    def test_books_updated(self,get_main_page,book_api,random_data,authors_api):
+        author_new = random_data.generate_author("moshe")
+        author = authors_api.post_authors(author_new)
+        book_created = random_data.generate_book(name="moshe is hot", authorid=author.id)
+        book_api.post_books(book_created)
+        store_page = get_main_page.click_bookstore()
+        books = store_page.get_books_by_author("moshe")
+        for book in books:
+            text = store_page.get_book_title(book)
+            assert "moshe is hot" == text
 
