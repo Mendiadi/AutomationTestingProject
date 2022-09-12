@@ -1,6 +1,6 @@
 
-from tests.fixtures.ui_fixtures import *
-from tests.fixtures.api_fixtures import *
+from fixtures.api_fixtures  import *
+from fixtures.ui_fixtures import *
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item, call):

@@ -4,3 +4,6 @@ selenium~=4.3.0
 PyYAML~=6.0
 Faker~=14.2.0
 requests~=2.28.1
+allure-pytest~=2.9.45
+allure-python-commons~=2.9.45
+

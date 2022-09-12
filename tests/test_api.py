@@ -11,7 +11,7 @@ import allure
 @allure.epic("Authors testing from api")
 class TestAuthors:
 
-    @pytest.mark.smoke
+    @pytest.mark.regression
     @allure.title("case Add author")
     def test_post_authors(self, authors_api, random_data):
         author = authors_api.post_authors(random_data.generate_author())
@@ -74,10 +74,15 @@ class TestAuthors:
 class TestBook:
 
     @allure.title("get books")
-    def test_get_books(self, book_api, random_data):
+    def test_get_books(self, book_api, random_data,authors_api):
+        author_create = random_data.generate_author("mr sami")
+        author = authors_api.post_authors(author_create)
         api = book_api
-        book = random_data.generate_book()
+        book_dto = random_data.generate_book(authorid=author.id)
+        book = api.post_books(book_dto)
         books = api.get_books()
+        assert book.convert_to_book_dto() in books
+        authors_api.delete_author(id=author.id)
 
     @allure.title("case delete book")
     def test_delete_book(self, book_api, random_data, authors_api):
@@ -104,10 +109,24 @@ class TestBook:
         assert res['code'] == 400
         assert 'The JSON value could not be converted' in res['msg']
 
-    def test_post_book_invalid_id(self):
-        pass
+    @allure.title("try to post book with invalid id ")
+    @pytest.mark.parametrize("id,excepted",[((-1),("The field AuthorId must be between 1 and 2147483647.")),
+                                            ((2147483647),("The field AuthorId must be between 1 and 2147483647."))
+                                            ,(("sfsf"),("The JSON value could not be converted to System.Int32."))])
+    def test_post_book_invalid_id(self,id,excepted,random_data,book_api):
+        book_dto = random_data.generate_book(authorid=id)
+        book = book_api.post_books(book_dto)
+        assert book['code'] == 400
+        assert excepted in book['msg']
 
-    def test_post_book_no_name(self):
+    @pytest.mark.parametrize("name,excepted",[((2),("The JSON value could not be converted to System.String."))
+                                              ,((None),("The JSON value could not be converted to System.String."))])
+    def test_post_book_no_name(self,random_data,book_api,name,excepted):
+        book_dto = random_data.generate_book(name=3)
+        book = book_api.post_books(book_dto)
+        assert excepted in book['msg'] and book['code'] == 400
+
+    def test_post_book_invalid_author(self):
         pass
 
     @allure.title("case post books")

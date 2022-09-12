@@ -13,6 +13,12 @@ class PlayWright(Driver):
     def __init__(self, driver:Locator, type_):
         super().__init__(driver, type_)
 
+    def switch_to_alert(self,input__=""):
+        pass
+
+    def element_is_visible(self,locator) -> [bool]:
+        return self._driver.is_visible(self.By(*locator)), "locator"
+
     @staticmethod
     def By(by, locator):
         if by == "name":
@@ -93,5 +99,4 @@ class PlayWright(Driver):
     def alert(self):
         self._driver.on("dialog", lambda dialog: dialog.accept())
 
-    def is_visible(self, locator) -> bool:
-        return self._driver.is_visible(self.By(*locator))
+
