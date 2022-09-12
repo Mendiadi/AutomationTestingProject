@@ -1,5 +1,4 @@
-
-from fixtures.api_fixtures  import *
+from fixtures.api_fixtures import *
 from fixtures.ui_fixtures import *
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)

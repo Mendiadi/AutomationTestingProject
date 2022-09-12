@@ -1,4 +1,8 @@
 {
+    "admin": {
+  "email": "admin@sela.co.il",
+  "password": "string"
+},
     "main_user":
     {
         "email": "adii@sela.co.il",

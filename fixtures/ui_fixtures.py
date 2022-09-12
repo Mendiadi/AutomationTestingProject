@@ -7,6 +7,7 @@ from selenium import webdriver
 from commons.utils import screenshot_if_failed
 
 
+
 @pytest.fixture
 def get_test_data(pytestconfig):
     data = load_test_data()
@@ -22,13 +23,13 @@ def init_driver(get_test_data, request):
     if get_test_data.lib == "selenium":
         if get_test_data.selenium_grid:
             # 'http://127.0.0.1:4444/wd/hub'
-            capabilities = webdriver.ChromeOptions()
+
             page =  webdriver.Remote(
                 command_executor='http://localhost:4444/wd/hub',
                 desired_capabilities={
                     'browserName':"Chrome",
                     'javascriptEnabled': True
-                },options=capabilities
+                },options=webdriver.ChromeOptions()
             )
             page.get(get_test_data.url )
         else:

@@ -84,8 +84,10 @@ class TestBook:
         assert book.convert_to_book_dto() in books
         authors_api.delete_author(id=author.id)
 
-    @allure.title("case delete book")
-    def test_delete_book(self, book_api, random_data, authors_api):
+
+
+    @allure.title("case delete book normal user")
+    def test_delete_book_normal_user(self, book_api, random_data, authors_api):
         author_dto = random_data.generate_author()
         author = authors_api.post_authors(author_dto)
         author = authors_api.get_author_by_id(id=author.id)
@@ -96,7 +98,7 @@ class TestBook:
         assert book in books
         book_api.delete_book(id=book.id)
         books = book_api.get_books()
-        assert book not in books
+        assert book in books
 
     @allure.title("case delete book invalid id")
     def test_delete_book_invalid_id(self, book_api, random_data, authors_api):
@@ -133,7 +135,7 @@ class TestBook:
     def test_post_book(self, book_api, random_data, authors_api):
         new_author = random_data.generate_author()
         author = authors_api.post_authors(new_author)
-        new_book = random_data.generate_book(authorid=author.id)
+        new_book = random_data.generate_book(authorid=author.id,name="dbora")
         book = book_api.post_books(new_book)
         books = book_api.get_books()
         author = authors_api.get_author_by_id(id=author.id)
@@ -142,6 +144,19 @@ class TestBook:
         assert [book.id == b['id'] for b in author.books]
         logging.info(f"book - {books},{author},{author.books}")
         authors_api.delete_author(id=author.id)
+
+    @allure.title("case delete book admin user")
+    def test_delete_book_from_admin(self, fix_admin_user, book_api, authors_api, get_account_api, random_data):
+        author_dto = random_data.generate_author()
+        author = authors_api.post_authors(author_dto)
+        author = authors_api.get_author_by_id(id=author.id)
+        book_dto = random_data.generate_book(authorid=author.id, name="shay")
+        book = book_api.post_books(book_dto)
+        res = get_account_api.login(fix_admin_user)
+        book_api._session.headers.update({'Authorization': f'Bearer {res.token}'})
+        book_api.delete_book(id=book.id)
+        books = book_api.get_books()
+        assert book not in books
 
 
 def test_delete_all_authors(authors_api):
