@@ -27,3 +27,9 @@ class LoginPage(AutenticationPage):
     def get_register_btn_text(self) -> str:
         btn = self._driver.locate_element(self._locators['register'])
         return self._driver.text(btn)
+
+    def elements_visible_login(self):
+        res = self.elements_visible()
+        elem = self._driver.element_is_visible(self._locators['register'])
+        res.append(elem)
+        return res

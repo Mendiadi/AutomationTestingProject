@@ -34,3 +34,10 @@ class RegisterPage(AutenticationPage):
     def get_back_login_btn_text(self) -> str:
         btn = self._driver.locate_element(self._locators["back_login"])
         return self._driver.text(btn)
+
+    def element_visible_register(self):
+        res = self.elements_visible()
+        for locator in self._locators.values():
+            isfound = self._driver.element_is_visible(locator)
+            res.append(isfound)
+        return res

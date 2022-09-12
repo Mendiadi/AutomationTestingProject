@@ -15,8 +15,12 @@ class Selenium(Driver):
         alert_var.accept()
         return t
 
-
-
+    def element_is_visible(self,locator) -> [bool]:
+        try:
+            result = WebDriverWait(self._driver, self.wait).until(EC.visibility_of_element_located(locator))
+            return True , result
+        except:
+            return False, "element not found"
     def locate_element(self, locator: tuple[[], str], driver: [] = None) -> WebElement:
         """
         Locating element with wait timeout and option to mark that element

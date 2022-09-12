@@ -48,6 +48,8 @@ class Driver(ABC):
         elif self._type == PLAYWRIGHT:
             return self._driver.title()
 
+    def element_is_visible(self, locator) -> bool:
+        pass
     @property
     def type(self) -> str:
         return self._type

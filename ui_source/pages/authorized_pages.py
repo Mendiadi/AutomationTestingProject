@@ -30,3 +30,10 @@ class AutenticationPage(BasePage):
     def get_submit_btn_text(self) -> str:
         btn = self._driver.locate_element(self._au_locators['submit'])
         return self._driver.text(btn)
+
+    def elements_visible(self):
+        results = []
+        for locator in self._au_locators.values():
+            is_found = self._driver.element_is_visible(locator)
+            results.append(is_found)
+        return results
