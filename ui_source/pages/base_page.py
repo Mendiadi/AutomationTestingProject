@@ -12,6 +12,17 @@ class BasePage:
         "login_btn": (By.XPATH, '//*[@id="root"]/nav/div/div/a[3]')
     }
 
+    def get_store_btn_text(self)-> str:
+        btn = self._driver.locate_element(self._common_locators["store_btn"])
+        return self._driver.text(btn)
+    def get_login_btn_text(self)-> str:
+        btn = self._driver.locate_element(self._common_locators["login_btn"])
+        return self._driver.text(btn)
+
+    def get_book_store_btn_text(self)-> str:
+        btn = self._driver.locate_element(self._common_locators["book_store_btn"])
+        return self._driver.text(btn)
+
     def click_login(self):
         from ui_source.pages import login_page
         login_btn = self._driver.locate_element(self._common_locators["login_btn"])

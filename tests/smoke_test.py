@@ -19,12 +19,12 @@ class TestSmoke:
         login_result = get_main_page.elements_visible_login()
         register_page = get_main_page.click_register()
         register_result = register_page.element_visible_register()
-        for is_found,msg in login_result:
-            LOGGER.info(msg)
-            assert is_found
-        for is_found, msg in register_result:
-            LOGGER.info(msg)
-            assert is_found
+        results = (register_result,login_result)
+        for result in results:
+            for element_is_found,msg in result:
+                LOGGER.info(f"{element_is_found} | {msg}")
+                assert element_is_found
+
 
 
     def test_store_element_loading(self,get_main_page):
