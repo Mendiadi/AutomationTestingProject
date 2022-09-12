@@ -15,7 +15,7 @@ def get_test_data(pytestconfig):
     data.browser = pytestconfig.getoption("browser")
     return data
 
-
+#java -jar selenium-server-standalone-3.141.59.jar
 @pytest.fixture
 def init_driver(get_test_data, request):
     get_test_data.valid()
@@ -24,7 +24,7 @@ def init_driver(get_test_data, request):
             # 'http://127.0.0.1:4444/wd/hub'
             capabilities = webdriver.ChromeOptions()
             page =  webdriver.Remote(
-                command_executor='http://127.0.0.1:4444/wd/hub',
+                command_executor='http://localhost:4444/wd/hub',
                 desired_capabilities={
                     'browserName':"Chrome",
                     'javascriptEnabled': True
