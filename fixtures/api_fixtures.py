@@ -10,7 +10,6 @@ from api_source.models.login_dto import LoginDto
 import pytest
 
 
-
 @pytest.fixture(scope="session")
 def random_data():
     return RandomData()
@@ -22,10 +21,12 @@ def fix_user():
     userid = user['main_user_id']
     return {"user": ApiUserDto(**user['main_user']), "userid": userid}
 
+
 @pytest.fixture(scope="session")
 def fix_admin_user():
     user = utils.json_read(r"data_api.json")
-    return  LoginDto(**user['admin'])
+    return LoginDto(**user['admin'])
+
 
 @pytest.fixture(scope="session")
 def url(pytestconfig):
@@ -33,31 +34,34 @@ def url(pytestconfig):
     url = url[:-1:]
     return url
 
-@pytest.fixture(scope="session")
-def bearer_au_session(fix_user,url):
 
+@pytest.fixture(scope="session")
+def bearer_au_session(fix_user, url):
     user_dict = fix_user['user'].to_json()
     with rest.Session() as new_session:
-        code = rest.update_token(user_dict, new_session, f'{url}{URL_SWAGGER}{ACCOUNT_URL}/login')
+        new_session.set_login_url(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/login')
+        code = new_session.update_token(user_dict)
         if code == 401:
-            new_session.post(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/register', json=user_dict)
-            rest.update_token(user_dict, new_session, f'{URL}{ACCOUNT_URL}/login')
+            new_session.session.post(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/register', json=user_dict)
+            new_session.update_token(user_dict)
         yield new_session
 
 
 @pytest.fixture(scope="session")
-def get_account_api(bearer_au_session,url) -> AccountApi:
+def get_account_api(bearer_au_session, url) -> AccountApi:
     url = url + URL_SWAGGER + ACCOUNT_URL
     session = bearer_au_session
     return AccountApi(url, session)
 
-@pytest.fixture(scope="session")
-def book_api(bearer_au_session,url):
-    url = url + URL_SWAGGER +"Books"
-    return BookApi(url,bearer_au_session)
 
 @pytest.fixture(scope="session")
-def authors_api(bearer_au_session,url):
-    url = url + URL_SWAGGER +   AUTHORS_URL
+def book_api(bearer_au_session, url):
+    url = url + URL_SWAGGER + "Books"
+    return BookApi(url, bearer_au_session)
+
+
+@pytest.fixture(scope="session")
+def authors_api(bearer_au_session, url):
+    url = url + URL_SWAGGER + AUTHORS_URL
     session = bearer_au_session
     return AuthorsApi(url, session)

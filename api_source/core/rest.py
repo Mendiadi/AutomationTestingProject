@@ -262,8 +262,7 @@ def put(
 
 #####################################################
 
-
-class Session:
+class SessionContextManager:
     def __init__(self, headers: [] = ""):
         self._headers = headers
         self._session = requests.session()
@@ -271,9 +270,7 @@ class Session:
     def __enter__(self):
         self._session.headers.update(self._headers)
         lg.info(f"session started... {self._session.headers.items()}")
-        return self._session
-
-
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._session.close()
@@ -282,10 +279,30 @@ class Session:
                          exe_type: {exc_type},exe_val {exc_val}, exe_tb {exc_tb}""")
 
 
+class Session(SessionContextManager):
 
-def update_token(user,session,url):
-    res = session.post(url=url, json=user)
-    token = res.json()['token']
-    headers = {'Authorization': f'Bearer {token}'}
-    session.headers.update(headers)
-    return res.status_code
+    def __init__(self, headers: [] = ""):
+        super().__init__(headers)
+        self._headers = headers
+        self._login_url: str
+
+    def set_login_url(self, url):
+        self._login_url = url
+
+    @property
+    def session(self):
+        return self._session
+
+    @property
+    def headers(self):
+        return self._session.headers
+
+    def update_token(self, user):
+        res = self._session.post(url=self._login_url, json=user)
+        try:
+            token = res.json()['token']
+        except KeyError:
+            token = res
+        headers = {'Authorization': f'Bearer {token}'}
+        self._session.headers.update(headers)
+        return res.status_code

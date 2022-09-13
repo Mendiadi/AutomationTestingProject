@@ -168,7 +168,7 @@ class TestBook:
         book_dto = random_data.generate_book(authorid=author.id, name="shay")
         book = book_api.post_books(book_dto)
         res = get_account_api.login(fix_admin_user)
-        book_api._session.headers.update({'Authorization': f'Bearer {res.token}'})
+        book_api.session.update_token(res.token)
         book_api.delete_book(id=book.id)
         books = book_api.get_books()
         assert book not in books
@@ -212,6 +212,6 @@ class TestAPISUnauthorized:
     def test_unauthorized_delete_author(self, authors_api,get_account_api,fix_user):
         res = authors_api.delete_author(id=5)
         response = get_account_api.login(fix_user['user'])
-        authors_api._session.headers.update({'Authorization': f'Bearer {response.token}'})
+        authors_api.session.update_token(response.token)
         assert res['code'] == 401
 

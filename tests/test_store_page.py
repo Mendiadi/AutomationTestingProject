@@ -49,6 +49,7 @@ class TestStore:
     @allure.title("case post books and see if they apear at screen")
     def test_books_updated(self,get_main_page,book_api,random_data,authors_api):
         author_new = random_data.generate_author("moshe")
+
         author = authors_api.post_authors(author_new)
         book_created = random_data.generate_book(name="moshe is hot", authorid=author.id)
         book_api.post_books(book_created)
