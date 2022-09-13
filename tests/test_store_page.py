@@ -60,9 +60,11 @@ class TestStore:
         LOGGER.info(book1)
         time.sleep(1)
         msg = store_page.purchase(book1)
-        LOGGER.info(msg)
+        time.sleep(1)
+        store_page.reload()
         amount_in_stock_api = book_api.get_book_by_id(id=book.id).amountInStock
-        assert book.amountInStock - 1 == amount_in_stock_api
+        LOGGER.info(amount_in_stock_api)
+        assert book.amountInStock - 1  == amount_in_stock_api
         assert f"Thank you for your purchase of {book.name}" in msg
         authors_api.delete_author(id=author.id)
 
