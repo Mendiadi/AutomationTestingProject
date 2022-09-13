@@ -30,13 +30,10 @@ def fix_admin_user():
 def bearer_au_session(fix_user):
     user_dict = fix_user['user'].to_json()
     with rest.Session() as new_session:
-        res = new_session.post(url=f'{URL}{ACCOUNT_URL}/login', json=user_dict)
-        if res.status_code == 401:
+        code = rest.update_token(user_dict, new_session, f'{URL}{ACCOUNT_URL}/login')
+        if code == 401:
             new_session.post(f'{URL}{ACCOUNT_URL}/register', json=user_dict)
-            res = new_session.post(url=f'{URL}{ACCOUNT_URL}/login', json=user_dict)
-        token = res.json()['token']
-        headers = {'Authorization': f'Bearer {token}'}
-        new_session.headers.update(headers)
+            rest.update_token(user_dict, new_session, f'{URL}{ACCOUNT_URL}/login')
         yield new_session
 
 

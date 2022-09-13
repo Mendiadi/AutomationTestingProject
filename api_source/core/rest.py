@@ -273,8 +273,19 @@ class Session:
         lg.info(f"session started... {self._session.headers.items()}")
         return self._session
 
+
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._session.close()
         lg.info(f"""session closed.. cookies = {self._session.cookies.items()}
                        auth = {self._session.auth} headers = {self._session.headers.items()}
                          exe_type: {exc_type},exe_val {exc_val}, exe_tb {exc_tb}""")
+
+
+
+def update_token(user,session,url):
+    res = session.post(url=url, json=user)
+    token = res.json()['token']
+    headers = {'Authorization': f'Bearer {token}'}
+    session.headers.update(headers)
+    return res.status_code

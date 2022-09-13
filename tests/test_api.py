@@ -4,10 +4,6 @@ import pytest
 import allure
 
 
-
-
-
-
 @allure.epic("Authors testing from api")
 class TestAuthors:
 
@@ -73,8 +69,28 @@ class TestAuthors:
 @allure.epic("books from api")
 class TestBook:
 
+    @allure.title("get book by id")
+    def test_get_book_by_id_valid(self,book_api,random_data,authors_api):
+        author_create = random_data.generate_author(name="sami")
+        author = authors_api.post_authors(author_create)
+        book_create = random_data.generate_book(name="my sami book",authorid=author.id)
+        book = book_api.post_books(book_create)
+        get_book = book_api.get_book_by_id(id=book.id)
+        book = book.convert_to_book_dto()
+        assert get_book == book
+        authors_api.delete_author(id=author.id)
+        assert book_api.get_book_by_id(id=book.id)['code'] == 404
+
+    @pytest.mark.parametrize("id,excepted,code",[((-7),("Not Found"),(404)),(("df"),("The value \'df\' is not valid"),(400))])
+    @allure.title("get book by id invalid")
+    def test_get_book_by_id_invalid(self,book_api,id,excepted,code):
+        api = book_api
+        res = api.get_book_by_id(id=id)
+        assert res['code'] == code
+        assert excepted in res['msg']
+
     @allure.title("get books")
-    def test_get_books(self, book_api, random_data,authors_api):
+    def test_get_books(self, book_api, random_data, authors_api):
         author_create = random_data.generate_author("mr sami")
         author = authors_api.post_authors(author_create)
         api = book_api
@@ -83,8 +99,6 @@ class TestBook:
         books = api.get_books()
         assert book.convert_to_book_dto() in books
         authors_api.delete_author(id=author.id)
-
-
 
     @allure.title("case delete book normal user")
     def test_delete_book_normal_user(self, book_api, random_data, authors_api):
@@ -112,18 +126,18 @@ class TestBook:
         assert 'The JSON value could not be converted' in res['msg']
 
     @allure.title("try to post book with invalid id ")
-    @pytest.mark.parametrize("id,excepted",[((-1),("The field AuthorId must be between 1 and 2147483647.")),
-                                            ((2147483647),("The field AuthorId must be between 1 and 2147483647."))
-                                            ,(("sfsf"),("The JSON value could not be converted to System.Int32."))])
-    def test_post_book_invalid_id(self,id,excepted,random_data,book_api):
+    @pytest.mark.parametrize("id,excepted", [((-1), ("The field AuthorId must be between 1 and 2147483647.")),
+                                             ((2147483647), ("The field AuthorId must be between 1 and 2147483647."))
+        , (("sfsf"), ("The JSON value could not be converted to System.Int32."))])
+    def test_post_book_invalid_id(self, id, excepted, random_data, book_api):
         book_dto = random_data.generate_book(authorid=id)
         book = book_api.post_books(book_dto)
         assert book['code'] == 400
         assert excepted in book['msg']
 
-    @pytest.mark.parametrize("name,excepted",[((2),("The JSON value could not be converted to System.String."))
-                                              ,((None),("The JSON value could not be converted to System.String."))])
-    def test_post_book_no_name(self,random_data,book_api,name,excepted):
+    @pytest.mark.parametrize("name,excepted", [((2), ("The JSON value could not be converted to System.String."))
+        , ((None), ("The JSON value could not be converted to System.String."))])
+    def test_post_book_no_name(self, random_data, book_api, name, excepted):
         book_dto = random_data.generate_book(name=3)
         book = book_api.post_books(book_dto)
         assert excepted in book['msg'] and book['code'] == 400
@@ -135,7 +149,7 @@ class TestBook:
     def test_post_book(self, book_api, random_data, authors_api):
         new_author = random_data.generate_author()
         author = authors_api.post_authors(new_author)
-        new_book = random_data.generate_book(authorid=author.id,name="dbora")
+        new_book = random_data.generate_book(authorid=author.id, name="dbora")
         book = book_api.post_books(new_book)
         books = book_api.get_books()
         author = authors_api.get_author_by_id(id=author.id)

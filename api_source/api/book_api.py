@@ -30,3 +30,10 @@ class BookApi(BaseAPI):
     def delete_book(self,id:int):
         with allure.step(f"delete book: {id}"):
             return self.as_dict()
+
+    @rest.get(param="id")
+    def get_book_by_id(self,id:int) -> BookDto:
+        with allure.step(f"get book by id -> id= {id}"):
+            if self._response.ok:
+                return BookDto(**self._response.json())
+            return self.as_dict()
