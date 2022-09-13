@@ -43,7 +43,8 @@ def bearer_au_session(fix_user, url):
         code = new_session.update_token(user_dict)
         if code == 401:
             new_session.session.post(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/register', json=user_dict)
-            new_session.update_token(user_dict)
+
+            new_session.update_token(user_dict,True)
         yield new_session
 
 

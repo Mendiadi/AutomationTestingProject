@@ -24,6 +24,12 @@ def parse_yaml():
             print(exc)
 
 
+def write_to_json(data: dict,path):
+    json_object = json.dumps(data, indent=3)
+    with open(path, "w") as outfile:
+        outfile.write(json_object)
+
+
 def screenshot_if_failed(driver, request):
     if request.node.rep_call.failed:
         try:

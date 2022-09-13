@@ -33,7 +33,7 @@ class TestStore:
         time.sleep(1)
         msg = store_page.purchase(book1)
         LOGGER.info(msg)
-        assert 9==book_api.get_book_by_id(id=book.id).amountInStock
+        assert book.amountInStock == book_api.get_book_by_id(id=book.id).amountInStock
         assert "Must be signed in to purchase." in msg
 
     @allure.title("get books by author")
@@ -46,8 +46,8 @@ class TestStore:
             LOGGER.info(book_title)
             assert book_title == "1984" or "Animal Farm"
 
-    @allure.title("buy book")
-    def test_buy_book(self,get_main_page,book_api,random_data,authors_api,get_test_data):
+    @allure.title("case buy book with login and created book")
+    def test_case_buy_book(self,get_main_page,book_api,random_data,authors_api,get_test_data):
         get_main_page.login(get_test_data.email,get_test_data.password).click_bookstore()
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)

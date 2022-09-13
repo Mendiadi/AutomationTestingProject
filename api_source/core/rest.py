@@ -297,8 +297,13 @@ class Session(SessionContextManager):
     def headers(self):
         return self._session.headers
 
-    def update_token(self, user):
+    def update_token(self, user,is_created_now = False):
+        from commons import utils
         res = self._session.post(url=self._login_url, json=user)
+        if is_created_now:
+            user = utils.json_read(r"data_api.json")
+            user['userId'] = res.json()["userId"]
+            utils.write_to_json(user,r"data_api.json")
         try:
             token = res.json()['token']
         except KeyError:
