@@ -24,21 +24,16 @@ def init_driver(get_test_data, request):
         if get_test_data.selenium_grid:
             # 'http://127.0.0.1:4444/wd/hub'
 
-            page =  webdriver.Remote(
+            firefox_options = webdriver.FirefoxOptions()
+            page = webdriver.Remote(
                 command_executor='http://localhost:4444/wd/hub',
-                desired_capabilities={
-                    'browserName':"Chrome",
-                    'javascriptEnabled': True
-                },options=webdriver.ChromeOptions()
+                options=firefox_options
             )
-            page.get(get_test_data.url )
+            page.get("http://www.google.com")
         else:
             if get_test_data.browser == "chrome":
-
-
                 page =  webdriver.Chrome(get_test_data.driver_path)
             elif get_test_data.browser == "firefox":
-
 
                 page =  webdriver.Firefox(get_test_data.driver_path)
             page.get(get_test_data.url)

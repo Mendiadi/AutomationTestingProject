@@ -10,6 +10,7 @@ from api_source.models.login_dto import LoginDto
 import pytest
 
 
+
 @pytest.fixture(scope="session")
 def random_data():
     return RandomData()
@@ -27,29 +28,36 @@ def fix_admin_user():
     return  LoginDto(**user['admin'])
 
 @pytest.fixture(scope="session")
-def bearer_au_session(fix_user):
+def url(pytestconfig):
+    url = pytestconfig.getoption("url")
+    url = url[:-1:]
+    return url
+
+@pytest.fixture(scope="session")
+def bearer_au_session(fix_user,url):
+
     user_dict = fix_user['user'].to_json()
     with rest.Session() as new_session:
-        code = rest.update_token(user_dict, new_session, f'{URL}{ACCOUNT_URL}/login')
+        code = rest.update_token(user_dict, new_session, f'{url}{URL_SWAGGER}{ACCOUNT_URL}/login')
         if code == 401:
-            new_session.post(f'{URL}{ACCOUNT_URL}/register', json=user_dict)
+            new_session.post(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/register', json=user_dict)
             rest.update_token(user_dict, new_session, f'{URL}{ACCOUNT_URL}/login')
         yield new_session
 
 
 @pytest.fixture(scope="session")
-def get_account_api(bearer_au_session) -> AccountApi:
-    url = URL + ACCOUNT_URL
+def get_account_api(bearer_au_session,url) -> AccountApi:
+    url = url + URL_SWAGGER + ACCOUNT_URL
     session = bearer_au_session
     return AccountApi(url, session)
 
 @pytest.fixture(scope="session")
-def book_api(bearer_au_session):
-    url = URL + "Books"
+def book_api(bearer_au_session,url):
+    url = url + URL_SWAGGER +"Books"
     return BookApi(url,bearer_au_session)
 
 @pytest.fixture(scope="session")
-def authors_api(bearer_au_session):
-    url = URL + AUTHORS_URL
+def authors_api(bearer_au_session,url):
+    url = url + URL_SWAGGER +   AUTHORS_URL
     session = bearer_au_session
     return AuthorsApi(url, session)

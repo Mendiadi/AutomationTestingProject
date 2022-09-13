@@ -187,7 +187,6 @@ def test_delete_all_authors(authors_api):
 class TestAPISUnauthorized:
 
 
-
     def test_unauthorized_delete_book(self, book_api):
 
         book_api._session.headers.clear()
