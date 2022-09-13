@@ -26,10 +26,9 @@ class TestStore:
     def test_buy_no_login_book(self, get_main_page,book_api,random_data,authors_api):
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)
-        book_created = random_data.generate_book(authorid=author.id,name="shdfd")
+        book_created = random_data.generate_book(authorid=author.id,name="shay")
         book = book_api.post_books(book_created)
         store_page = get_main_page.click_bookstore()
-
         time.sleep(1)
         store_page.reload()
         book1 = store_page.get_book(title=book_created.name)
@@ -66,3 +65,16 @@ class TestStore:
             text = store_page.get_book_title(book)
             assert "moshe is hot" == text
 
+    @allure.title("check if all the books in db are visible")
+    def test_verify_books(self,get_main_page,book_api):
+        boos_api = book_api.get_books()
+        store_page = get_main_page.click_bookstore()
+        books = store_page.get_books()
+
+        LOGGER.info(books)
+        LOGGER.info(boos_api)
+        result_book_ui = [store_page.get_book_title(book) for book in books]
+        result = [book.name for book in boos_api]
+        assert len(result_book_ui) == len(result)
+        for i in range(len(result)):
+            assert result[i] == result_book_ui[i]

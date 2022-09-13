@@ -158,7 +158,7 @@ class TestBook:
         assert [book.id == b.id for b in books]
         assert [book.id == b['id'] for b in author.books]
         logging.info(f"book - {books},{author},{author.books}")
-        authors_api.delete_author(id=author.id)
+        # authors_api.delete_author(id=author.id)
 
     @allure.title("case delete book admin user")
     def test_delete_book_from_admin(self, fix_admin_user, book_api, authors_api, get_account_api, random_data):
