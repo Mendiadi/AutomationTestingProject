@@ -70,10 +70,10 @@ class TestAuthors:
 class TestBook:
 
     @allure.title("get book by id")
-    def test_get_book_by_id_valid(self,book_api,random_data,authors_api):
+    def test_get_book_by_id_valid(self, book_api, random_data, authors_api):
         author_create = random_data.generate_author(name="sami")
         author = authors_api.post_authors(author_create)
-        book_create = random_data.generate_book(name="my sami book",authorid=author.id)
+        book_create = random_data.generate_book(name="my sami book", authorid=author.id)
         book = book_api.post_books(book_create)
         get_book = book_api.get_book_by_id(id=book.id)
         book = book.convert_to_book_dto()
@@ -81,9 +81,10 @@ class TestBook:
         authors_api.delete_author(id=author.id)
         assert book_api.get_book_by_id(id=book.id)['code'] == 404
 
-    @pytest.mark.parametrize("id,excepted,code",[((-7),("Not Found"),(404)),(("df"),("The value \'df\' is not valid"),(400))])
+    @pytest.mark.parametrize("id,excepted,code",
+                             [((-7), ("Not Found"), (404)), (("df"), ("The value \'df\' is not valid"), (400))])
     @allure.title("get book by id invalid")
-    def test_get_book_by_id_invalid(self,book_api,id,excepted,code):
+    def test_get_book_by_id_invalid(self, book_api, id, excepted, code):
         api = book_api
         res = api.get_book_by_id(id=id)
         assert res['code'] == code
@@ -181,3 +182,37 @@ def test_delete_all_authors(authors_api):
     for author in authors:
         if author.id > 3:
             api.delete_author(id=author.id)
+
+
+class TestAPISUnauthorized:
+
+
+
+    def test_unauthorized_delete_book(self, book_api):
+
+        book_api._session.headers.clear()
+        res = book_api.delete_book(id=5)
+        assert res['code'] == 401
+
+
+    def test_unauthorized_post_book(self, book_api,random_data):
+        book = random_data.generate_book(authorid=2)
+        res = book_api.post_books(book)
+        assert res['code'] == 401
+
+    def test_unauthorized_post_author(self, authors_api,random_data):
+        author = random_data.generate_author()
+        res = authors_api.post_authors(author)
+        assert res['code'] == 401
+
+    def test_unauthorized_put_author(self, authors_api,random_data):
+        author = random_data.generate_author()
+        res = authors_api.put_author_by_id(author,id=4)
+        assert res['code'] == 401
+
+    def test_unauthorized_delete_author(self, authors_api,get_account_api,fix_user):
+        res = authors_api.delete_author(id=5)
+        response = get_account_api.login(fix_user['user'])
+        authors_api._session.headers.update({'Authorization': f'Bearer {response.token}'})
+        assert res['code'] == 401
+
