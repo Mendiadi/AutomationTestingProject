@@ -15,6 +15,7 @@ class Selenium(Driver):
         alert_var.accept()
         return t
 
+
     def element_is_visible(self,locator) -> [bool]:
         try:
             result = WebDriverWait(self._driver, self.wait).until(EC.visibility_of_element_located(locator))

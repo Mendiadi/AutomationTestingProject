@@ -150,7 +150,7 @@ class TestBook:
     def test_post_book(self, book_api, random_data, authors_api):
         new_author = random_data.generate_author()
         author = authors_api.post_authors(new_author)
-        new_book = random_data.generate_book(authorid=author.id, name="dbora")
+        new_book = random_data.generate_book(authorid=author.id)
         book = book_api.post_books(new_book)
         books = book_api.get_books()
         author = authors_api.get_author_by_id(id=author.id)
@@ -189,7 +189,7 @@ class TestAPISUnauthorized:
 
     def test_unauthorized_delete_book(self, book_api):
 
-        book_api._session.headers.clear()
+        book_api.session.headers.clear()
         res = book_api.delete_book(id=5)
         assert res['code'] == 401
 

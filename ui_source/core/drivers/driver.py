@@ -78,3 +78,9 @@ class Driver(ABC):
         pass
     def alert_accepted(self,alert_var):
         pass
+
+    def refresh(self):
+        if self._type == PLAYWRIGHT:
+            self._driver.reload()
+        else:
+            self._driver.refresh()

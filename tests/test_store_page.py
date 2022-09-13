@@ -23,14 +23,21 @@ class TestStore:
         assert "George Orwell" in book_author
 
     @allure.title("case buy book without login")
-    def test_buy_no_login_book(self, get_main_page):
+    def test_buy_no_login_book(self, get_main_page,book_api,random_data,authors_api):
+        author_created = random_data.generate_author()
+        author = authors_api.post_authors(author_created)
+        book_created = random_data.generate_book(authorid=author.id,name="shdfd")
+        book = book_api.post_books(book_created)
         store_page = get_main_page.click_bookstore()
-        time.sleep(3)
-        book = store_page.get_book(title="1984")
-        time.sleep(3)
-        msg = store_page.purchase(book)
 
+        time.sleep(1)
+        store_page.reload()
+        book1 = store_page.get_book(title=book_created.name)
+        LOGGER.info(book1)
+        time.sleep(1)
+        msg = store_page.purchase(book1)
         LOGGER.info(msg)
+        # assert 9==book_api.get_book_by_id(id=book.id).amountInStock
         assert "Must be signed in to purchase." in msg
 
     @allure.title("get books by author")
