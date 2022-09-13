@@ -36,13 +36,16 @@ def url(pytestconfig):
 
 
 @pytest.fixture(scope="session")
-def bearer_au_session(fix_user, url):
-    user_dict = fix_user['user'].to_json()
+def bearer_au_session(fix_user, url,fix_admin_user):
+    user_dict = {"user":fix_user['user'].to_json(),"main_user_id":fix_user['userid']}
+
     with rest.Session() as new_session:
+        new_session.session.post(url=f"{url}{URL_SWAGGER}{ACCOUNT_URL}/register",json=ApiUserDto(
+            fix_admin_user.email,fix_admin_user.password,"admin","admin").to_json())
         new_session.set_login_url(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/login')
         code = new_session.update_token(user_dict)
         if code == 401:
-            new_session.session.post(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/register', json=user_dict)
+            new_session.session.post(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/register', json=user_dict['user'])
 
             new_session.update_token(user_dict,True)
         yield new_session

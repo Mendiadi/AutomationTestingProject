@@ -1,14 +1,13 @@
 {
-    "admin": {
-  "email": "admin@sela.co.il",
-  "password": "string"
-},
-    "main_user":
-    {
-        "email": "adii@sela.co.il",
-        "password": "string11",
-        "firstName": "adi",
-        "lastName": "mendel"
-    },
-    "main_user_id": "5d4c3ccf-dca3-420e-be5f-b1bb11efc850"
+   "admin": {
+      "email": "admin@sela.co.il",
+      "password": "string"
+   },
+   "main_user": {
+      "email": "adii@sela.co.il",
+      "password": "string11",
+      "firstName": "adi",
+      "lastName": "mendel"
+   },
+   "main_user_id": "b9a039a5-a223-4f8a-a9c3-806b2456f05d"
 }

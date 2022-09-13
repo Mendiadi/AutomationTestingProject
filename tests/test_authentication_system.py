@@ -5,26 +5,6 @@ import allure
 
 LOGGER = logging.getLogger(__name__)
 
-@allure.epic("UI Authentication system")
-class TestAuthenticationUI:
-
-
-    @allure.feature("Feature: Login")
-    @allure.title("verify Login")
-    def test_login(self, get_main_page, get_test_data):
-        LOGGER.info("login valid")
-        store_page = get_main_page.login(get_test_data.email, get_test_data.password)
-        time.sleep(5)
-        text = store_page.get_label_h1_text()
-        LOGGER.info(text)
-        assert text == 'Welcome to our store'
-
-    @allure.feature("Feature: Register")
-    @allure.title("verify register")
-    def test_register(self, get_main_page,random_data):
-        register_page = get_main_page.click_register()
-        register_page.register(random_data.email(), random_data.password(), random_data.firstname(), random_data.lastname())
-
 
 @allure.epic("API Authentication system")
 class TestAuthenticationAPI:
@@ -118,3 +98,24 @@ class TestAuthenticationAPI:
         api = get_account_api
         res = api.refresh_token("i")
         assert res['code'] == 400
+
+@allure.epic("UI Authentication system")
+class TestAuthenticationUI:
+
+
+    @allure.feature("Feature: Login")
+    @allure.title("verify Login")
+    def test_login(self, get_main_page, get_test_data):
+        LOGGER.info("login valid")
+        store_page = get_main_page.login(get_test_data.email, get_test_data.password)
+        time.sleep(5)
+        text = store_page.get_label_h1_text()
+        LOGGER.info(text)
+        assert text == 'Welcome to our store'
+
+    @allure.feature("Feature: Register")
+    @allure.title("verify register")
+    def test_register(self, get_main_page,random_data):
+        register_page = get_main_page.click_register()
+        register_page.register(random_data.email(), random_data.password(), random_data.firstname(), random_data.lastname())
+
