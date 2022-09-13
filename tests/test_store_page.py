@@ -28,10 +28,10 @@ class TestStore:
         time.sleep(3)
         book = store_page.get_book(title="1984")
         time.sleep(3)
-        store_page.purchase(book)
-        text = store_page.purcashe_message()
-        LOGGER.info(text)
-        assert "Must be signed in to purchase." in text
+        msg = store_page.purchase(book)
+
+        LOGGER.info(msg)
+        assert "Must be signed in to purchase." in msg
 
     @allure.title("get books by author")
     def test_get_books_by_author(self, get_main_page):

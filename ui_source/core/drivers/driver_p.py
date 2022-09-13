@@ -1,22 +1,28 @@
 from ui_source.core.drivers.driver import Driver
 from playwright.sync_api import Locator, ElementHandle, FrameLocator
 from ui_source.core.exceptions_ import LocatorWithError
-
 import os
-
 import allure
-
 from allure_commons.types import AttachmentType
 
 
 class PlayWright(Driver):
-    def __init__(self, driver:Locator, type_):
+    def __init__(self, driver, type_):
         super().__init__(driver, type_)
 
-    def switch_to_alert(self,input__=""):
-        pass
+    def switch_to_alert(self,input__=None):
+        btn = input__[0].query_selector(self.By(*input__[1]))
+        with self._driver.expect_event("dialog") as dialog:
+            self._driver.on("dialog", lambda dialog: dialog.accept())
+            btn.click()
+            dialog.is_done()
+            txt = dialog.value
 
-    def element_is_visible(self,locator) -> [bool]:
+            return txt
+
+
+
+    def element_is_visible(self,locator) :
         return self._driver.is_visible(self.By(*locator)), "locator"
 
     @staticmethod

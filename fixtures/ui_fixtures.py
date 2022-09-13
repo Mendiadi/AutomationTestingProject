@@ -26,7 +26,7 @@ def init_driver(get_test_data, request):
 
             firefox_options = webdriver.FirefoxOptions()
             page = webdriver.Remote(
-                command_executor='http://localhost:4444/wd/hub',
+                command_executor='http://127.0.0.1:4444/wd/hub',
                 options=firefox_options
             )
             page.get("http://www.google.com")

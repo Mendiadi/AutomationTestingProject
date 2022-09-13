@@ -20,13 +20,6 @@ class StorePage(BasePage):
 
 
 
-
-
-    def purcashe_message(self) -> str:
-        alert_var = self._driver.switch_to_alert()
-        return alert_var
-
-
     def get_label_h1_text(self) -> str:
         label = self._driver.locate_element(self._locators["h1_label"])
         return self._driver.text(label)
@@ -59,8 +52,14 @@ class StorePage(BasePage):
         return self._driver.text(text)
 
     @allure.step("purchase a book")
-    def purchase(self,book):
-        self._driver.locate_element(self._locators['buy_btn'],book).click()
+    def purchase(self,book) -> str:
+        if self._driver.type.lower() == "selenium":
+            self._driver.locate_element(self._locators['buy_btn'], book).click()
+            alert_var = self._driver.switch_to_alert()
+            return alert_var
+        else:
+            alert_var = self._driver.switch_to_alert((book,self._locators['buy_btn']))
+            return str(alert_var.message)
 
 
     def get_book_author(self,book) -> str:
