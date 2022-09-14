@@ -9,7 +9,9 @@ std file
 
 ```
 
-tree of dir
+tree of dirs
+![script](https://github.com/Mendiadi/AutomationTestingProject/blob/master/assets/tree.PNG?raw=true)
+
 config file
 ```json
 
@@ -20,6 +22,8 @@ config file
 run with docker
 
 run with remote
+selenium grid at running sessions
+![script](https://github.com/Mendiadi/AutomationTestingProject/blob/master/assets/grid_png.PNG?raw=true)
 
 
 
@@ -70,7 +74,7 @@ in the allure reports as you can see in the example image down below
 
 Example of reports behaviors (all tests run mode):
 
-![script]()
+![script](https://github.com/Mendiadi/AutomationTestingProject/blob/master/assets/allure_behavior.PNG?raw=true)
 
 also if test failed in the UI tests (selenium and also playwright)
 you can find the screenshot in the reports as down below.
@@ -78,9 +82,12 @@ example taken from playwright but also same in selenium
 
 Example of picture of test failed in reports (few tests run mode):
 
-![script]()
+![script](https://github.com/Mendiadi/AutomationTestingProject/blob/master/assets/allure_image.PNG?raw=true)
 
+more examples:
 
+![script](https://github.com/Mendiadi/AutomationTestingProject/blob/master/assets/allure_step.PNG?raw=true)
 
+![script](https://github.com/Mendiadi/AutomationTestingProject/blob/master/assets/allure_param.PNG?raw=true)
 ## Author
 adi mendel
