@@ -1,27 +1,38 @@
+import time
+
 from ui_source.core.drivers.driver import Driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.action_chains import ActionChains
 
+
 class Selenium(Driver):
     def __init__(self, driver, type_):
         self.wait = 5
         super().__init__(driver, type_)
 
-    def switch_to_alert(self,input__=""):
+    def switch_to_alert(self, input__=""):
         alert_var = self._driver.switch_to.alert
         t = alert_var.text
         alert_var.accept()
         return t
 
+    def move_to_element(self,element):
+        actions = ActionChains(self._driver)
+        actions.scroll_to_element(element)
+        elem = actions.move_to_element(element)
+        time.sleep(0.5)
+        elem.click().perform()
 
-    def element_is_visible(self,locator) -> [bool]:
+
+    def element_is_visible(self, locator) -> [bool]:
         try:
             result = WebDriverWait(self._driver, self.wait).until(EC.visibility_of_element_located(locator))
-            return True , result
+            return True, result
         except:
             return False, "element not found"
+
     def locate_element(self, locator: tuple[[], str], driver: [] = None) -> WebElement:
         """
         Locating element with wait timeout and option to mark that element

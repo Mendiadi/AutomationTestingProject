@@ -51,8 +51,14 @@ class StorePage(BasePage):
 
     @allure.step("purchase a book")
     def purchase(self, book) -> str:
+
        if self._driver.type.lower() == "selenium":
-            self._driver.locate_element(self._locators['buy_btn'], book).click()
+            buy_btn = self._driver.locate_element(self._locators['buy_btn'], book)
+            try:
+                self._driver.move_to_element(buy_btn)
+            except:
+                self._driver.script_execute("document.body.style.transform='scale(0.8)';")
+                self._driver.move_to_element(buy_btn)
             alert_var = self._driver.switch_to_alert()
             return alert_var
        else:

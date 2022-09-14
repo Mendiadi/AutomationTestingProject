@@ -50,6 +50,7 @@ class Driver(ABC):
 
     def element_is_visible(self, locator) -> bool:
         pass
+
     @property
     def type(self) -> str:
         return self._type
@@ -74,9 +75,12 @@ class Driver(ABC):
     def alert_text(self, alert_var) -> str:
         pass
 
+    def move_to_element(self,element):
+        pass
     def switch_to_alert(self, input__=""):
         pass
-    def alert_accepted(self,alert_var):
+
+    def alert_accepted(self, alert_var):
         pass
 
     def refresh(self):

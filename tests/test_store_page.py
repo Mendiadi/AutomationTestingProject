@@ -21,10 +21,23 @@ class TestStore:
 
     @allure.title("case buy book without login")
     def test_buy_no_login_book(self, get_main_page, book_api, random_data, authors_api):
+        author_created1 = random_data.generate_author()
+        author1 = authors_api.post_authors(author_created1)
+
+        book_created1 = random_data.generate_book(authorid=author1.id, name="shsdsy1")
+        book1 = book_api.post_books(book_created1)
+        book_created2 = random_data.generate_book(authorid=author1.id, name="shasdsy1")
+        book2 = book_api.post_books(book_created2)
+        book_created3 = random_data.generate_book(authorid=author1.id, name="sdsdsay1")
+        book3 = book_api.post_books(book_created3)
+        book_created4 = random_data.generate_book(authorid=author1.id, name="sdsy1")
+        book4 = book_api.post_books(book_created4)
         author_created = random_data.generate_author()
+
         author = authors_api.post_authors(author_created)
         book_created = random_data.generate_book(authorid=author.id, name="shay")
         book = book_api.post_books(book_created)
+
         store_page = get_main_page.click_bookstore()
         time.sleep(1)
         store_page.reload()
