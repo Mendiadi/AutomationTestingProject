@@ -86,8 +86,7 @@ def init_driver(get_test_data, request):
         finally:
             if obj_driver.type == SELENIUM:
                 page.close()
-    if obj_driver.type == SELENIUM:
-        page.close()
+
 
 
 @pytest.fixture

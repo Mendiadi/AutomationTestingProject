@@ -45,7 +45,7 @@ class Selenium(Driver):
             element = driver.find_element(*locator)
         except (se.TimeoutException,se.NoSuchElementException,se.ElementNotVisibleException) as e:
             logging.info(f"log msg from Driver - {e}")
-            element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(*locator))
+            element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(locator))
         except se.StaleElementReferenceException as e:
             logging.info(f"log msg from Driver - {e}")
             self.refresh()
@@ -72,8 +72,9 @@ class Selenium(Driver):
         try:
             self._driver.switch_to.frame(locator)
         except Exception as e:
+            time.sleep(1)
             logging.info(f"log msg from Driver - {e}")
-            WebDriverWait(self._driver, self.wait).until(EC.frame_to_be_available_and_switch_to_it(*locator))
+            self._driver.switch_to.frame(locator)
 
     def switch_to_default(self):
         """

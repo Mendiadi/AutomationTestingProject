@@ -11,7 +11,8 @@ class BasePage:
     _common_locators = {
         "book_store_btn": (By.CLASS_NAME, 'navbar-brand'),
         "store_btn": (By.XPATH, '//*[@id="root"]/nav/div/div/a[1]'),
-        "login_btn": (By.XPATH, '//*[@id="root"]/nav/div/div/a[3]')
+        "login_btn": (By.XPATH, '//*[@id="root"]/nav/div/div/a[3]'),
+        "author_btn":(By.XPATH,'//*[@id="root"]/nav/div/div/a[2]')
     }
 
     def page_resize(self,value:float):
@@ -21,6 +22,10 @@ class BasePage:
 
         self._driver.refresh()
 
+    def click_authors_btn(self):
+        from core.pages import authors_page
+        self._driver.locate_element(self._common_locators['author_btn']).click()
+        return authors_page.AuthorsPage(self._driver)
 
     def get_store_btn_text(self)-> str:
         btn = self._driver.locate_element(self._common_locators["store_btn"])
