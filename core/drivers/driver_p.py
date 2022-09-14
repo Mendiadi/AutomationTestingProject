@@ -2,6 +2,7 @@ from core.drivers import Driver
 from playwright.sync_api import Locator, ElementHandle, FrameLocator
 from commons import LocatorWithError
 import os
+import logging
 
 
 class PlayWright(Driver):
@@ -50,7 +51,8 @@ class PlayWright(Driver):
             driver = self._driver
         try:
             element = driver.locator(self.By(*locator))
-        except:
+        except Exception as e:
+            logging.info(f"log msg from Driver - {e}")
             element = driver.query_selector(self.By(*locator))
         finally:
             return element

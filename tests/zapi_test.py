@@ -64,14 +64,6 @@ class TestAuthors:
             assert [query not in author.name for author in authors_get]
 
 
-def test_delete_all_authors(authors_api):
-    api = authors_api
-    authors = api.get_authors()
-    if len(authors) < 50:
-        pytest.skip(reason="not too many moshes")
-    for author in authors:
-        if author.id > 3:
-            api.delete_author(id=author.id)
 
 
 @allure.epic("books from api")

@@ -1,10 +1,11 @@
+import logging
 import time
 from core.drivers import Driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.action_chains import ActionChains
-
+import selenium.common.exceptions as se
 
 class Selenium(Driver):
     def __init__(self, driver, type_):
@@ -20,15 +21,14 @@ class Selenium(Driver):
     def move_to_element(self, element):
         actions = ActionChains(self._driver)
         actions.scroll_to_element(element)
-        elem = actions.move_to_element(element)
-        time.sleep(0.5)
-        elem.click().perform()
+        element.click()
 
     def element_is_visible(self, locator) -> [bool]:
         try:
             result = WebDriverWait(self._driver, self.wait).until(EC.visibility_of_element_located(locator))
             return True, result
-        except:
+        except Exception as  e:
+            logging.info(f"log msg from Driver - {e}")
             return False, "element not found"
 
     def locate_element(self, locator: tuple[[], str], driver: [] = None) -> WebElement:
@@ -43,9 +43,15 @@ class Selenium(Driver):
             driver = self._driver
         try:
             element = driver.find_element(*locator)
-        except TimeoutError:
+        except (se.TimeoutException,se.NoSuchElementException,se.ElementNotVisibleException) as e:
+            logging.info(f"log msg from Driver - {e}")
             element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(*locator))
-        return element
+        except se.StaleElementReferenceException as e:
+            logging.info(f"log msg from Driver - {e}")
+            self.refresh()
+            element = driver.find_element(*locator)
+        finally:
+            return element
 
     def locate_elements(self, locator: tuple[[], str]) -> [WebElement]:
         """
@@ -65,7 +71,8 @@ class Selenium(Driver):
         """
         try:
             self._driver.switch_to.frame(locator)
-        except Exception:
+        except Exception as e:
+            logging.info(f"log msg from Driver - {e}")
             WebDriverWait(self._driver, self.wait).until(EC.frame_to_be_available_and_switch_to_it(*locator))
 
     def switch_to_default(self):

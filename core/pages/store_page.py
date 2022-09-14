@@ -54,8 +54,11 @@ class StorePage(BasePage):
 
        if self._driver.type.lower() == "selenium":
             buy_btn = self._driver.locate_element(self._locators['buy_btn'], book)
-            self.page_resize(0.8)
-            self._driver.move_to_element(buy_btn)
+            try:
+                self._driver.move_to_element(buy_btn)
+            except:
+                self.page_resize(0.8)
+                buy_btn.click()
             alert_var = self._driver.switch_to_alert()
             self.page_resize(1.0)
             return alert_var
