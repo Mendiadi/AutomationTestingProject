@@ -1,13 +1,15 @@
-from api_source.api.account_api import AccountApi
-from commons import utils
-from api_source.models.api_user_dto import ApiUserDto
-from api_source.core import rest
-from api_source.api.authors_api import AuthorsApi
-from api_source.core.constant import *
-from commons.generate_data import RandomData
-from api_source.api.book_api import BookApi
-from api_source.models.login_dto import LoginDto
 import pytest
+from core import rest
+from core.api import AccountApi
+from core.api import BookApi
+from core.api import AuthorsApi
+from core.api.constant import *
+from commons import json_read
+from commons import RandomData
+from core.models import LoginDto
+from core.models import ApiUserDto
+
+
 
 
 @pytest.fixture(scope="session")
@@ -17,14 +19,14 @@ def random_data():
 
 @pytest.fixture(scope="session")
 def fix_user():
-    user = utils.json_read(r"data_api.json")
-    user_id = utils.json_read(r"user_id.json")
+    user = json_read(r"data_api.json")
+    user_id = json_read(r"user_id.json")
     return {"user": ApiUserDto(**user['main_user']), "userid": user_id['id']}
 
 
 @pytest.fixture(scope="session")
 def fix_admin_user():
-    user = utils.json_read(r"data_api.json")
+    user = json_read(r"data_api.json")
     return LoginDto(**user['admin'])
 
 

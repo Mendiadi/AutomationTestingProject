@@ -1,5 +1,6 @@
 import logging
 import allure
+
 LOGGER = logging.getLogger(__name__)
 
 

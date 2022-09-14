@@ -1,7 +1,7 @@
 import logging
-from api_source.models.get_author_dto import GetAuthorDto
 import pytest
 import allure
+from core.models import GetAuthorDto
 
 
 @allure.epic("Authors testing from api")

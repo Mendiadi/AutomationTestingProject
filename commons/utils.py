@@ -1,7 +1,5 @@
 import json
-import allure
 import yaml
-import os
 
 
 def json_read(path) -> json:
@@ -24,9 +22,7 @@ def parse_yaml():
             print(exc)
 
 
-def write_to_json(data: dict,path):
+def write_to_json(data: dict, path):
     json_object = json.dumps(data, indent=1)
     with open(path, "w") as outfile:
         outfile.write(json_object)
-
-

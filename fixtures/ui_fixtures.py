@@ -1,14 +1,15 @@
 import os
 import ctypes
-
 import pytest
-from ui_source.pages import login_page
-from ui_source.core.data_load import load_test_data
-from ui_source.core.drivers.driver import Driver
+import allure
 from playwright.sync_api import sync_playwright
 from selenium import webdriver
+from core.pages.login_page import LoginPage
+from commons import load_test_data
+from core.drivers import Driver
 
-import allure
+
+
 
 
 @pytest.fixture
@@ -83,6 +84,6 @@ def init_driver(get_test_data, request):
 
 @pytest.fixture
 def get_main_page(init_driver):
-    page = login_page.LoginPage(init_driver)
+    page = LoginPage(init_driver)
     yield page
     del page

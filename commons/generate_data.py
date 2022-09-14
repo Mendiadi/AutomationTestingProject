@@ -1,9 +1,10 @@
 import math
 
 from faker import Faker
-from api_source.models.api_user_dto import ApiUserDto
-from api_source.models.create_author_dto import CreateAuthorDto
-from api_source.models.create_book_dto import CreateBookDto
+from core.models import ApiUserDto
+from core.models.create_author_dto import CreateAuthorDto
+from core.models import CreateBookDto
+
 
 class RandomData:
     def __init__(self):
@@ -32,7 +33,7 @@ class RandomData:
             user['password'] = self.password()
         return ApiUserDto(**user)
 
-    def generate_author(self,name:str=None) -> CreateAuthorDto:
+    def generate_author(self, name: str = None) -> CreateAuthorDto:
         name = name if name else self.firstname() + self.lastname()
         homelo = self._faker.random.randint(-180, 180)
         homala = self._faker.random.randint(-90, 90)
@@ -40,15 +41,14 @@ class RandomData:
         homelo *= math.sin(homelo)
         return CreateAuthorDto(name, homala, homelo)
 
-    def generate_book(self,authorid=None,price=None,amount=None,description:str=None,name:str=None) -> CreateBookDto:
+    def generate_book(self, authorid=None, price=None, amount=None, description: str = None,
+                      name: str = None) -> CreateBookDto:
         book = {
             "name": name if name else self._faker.name(),
             "description": description if description else "description",
             "price": price if price else 50,
-            "amountInStock": amount if amount else  10,
+            "amountInStock": amount if amount else 10,
             "imageUrl": self._faker.url(),
-            "authorId": authorid if authorid else self._faker.random.randint(4,200)
+            "authorId": authorid if authorid else self._faker.random.randint(4, 200)
         }
         return CreateBookDto(**book)
-
-
