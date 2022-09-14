@@ -51,11 +51,11 @@ class StorePage(BasePage):
 
     @allure.step("purchase a book")
     def purchase(self, book) -> str:
-        if self._driver.type.lower() == "selenium":
+       if self._driver.type.lower() == "selenium":
             self._driver.locate_element(self._locators['buy_btn'], book).click()
             alert_var = self._driver.switch_to_alert()
             return alert_var
-        else:
+       else:
             alert_var = self._driver.switch_to_alert((book, self._locators['buy_btn']))
             return str(alert_var.message)
 

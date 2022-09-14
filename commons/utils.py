@@ -25,7 +25,7 @@ def parse_yaml():
 
 
 def write_to_json(data: dict,path):
-    json_object = json.dumps(data, indent=3)
+    json_object = json.dumps(data, indent=1)
     with open(path, "w") as outfile:
         outfile.write(json_object)
 

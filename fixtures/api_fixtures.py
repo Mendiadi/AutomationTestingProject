@@ -18,8 +18,8 @@ def random_data():
 @pytest.fixture(scope="session")
 def fix_user():
     user = utils.json_read(r"data_api.json")
-    userid = user['main_user_id']
-    return {"user": ApiUserDto(**user['main_user']), "userid": userid}
+    user_id = utils.json_read(r"user_id.json")
+    return {"user": ApiUserDto(**user['main_user']), "userid": user_id['id']}
 
 
 @pytest.fixture(scope="session")
@@ -36,18 +36,18 @@ def url(pytestconfig):
 
 
 @pytest.fixture(scope="session")
-def bearer_au_session(fix_user, url,fix_admin_user):
-    user_dict = {"user":fix_user['user'].to_json(),"main_user_id":fix_user['userid']}
+def bearer_au_session(fix_user, url, fix_admin_user):
+    user_dict = {"user": fix_user['user'].to_json(), "main_user_id": fix_user['userid']}
 
     with rest.Session() as new_session:
-        new_session.session.post(url=f"{url}{URL_SWAGGER}{ACCOUNT_URL}/register",json=ApiUserDto(
-            fix_admin_user.email,fix_admin_user.password,"admin","admin").to_json())
+        new_session.session.post(url=f"{url}{URL_SWAGGER}{ACCOUNT_URL}/register", json=ApiUserDto(
+            fix_admin_user.email, fix_admin_user.password, "admin", "admin").to_json())
         new_session.set_login_url(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/login')
         code = new_session.update_token(user_dict)
         if code == 401:
             new_session.session.post(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/register', json=user_dict['user'])
 
-            new_session.update_token(user_dict,True)
+            new_session.update_token(user_dict, True)
         yield new_session
 
 
@@ -68,4 +68,9 @@ def book_api(bearer_au_session, url):
 def authors_api(bearer_au_session, url):
     url = url + URL_SWAGGER + AUTHORS_URL
     session = bearer_au_session
-    return AuthorsApi(url, session)
+    api = AuthorsApi(url, session)
+    yield api
+    authors = api.get_authors()
+    for author in authors:
+        if author.id > 3:
+            api.delete_author(id=author.id)

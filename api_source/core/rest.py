@@ -162,7 +162,7 @@ class Rest:
             raise ParamNotSigned(self._session, param, data, func)
         url_ = self._base_url + url + param_ if url else self._base_url
         data = Rest.try_to_json(data)
-        return data, url_ if url_.find(param_) > 1 or not url_ else f"{url_}/{param_}"
+        return data, url_ if (url_.count(param_, 30) > 1 or url) or not url_ else f"{url_}/{param_}"
 
     @staticmethod
     def request(
@@ -297,15 +297,18 @@ class Session(SessionContextManager):
     def headers(self):
         return self._session.headers
 
-    def update_token(self, user,is_created_now = False):
+    def update_token(self, user, is_created_now=False):
         from commons import utils
+        if isinstance(user, str):
+            headers = {'Authorization': f'Bearer {user}'}
+            self._session.headers.update(headers)
+            return
         res = self._session.post(url=self._login_url, json=user['user'])
-        if res.status_code == 401:
-            return 401
+
         if is_created_now:
-            user = utils.json_read(r"data_api.json")
             user["main_user_id"] = res.json()["userId"]
-            utils.write_to_json(user,r"data_api.json")
+            user_dict = {"id": res.json()["userId"]}
+            utils.write_to_json(user_dict, r"user_id.json")
 
         try:
             token = res.json()['token']

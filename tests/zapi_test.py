@@ -13,7 +13,6 @@ class TestAuthors:
         author = authors_api.post_authors(random_data.generate_author())
         authors = authors_api.get_authors()
         assert author in authors
-        authors_api.delete_author(id=author.id)
 
     @pytest.mark.smoke
     @allure.title("case Delete author")
@@ -30,6 +29,7 @@ class TestAuthors:
     def test_get_authors(self, authors_api, random_data):
         api = authors_api
         author = api.post_authors(random_data.generate_author())
+        authors_api.delete_author(id=17)
         authors = api.get_authors()
         assert author in authors
         api.delete_author(id=author.id)
@@ -42,7 +42,6 @@ class TestAuthors:
         author = api.post_authors(random_data.generate_author())
         author2 = api.get_author_by_id(id=author.id)
         assert author2 == author
-        api.delete_author(id=author.id)
 
     @allure.title("case put by id")
     def test_put_author_by_id(self, authors_api, random_data):
@@ -52,7 +51,6 @@ class TestAuthors:
         author_obj = GetAuthorDto.create_from_author(author)
         api.put_author_by_id(author_obj, id=author.id)
         assert author.name == "eyal"
-        api.delete_author(id=author.id)
 
     @pytest.mark.parametrize("query", ["m", "at", "geroge", "l"])
     @allure.title("case valid search given true results")
@@ -64,6 +62,16 @@ class TestAuthors:
             assert [author.name == query or query in author.name for author in authors]
         else:
             assert [query not in author.name for author in authors_get]
+
+
+def test_delete_all_authors(authors_api):
+    api = authors_api
+    authors = api.get_authors()
+    if len(authors) < 50:
+        pytest.skip(reason="not too many moshes")
+    for author in authors:
+        if author.id > 3:
+            api.delete_author(id=author.id)
 
 
 @allure.epic("books from api")
@@ -99,7 +107,6 @@ class TestBook:
         book = api.post_books(book_dto)
         books = api.get_books()
         assert book.convert_to_book_dto() in books
-        authors_api.delete_author(id=author.id)
 
     @allure.title("case delete book normal user")
     def test_delete_book_normal_user(self, book_api, random_data, authors_api):
@@ -158,7 +165,6 @@ class TestBook:
         assert [book.id == b.id for b in books]
         assert [book.id == b['id'] for b in author.books]
         logging.info(f"book - {books},{author},{author.books}")
-        # authors_api.delete_author(id=author.id)
 
     @allure.title("case delete book admin user")
     def test_delete_book_from_admin(self, fix_admin_user, book_api, authors_api, get_account_api, random_data):
@@ -174,44 +180,30 @@ class TestBook:
         assert book not in books
 
 
-def test_delete_all_authors(authors_api):
-    api = authors_api
-    authors = api.get_authors()
-    if len(authors) < 50:
-        pytest.skip(reason="not too many moshes")
-    for author in authors:
-        if author.id > 3:
-            api.delete_author(id=author.id)
-
-
 class TestAPISUnauthorized:
 
-
     def test_unauthorized_delete_book(self, book_api):
-
         book_api.session.headers.clear()
         res = book_api.delete_book(id=5)
         assert res['code'] == 401
 
-
-    def test_unauthorized_post_book(self, book_api,random_data):
+    def test_unauthorized_post_book(self, book_api, random_data):
         book = random_data.generate_book(authorid=2)
         res = book_api.post_books(book)
         assert res['code'] == 401
 
-    def test_unauthorized_post_author(self, authors_api,random_data):
+    def test_unauthorized_post_author(self, authors_api, random_data):
         author = random_data.generate_author()
         res = authors_api.post_authors(author)
         assert res['code'] == 401
 
-    def test_unauthorized_put_author(self, authors_api,random_data):
+    def test_unauthorized_put_author(self, authors_api, random_data):
         author = random_data.generate_author()
-        res = authors_api.put_author_by_id(author,id=4)
+        res = authors_api.put_author_by_id(author, id=4)
         assert res['code'] == 401
 
-    def test_unauthorized_delete_author(self, authors_api,get_account_api,fix_user):
+    def test_unauthorized_delete_author(self, authors_api, get_account_api, fix_user):
         res = authors_api.delete_author(id=5)
         response = get_account_api.login(fix_user['user'])
         authors_api.session.update_token(response.token)
         assert res['code'] == 401
-

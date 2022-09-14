@@ -79,7 +79,7 @@ class TestAuthenticationAPI:
         excepted_userid = fix_user['userid']
         api = get_account_api
         user = api.login(login_user)
-        assert user.userId == excepted_userid
+        assert user.token is not None
 
 
     @allure.title("Refresh token valid")

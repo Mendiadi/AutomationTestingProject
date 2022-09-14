@@ -35,6 +35,7 @@ class TestStore:
         LOGGER.info(msg)
         assert book.amountInStock == book_api.get_book_by_id(id=book.id).amountInStock
         assert "Must be signed in to purchase." in msg
+        authors_api.delete_author(id=author.id)
 
     @allure.title("get books by author")
     def test_get_books_by_author(self, get_main_page):
@@ -47,8 +48,8 @@ class TestStore:
             assert book_title == "1984" or "Animal Farm"
 
     @allure.title("case buy book with login and created book")
-    def test_case_buy_book(self,get_main_page,book_api,random_data,authors_api,get_test_data):
-        get_main_page.login(get_test_data.email,get_test_data.password).click_bookstore()
+    def test_case_buy_book(self, get_main_page, book_api, random_data, authors_api, get_test_data):
+        get_main_page.login(get_test_data.email, get_test_data.password).click_bookstore()
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)
         book_created = random_data.generate_book(authorid=author.id)
@@ -64,7 +65,7 @@ class TestStore:
         store_page.reload()
         amount_in_stock_api = book_api.get_book_by_id(id=book.id).amountInStock
         LOGGER.info(amount_in_stock_api)
-        assert book.amountInStock - 1  == amount_in_stock_api
+        assert book.amountInStock - 1 == amount_in_stock_api
         assert f"Thank you for your purchase of {book.name}" in msg
         authors_api.delete_author(id=author.id)
 
@@ -80,7 +81,7 @@ class TestStore:
         for book in books:
             text = store_page.get_book_title(book)
             assert "moshe is hot" == text
-
+        authors_api.delete_author(id=author.id)
 
     @allure.title("check if all the books in db are visible")
     def test_verify_books(self, get_main_page, book_api):
