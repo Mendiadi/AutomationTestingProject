@@ -45,10 +45,12 @@ class StorePage(BasePage):
                 return book
         return None
 
-    @allure.step("check book title")
+
     def get_book_title(self, book):
         text = self._driver.locate_element(self._locators['book_title'], book)
-        return self._driver.text(text)
+        txt = self._driver.text(text)
+        with allure.step(f"get book title is - {txt}"):
+            return txt
 
     @allure.step("purchase a book")
     def purchase(self, book) -> str:
@@ -71,13 +73,17 @@ class StorePage(BasePage):
 
     def get_book_author(self, book) -> str:
         text = self._driver.locate_element(self._locators["book_author"], book)
-        return self._driver.text(text)
+        txt = self._driver.text(text)
+        with allure.step(f"get book author is - {txt}"):
+            return txt
 
     @allure.step("check book price")
     def get_book_price(self, book):
         text = self._driver.locate_element(self._locators['book_price_cap'],book)
         txt = self._driver.text(text)
-        return txt[0:txt.find("L")]
+        txt = txt[0:txt.find("L")]
+        with allure.step(f"get book price is - {txt}"):
+            return txt
 
     @allure.step("check book stock")
     def get_book_stock(self, book):
@@ -88,4 +94,6 @@ class StorePage(BasePage):
     @allure.step("read book description")
     def get_book_decription(self,book):
         text = self._driver.locate_element(self._locators["description"], book)
-        return self._driver.text(text)
+        txt = self._driver.text(text)
+        with allure.step(f"get book decription is - {txt}"):
+            return txt

@@ -1,4 +1,7 @@
+import allure
 
+
+@allure.epic("UI Authors Page")
 class TestAuthorsPage:
 
     def test_url(self):

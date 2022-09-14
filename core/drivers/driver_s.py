@@ -76,6 +76,7 @@ class Selenium(Driver):
             logging.info(f"log msg from Driver - {e}")
             self._driver.switch_to.frame(locator)
 
+
     def switch_to_default(self):
         """
         Switching back to default content

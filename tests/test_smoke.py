@@ -4,6 +4,7 @@ import pytest
 
 LOGGER = logging.getLogger(__name__)
 
+@allure.epic("UI Loading tests")
 @pytest.mark.smoke
 class TestSmoke:
 

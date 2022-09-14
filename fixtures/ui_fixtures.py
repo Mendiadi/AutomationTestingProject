@@ -42,6 +42,7 @@ def init_driver(get_test_data, request):
                 desired_capabilities=capabilities
             )
             page.get(get_test_data.url)
+
         else:
             if get_test_data.browser == CHROME:
                 page = webdriver.Chrome(get_test_data.driver_path)
