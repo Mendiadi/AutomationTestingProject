@@ -158,6 +158,33 @@ class TestBook:
         assert [book.id == b['id'] for b in author.books]
         logging.info(f"book - {books},{author},{author.books}")
 
+    @allure.title("case put update book")
+    def test_put_book(self, book_api, random_data, authors_api):
+        new_author = random_data.generate_author()
+        author = authors_api.post_authors(new_author)
+        new_book = random_data.generate_book(authorid=author.id)
+        book = book_api.post_books(new_book)
+        book.name = "adi hagever"
+        book.amountInStock = 5
+        book_api.put_book(book,id=book.id)
+        same_book = book_api.get_book_by_id(id=book.id)
+        assert same_book.name == "adi hagever" and same_book.amountInStock == 5
+
+    @allure.title("case put book invalid id")
+    @pytest.mark.parametrize("id,excepted",[(10,400),(-20,400),("ss",400)])
+    def test_put_book_invalid_id(self, book_api, random_data, authors_api,id,excepted):
+        new_author = random_data.generate_author()
+        author = authors_api.post_authors(new_author)
+        new_book = random_data.generate_book(authorid=author.id)
+        book = book_api.post_books(new_book)
+        res = book_api.put_book(book, id=id)
+        assert res['code'] == excepted
+
+    @allure.title("case put book invalid data")
+    def test_put_book_invalid_data(self,book_api):
+        res = book_api.put_book({}, id=4)
+        assert res['code'] == 400
+
     @allure.title("case delete book admin user")
     def test_delete_book_from_admin(self, fix_admin_user, book_api, authors_api, get_account_api, random_data):
         author_dto = random_data.generate_author()
@@ -183,6 +210,11 @@ class TestAPISUnauthorized:
         book = random_data.generate_book(authorid=2)
         res = book_api.post_books(book)
         assert res['code'] == 401
+
+    def test_put_book_unauthorized(self,book_api):
+        res = book_api.put_book({},id=10)
+        assert res['code'] == 401
+
 
     def test_unauthorized_post_author(self, authors_api, random_data):
         author = random_data.generate_author()

@@ -37,3 +37,8 @@ class BookApi(BaseAPI):
             if self._response.ok:
                 return BookDto(**self._response.json())
             return self.as_dict()
+
+    @rest.put(param="id",data_t=rest.JSON)
+    def put_book(self,book,id:int):
+        with allure.step(f"put book by id -> id= {id} and body = {book}"):
+            return self.as_dict()
