@@ -10,12 +10,13 @@ class AuthorsApi(BaseAPI):
     def __init__(self, url: str, session):
         super().__init__(url, session)
 
-    @allure.step("post authors from api")
+
     @rest.post(data_t=rest.JSON)
     def post_authors(self, author: GetAuthorDto):
-        if self._response.ok:
-            return Author(**self._response.json())
-        return self.as_dict(author)
+        with allure.step(f"post authors from api  {author.to_json()}"):
+            if self._response.ok:
+                return Author(**self._response.json())
+            return self.as_dict(author)
 
     @allure.step("get authors from api")
     @rest.get()
@@ -42,9 +43,10 @@ class AuthorsApi(BaseAPI):
 
     @rest.get(param="id")
     def get_author_by_id(self, id: int):
-        if self._response.ok:
-            return Author(**self._response.json())
-        return self.as_dict(id)
+        with allure.step(f"get author by id =  {id}"):
+            if self._response.ok:
+                return Author(**self._response.json())
+            return self.as_dict(id)
 
     @rest.put(param="id", data_t=rest.JSON)
     def put_author_by_id(self, author, id: int):

@@ -17,6 +17,9 @@ class TestAuthenticationAPI:
         res = api.register(user)
         assert res['code'] == 200
 
+    def test_register_invalid_data(self):
+        pass
+
     @allure.feature("Feature: Register")
     @allure.title("Register exists account")
     def test_register_exists_user(self, get_account_api, fix_user):
@@ -108,6 +111,18 @@ class TestAuthenticationUI:
         text = store_page.get_label_h1_text()
         LOGGER.info(text)
         assert text == 'Welcome to our store'
+
+    def test_login_invalid_cases(self):
+        pass
+
+    def test_register_invalid_cases(self):
+        pass
+
+    def test_register_exists(self):
+        pass
+
+    def test_register_and_login(self):
+        pass
 
     @allure.feature("Feature: Register")
     @allure.title("verify register")

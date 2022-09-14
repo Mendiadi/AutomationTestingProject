@@ -28,3 +28,12 @@ class TestReadability:
         assert "Book Store" in book_stor_btn_txt
         assert "Log In" in login_btn_txt
         assert "Store" in store_btn_txt
+
+    def test_readability_of_buttons_store(self):
+        pass
+
+    def test_readability_of_buttons_authors(self):
+        pass
+
+    def test_readability_of_buttons_author_page(self):
+        pass

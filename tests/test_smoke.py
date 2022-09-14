@@ -33,6 +33,11 @@ class TestSmoke:
     def test_authors_element_loading(self,get_main_page):
         pass
 
+    def test_authors_page_loading_elements(self):
+        pass
+
+    def test_base_page_load_element(self):
+        pass
 
 
 

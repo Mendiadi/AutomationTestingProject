@@ -1,5 +1,5 @@
 import pytest
-from core import rest
+from core.api import rest
 from core.api import AccountApi
 from core.api import BookApi
 from core.api import AuthorsApi
