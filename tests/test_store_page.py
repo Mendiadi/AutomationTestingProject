@@ -8,7 +8,7 @@ LOGGER = logging.getLogger(__name__)
 @allure.epic("UI store page")
 class TestStore:
 
-    @allure.title("get book by title") #############
+    @allure.title("get book by title")  #############
     def test_update_book(self, get_main_page):
         store_page = get_main_page.click_bookstore()
         time.sleep(3)
@@ -35,7 +35,6 @@ class TestStore:
         LOGGER.info(msg)
         assert book.amountInStock == book_api.get_book_by_id(id=book.id).amountInStock
         assert "Must be signed in to purchase." in msg
-
 
     @allure.title("get books by author")
     def test_update_and_get_books_by_author(self, get_main_page):
@@ -65,7 +64,6 @@ class TestStore:
         assert book.amountInStock - 1 == amount_in_stock_api
         assert f"Thank you for your purchase of {book.name}" in msg
 
-
     @allure.title("case post books and see if they apear at screen")
     def test_books_updated(self, get_main_page, book_api, random_data, authors_api):
         author_new = random_data.generate_author("moshe")
@@ -79,7 +77,6 @@ class TestStore:
             text = store_page.get_book_title(book)
             assert "moshe is hot" == text
 
-
     @allure.title("check if all the books in db are visible")
     def test_verify_books(self, get_main_page, book_api):
         boos_api = book_api.get_books()
@@ -92,7 +89,6 @@ class TestStore:
         assert len(result_book_ui) == len(result)
         for i in range(len(result)):
             assert result[i] == result_book_ui[i]
-
 
     def test_buy_book_that_no_stock(self):
         pass
