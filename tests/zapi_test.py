@@ -199,6 +199,7 @@ class TestBook:
         assert book not in books
 
 
+
 class TestAPISUnauthorized:
 
     def test_unauthorized_delete_book(self, book_api):

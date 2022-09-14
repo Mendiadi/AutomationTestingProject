@@ -101,3 +101,19 @@ class TestStore:
 
     def test_verify_authors_and_books(self):
         pass
+
+
+    @allure.title("post 10 new books and buy all the books in the store once ")
+    def test_buy_multiple(self,get_main_page,get_test_data,random_data,authors_api,book_api):
+        author_created = random_data.generate_author()
+        author = authors_api.post_authors(author_created)
+        for i in range(10):
+            book = random_data.generate_book(authorid=author.id)
+            book_api.post_books(book)
+        get_main_page.reload()
+        login_page = get_main_page.login(get_test_data.email,get_test_data.password)
+        store_page = login_page.click_bookstore()
+        books = store_page.get_books()
+        for book in books:
+            store_page.purchase(book)
+            LOGGER.info(store_page.get_book_title(book))
