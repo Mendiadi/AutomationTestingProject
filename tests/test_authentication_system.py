@@ -20,6 +20,10 @@ class TestAuthenticationAPI:
     def test_register_invalid_data(self):
         pass
 
+
+    def test_login_invalid_email(self):
+        pass
+
     @allure.feature("Feature: Register")
     @allure.title("Register exists account")
     def test_register_exists_user(self, get_account_api, fix_user):

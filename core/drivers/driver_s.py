@@ -26,7 +26,7 @@ class Selenium(Driver):
     def element_is_visible(self, locator) -> [bool]:
         try:
             result = WebDriverWait(self._driver, self.wait).until(EC.visibility_of_element_located(locator))
-            return True, result
+            return result.is_displayed(), result
         except Exception as  e:
             logging.info(f"log msg from Driver - {e}")
             return False, "element not found"
@@ -50,8 +50,8 @@ class Selenium(Driver):
             logging.info(f"log msg from Driver - {e}")
             self.refresh()
             element = driver.find_element(*locator)
-        finally:
-            return element
+
+        return element
 
     def locate_elements(self, locator: tuple[[], str]) -> [WebElement]:
         """

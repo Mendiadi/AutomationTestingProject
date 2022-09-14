@@ -59,9 +59,12 @@ class TestStore:
         book1 = store_page.get_book(title=book_created.name)
         LOGGER.info(book1)
         msg = store_page.purchase(book1)
-        store_page.reload()
         amount_in_stock_api = book_api.get_book_by_id(id=book.id).amountInStock
+        store_page.reload()
+        book_after_buy = store_page.get_book(title=book.name)
+        amount_in_stock_ui = store_page.get_book_stock(book_after_buy)
         LOGGER.info(amount_in_stock_api)
+        assert str(book.amountInStock - 1) in amount_in_stock_ui
         assert book.amountInStock - 1 == amount_in_stock_api
         assert f"Thank you for your purchase of {book.name}" in msg
 
@@ -90,18 +93,12 @@ class TestStore:
         for i in range(len(result)):
             assert result[i] == result_book_ui[i]
 
-    def test_update_book_ui_apear(self,book_api,get_main_page,authors_api,random_data):
-        pass
 
     def test_buy_book_that_no_stock(self):
         pass
 
     def test_buy_book_no_stock_and_login(self):
         pass
-
-    def test_verify_authors_and_books(self):
-        pass
-
 
     @allure.title("post 10 new books and buy all the books in the store once ")
     def test_buy_multiple(self,get_main_page,get_test_data,random_data,authors_api,book_api):
@@ -117,3 +114,27 @@ class TestStore:
         for book in books:
             store_page.purchase(book)
             LOGGER.info(store_page.get_book_title(book))
+
+
+    def test_book_data_same_as_db(self,get_main_page,random_data,book_api,authors_api):
+        author_new = random_data.generate_author("david")
+        author = authors_api.post_authors(author_new)
+        book_created = random_data.generate_book(name="im happy", authorid=author.id,
+                                    description="My first day in earth",price="30",amount="5")
+        book_ = book_api.post_books(book_created)
+        store_page = get_main_page.click_bookstore()
+        store_page.reload()
+        book = store_page.get_book(title="im happy")
+        b_title = store_page.get_book_title(book)
+        b_author = store_page.get_book_author(book)
+        b_desc = store_page.get_book_decription(book)
+        b_price = store_page.get_book_price(book)
+        b_stock = store_page.get_book_stock(book)
+        assert "im happy" == b_title and "david" in b_author and \
+            b_desc == "My first day in earth" and "30" in b_price and "5" in b_stock
+        LOGGER.info(f"{b_title}, {b_stock},{b_author},{b_price},{b_desc}")
+        book_.description = "im love you"
+        book_api.put_book(book_.convert_to_book_dto(),id=book_.id)
+        store_page.reload()
+        book_after = store_page.get_book(title=book_.name)
+        assert store_page.get_book_decription(book_after) == "im love you"

@@ -1,3 +1,5 @@
+import time
+
 from core.drivers.driver import Driver
 from selenium.webdriver.common.by import By
 
@@ -16,7 +18,9 @@ class BasePage:
         self._driver.script_execute(f"document.body.style.transform='scale({value})';")
 
     def reload(self):
+
         self._driver.refresh()
+
 
     def get_store_btn_text(self)-> str:
         btn = self._driver.locate_element(self._common_locators["store_btn"])

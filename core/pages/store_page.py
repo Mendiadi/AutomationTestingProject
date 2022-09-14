@@ -15,7 +15,8 @@ class StorePage(BasePage):
         "book_cont": (By.CLASS_NAME, 'book-container'),
         "book_title": (By.CLASS_NAME, 'card-title'),
         "book_author": (By.CLASS_NAME, 'list-group-item'),
-        "book_price_cap": (By.CLASS_NAME, 'card-footer')
+        "book_price_cap": (By.CLASS_NAME, 'card-footer'),
+        "description":(By.CLASS_NAME,'card-text')
     }
 
     def get_label_h1_text(self) -> str:
@@ -74,5 +75,17 @@ class StorePage(BasePage):
 
     @allure.step("check book price")
     def get_book_price(self, book):
-        text = self._driver.locate_element(self._locators['book_price_cap'])
+        text = self._driver.locate_element(self._locators['book_price_cap'],book)
+        txt = self._driver.text(text)
+        return txt[0:txt.find("L")]
+
+    @allure.step("check book stock")
+    def get_book_stock(self, book):
+        text = self._driver.locate_element(self._locators['book_price_cap'], book)
+        txt = self._driver.text(text)
+        return txt[txt.find("L"):]
+
+    @allure.step("read book description")
+    def get_book_decription(self,book):
+        text = self._driver.locate_element(self._locators["description"], book)
         return self._driver.text(text)
