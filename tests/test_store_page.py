@@ -92,3 +92,12 @@ class TestStore:
         assert len(result_book_ui) == len(result)
         for i in range(len(result)):
             assert result[i] == result_book_ui[i]
+
+
+    def test_buy_book_that_no_stock(self):
+        pass
+
+    def test_buy_book_no_stock_and_login(self):
+        pass
+
+

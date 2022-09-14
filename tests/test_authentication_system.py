@@ -102,6 +102,8 @@ class TestAuthenticationAPI:
 @allure.epic("UI Authentication system")
 class TestAuthenticationUI:
 
+    def test_logout(self):
+        pass
 
     @allure.feature("Feature: Login")
     @allure.title("verify Login")
