@@ -12,6 +12,9 @@ class BasePage:
         "login_btn": (By.XPATH, '//*[@id="root"]/nav/div/div/a[3]')
     }
 
+    def page_resize(self,value:float):
+        self._driver.script_execute(f"document.body.style.transform='scale({value})';")
+
     def reload(self):
         self._driver.refresh()
 

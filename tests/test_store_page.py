@@ -55,13 +55,10 @@ class TestStore:
         book_created = random_data.generate_book(authorid=author.id)
         book = book_api.post_books(book_created)
         store_page = get_main_page.click_bookstore()
-        time.sleep(1)
         store_page.reload()
         book1 = store_page.get_book(title=book_created.name)
         LOGGER.info(book1)
-        time.sleep(1)
         msg = store_page.purchase(book1)
-        time.sleep(1)
         store_page.reload()
         amount_in_stock_api = book_api.get_book_by_id(id=book.id).amountInStock
         LOGGER.info(amount_in_stock_api)

@@ -84,7 +84,7 @@ class Driver(ABC):
         pass
 
     def refresh(self):
-        if self._type == PLAYWRIGHT:
+        if self._type.lower() == PLAYWRIGHT:
             self._driver.reload()
         else:
             self._driver.refresh()
