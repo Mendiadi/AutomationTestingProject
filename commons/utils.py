@@ -30,13 +30,3 @@ def write_to_json(data: dict,path):
         outfile.write(json_object)
 
 
-def screenshot_if_failed(driver, request):
-    if request.node.rep_call.failed:
-        try:
-            driver.script_execute("document.body.bgColor = 'white';")
-            allure.attach(driver.get_screenshot(),
-                          name=request.function.__name__,
-                          attachment_type=allure.attachment_type.PNG)
-        except:
-
-            pass

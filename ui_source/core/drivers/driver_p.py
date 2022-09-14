@@ -10,7 +10,7 @@ class PlayWright(Driver):
     def __init__(self, driver, type_):
         super().__init__(driver, type_)
 
-    def switch_to_alert(self,input__=None):
+    def switch_to_alert(self, input__=None):
         btn = input__[0].query_selector(self.By(*input__[1]))
         with self._driver.expect_event("dialog") as dialog:
             self._driver.on("dialog", lambda dialog: dialog.accept())
@@ -20,9 +20,7 @@ class PlayWright(Driver):
 
             return txt
 
-
-
-    def element_is_visible(self,locator) :
+    def element_is_visible(self, locator):
         return self._driver.is_visible(self.By(*locator)), "locator"
 
     @staticmethod
@@ -95,14 +93,11 @@ class PlayWright(Driver):
         :return: screenshot
         :rtype: bytes
         """
-        image = f"{__name__}.png"
-        os.makedirs(os.path.join("ScreenShots", os.path.dirname(image)), exist_ok=True)
-        allure.attach(self._driver.screenshot(
-            path=os.path.join("ScreenShots", image)), name=__name__, attachment_type=AttachmentType.PNG)
-
-        return self._driver.screenshot()
+        image = f"img.png"
+        if "reports" in os.listdir('/practice_automation'):
+            img__ = self._driver.screenshot(
+                path=fr"{image}")
+            return img__
 
     def alert(self):
         self._driver.on("dialog", lambda dialog: dialog.accept())
-
-

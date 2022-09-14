@@ -17,7 +17,6 @@ class TestAuthenticationAPI:
         res = api.register(user)
         assert res['code'] == 200
 
-
     @allure.feature("Feature: Register")
     @allure.title("Register exists account")
     def test_register_exists_user(self, get_account_api, fix_user):
@@ -25,7 +24,6 @@ class TestAuthenticationAPI:
         user = fix_user['user']
         res = api.register(user)
         assert res['code'] == 400 and "DuplicateUserName" in res['msg']
-
 
     @allure.feature("Feature: Login")
     @allure.title("Login user not exists")
@@ -37,7 +35,6 @@ class TestAuthenticationAPI:
         })
         assert res['code'] == 401 and "Unauthorized" in res['msg']
 
-
     @allure.feature("Feature: Login")
     @allure.title("Login without email")
     def test_login_no_email(self, get_account_api, random_data):
@@ -47,7 +44,6 @@ class TestAuthenticationAPI:
         })
         assert res['code'] == 400 and "The Email field is required" in res['msg']
 
-
     @allure.feature("Feature: Login")
     @allure.title("Login without password")
     def test_login_no_password(self, get_account_api, random_data):
@@ -56,7 +52,6 @@ class TestAuthenticationAPI:
             "email": random_data.email()
         })
         assert res['code'] == 400 and "The Password field is required" in res['msg']
-
 
     @pytest.mark.parametrize("password,excepted",
                              [("aaa", "Your password is limited to 4 to 15 characters")
@@ -71,7 +66,6 @@ class TestAuthenticationAPI:
         })
         assert res['code'] == 400 and excepted in res['msg']
 
-
     @allure.feature("Feature: Login")
     @allure.title("Login valid")
     def test_login(self, get_account_api, fix_user):
@@ -80,7 +74,6 @@ class TestAuthenticationAPI:
         api = get_account_api
         user = api.login(login_user)
         assert user.token is not None
-
 
     @allure.title("Refresh token valid")
     def test_refresh_token(self, get_account_api, fix_user):
@@ -92,12 +85,12 @@ class TestAuthenticationAPI:
         assert res['res'].userId == user_res.userId
         assert res['res'].token != user_res.token
 
-
     @allure.title("Refresh token invalid data")
     def test_refresh_invalid_token(self, get_account_api):
         api = get_account_api
         res = api.refresh_token("i")
         assert res['code'] == 400
+
 
 @allure.epic("UI Authentication system")
 class TestAuthenticationUI:
@@ -105,6 +98,7 @@ class TestAuthenticationUI:
     def test_logout(self):
         pass
 
+    @pytest.mark.regression
     @allure.feature("Feature: Login")
     @allure.title("verify Login")
     def test_login(self, get_main_page, get_test_data):
@@ -117,7 +111,7 @@ class TestAuthenticationUI:
 
     @allure.feature("Feature: Register")
     @allure.title("verify register")
-    def test_register(self, get_main_page,random_data):
+    def test_register(self, get_main_page, random_data):
         register_page = get_main_page.click_register()
-        register_page.register(random_data.email(), random_data.password(), random_data.firstname(), random_data.lastname())
-
+        register_page.register(random_data.email(), random_data.password(), random_data.firstname(),
+                               random_data.lastname())

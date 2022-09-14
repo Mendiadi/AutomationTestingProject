@@ -1,11 +1,14 @@
+import os
+import ctypes
+
 import pytest
 from ui_source.pages import login_page
 from ui_source.core.data_load import load_test_data
 from ui_source.core.drivers.driver import Driver
 from playwright.sync_api import sync_playwright
 from selenium import webdriver
-from commons.utils import screenshot_if_failed
 
+import allure
 
 
 @pytest.fixture
@@ -16,7 +19,8 @@ def get_test_data(pytestconfig):
     data.browser = pytestconfig.getoption("browser")
     return data
 
-#java -jar selenium-server-standalone-3.141.59.jar
+
+# java -jar selenium-server-standalone-3.141.59.jar
 @pytest.fixture
 def init_driver(get_test_data, request):
     get_test_data.valid()
@@ -33,16 +37,18 @@ def init_driver(get_test_data, request):
             page.get(get_test_data.url)
         else:
             if get_test_data.browser == "chrome":
-                page =  webdriver.Chrome(get_test_data.driver_path)
+                page = webdriver.Chrome(get_test_data.driver_path)
             elif get_test_data.browser == "firefox":
 
-                page =  webdriver.Firefox(get_test_data.driver_path)
+                page = webdriver.Firefox(get_test_data.driver_path)
             page.get(get_test_data.url)
         page.maximize_window()
-        yield Driver.create_driver(get_test_data.lib, page)
-        screenshot_if_failed(page, request)
-        page.close()
+        obj_driver = Driver.create_driver(get_test_data.lib, page)
+        yield obj_driver
+
     elif get_test_data.lib == "playwright":
+        user32 = ctypes.windll.user32
+
         with sync_playwright() as p:
             if get_test_data.browser == "chrome":
                 driver = p.chromium.launch(headless=False)
@@ -50,11 +56,29 @@ def init_driver(get_test_data, request):
                 driver = p.firefox.launch(headless=False)
             page = driver.new_page()
             page.goto(get_test_data.url)
-            screensize = {"width":1920, "height": 1080}
+            screensize = {"width": user32.GetSystemMetrics(0), "height": user32.GetSystemMetrics(1)}
             page.set_viewport_size(viewport_size=screensize)
-            yield Driver.create_driver(get_test_data.lib, page)
-            screenshot_if_failed(page, request)
+            obj_driver = Driver.create_driver(get_test_data.lib, page)
+            yield obj_driver
+            play_w_img = obj_driver.get_screenshot()
             page.close()
+
+    if request.node.rep_call.failed:
+        try:
+            if obj_driver.type == "selenium":
+                obj_driver.script_execute("document.body.bgColor = 'white';")
+                allure.attach(obj_driver.get_screenshot(),
+                              name=request.function.__name__,
+                              attachment_type=allure.attachment_type.PNG)
+            else:
+                allure.attach(play_w_img, attachment_type=allure.attachment_type.PNG)
+                if "img.png" in os.listdir():
+                    os.remove(play_w_img)
+        except:
+            pass
+        finally:
+            if obj_driver.type == "selenium":
+                page.close()
 
 
 @pytest.fixture
