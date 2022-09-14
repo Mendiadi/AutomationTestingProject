@@ -45,16 +45,23 @@
                 # as you can see you can call these api methods and -
                 use the parameter config to send most you need to.
 
-    (4) you can always send data with your request
-    example (4):
+    (4) you can send parameters that will catch as data
+    example (4)
+        in your test file -
+            def test_user():
+                res = post_user({name:name,id:id})
+                res1 = post_user(user_obj)
+
+    (5) you can always send data with your request
+    example (5):
         in your test file -
             def test_user():
                 res = post_user(data={name:name,id:id})
 
                 # as you can see you can always send or ignore and then data will be None
 
-    (5) you can choose if you send data by "data=" or "json=" using the data_t arg:
-    example (5):
+    (6) you can choose if you send data by "data=" or "json=" using the data_t arg:
+    example (6):
             @rest.post(data_t="json") # for json, its will be default "data" if not sending anything
             def post_user_id(self,response):
                 return response # to return the result or return any manipulation
@@ -62,7 +69,7 @@
     after im showed you how to use it and example also
     you can simply try and use it its very cool decorators.
 
-    more will come out soon, adi.
+    adi.
 """
 # implement code start:
 
@@ -70,6 +77,8 @@ import requests
 import enum
 import logging as lg
 
+
+# constant variables
 
 class Req(enum.Enum):
     """
@@ -89,12 +98,22 @@ DATA = "data"
 
 
 class RestError(Exception):
+    """
+        base module exception to help debug and dev
+    """
+
     def __init__(self, message, session: requests.Session):
         self.message = f"Session {session.headers['Connection']} stopped reason: {message}"
         super().__init__(self.message)
 
 
 class ParamNotSigned(RestError):
+    """
+        Error that can happen if you forget to send parameters
+        with signed like this -> find_user(id=id) after you config the param in your decorator
+
+    """
+
     def __init__(self, session, param, arg, func):
         self.msg = f"""param '{param}' is not signed when first call from '{func.__name__}' with '{arg}'
                    consider if you use 'param' argument for our decorators you should
@@ -104,12 +123,19 @@ class ParamNotSigned(RestError):
 
 # functions starts here:
 
-# context manager
 
 class Rest:
+    """
+        Holder for some methods
+    """
 
     @staticmethod
     def try_to_json(data):
+        """
+            try to make a dict if obj is sent
+        :param data: obj or dict to send data with request
+        :return: data after manipulation or just data
+        """
         try:
             return data.__dict__
         except AttributeError:
@@ -181,6 +207,7 @@ class Rest:
         return second and after all of that circle the fist will return
         :param type_: type of requests see Req class
         :param url: link to send request
+        :param param: the parameter configuration
         :param data_t: data type json or data
         """
 
@@ -263,6 +290,10 @@ def put(
 #####################################################
 
 class SessionContextManager:
+    """
+        Context Manager to make a session
+        and simply auto closed and logs after session ends
+    """
     def __init__(self, headers: [] = ""):
         self._headers = headers
         self._session = requests.session()
@@ -280,7 +311,11 @@ class SessionContextManager:
 
 
 class Session(SessionContextManager):
+    """
+        Session Context Manager class
+        to make some operations on session
 
+    """
     def __init__(self, headers: [] = ""):
         super().__init__(headers)
         self._headers = headers
@@ -298,6 +333,14 @@ class Session(SessionContextManager):
         return self._session.headers
 
     def update_token(self, user, is_created_now=False):
+        """
+        Update the login user and authorize
+        create new users if database are empty
+        save the results in file
+        :param user: user data to login
+        :param is_created_now: true if user are just created and need to store it
+        :return: None ot status code
+        """
         from commons import utils
         if isinstance(user, str):
             headers = {'Authorization': f'Bearer {user}'}
