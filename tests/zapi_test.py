@@ -7,6 +7,13 @@ from core.models import GetAuthorDto
 @allure.epic("Authors testing from api")
 class TestAuthors:
 
+    def test_post_author_invalid_data(self):
+        pass
+
+    def test_put_author_invalid_data(self):
+        pass
+
+
     @pytest.mark.regression
     @allure.title("case Add author")
     def test_post_authors(self, authors_api, random_data):
