@@ -78,7 +78,8 @@ def authors_api(bearer_au_session, url):
     api = AuthorsApi(url, session)
     yield api
     for author in api.get_authors():
-        api.delete_author(id=author.id)
+        if author.id > 5:
+            api.delete_author(id=author.id)
 
 
 
