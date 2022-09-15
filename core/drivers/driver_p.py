@@ -6,7 +6,7 @@ import logging
 
 
 class PlayWright(Driver):
-    def __init__(self, driver:Page, type_):
+    def __init__(self, driver, type_):
         super().__init__(driver, type_)
         self._driver_temp = None
     def switch_to_alert(self, input__=None):
@@ -20,6 +20,7 @@ class PlayWright(Driver):
             return txt
 
     def switch_to_tab(self, val: int):
+        logging.info(self._driver.url)
         pages = self._driver.context.pages
         if len(self._driver.context.pages) > 1:
             self._driver =pages[val]

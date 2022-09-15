@@ -5,6 +5,7 @@ from core.pages.map_frame import MapFrame
 class AuthorPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
+
     _locators = {
 
         "map_frame": (By.ID, 'iframeId')
