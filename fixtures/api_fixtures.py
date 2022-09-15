@@ -76,7 +76,9 @@ def authors_api(bearer_au_session, url):
     url = url + URL_SWAGGER + AUTHORS_URL
     session = bearer_au_session
     api = AuthorsApi(url, session)
-    return api
+    yield api
+    for author in api.get_authors():
+        api.delete_author(id=author.id)
 
 
 

@@ -72,8 +72,11 @@ class TestAuthors:
             assert [query not in author.name for author in authors_get]
 
 
+
 @allure.epic("books from api")
 class TestBook:
+
+
 
     @allure.title("get book by id")
     def test_get_book_by_id_valid(self, book_api, random_data, authors_api):
