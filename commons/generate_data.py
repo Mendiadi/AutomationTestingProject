@@ -46,13 +46,13 @@ class RandomData:
         return CreateAuthorDto(name, homala, homelo)
 
     def generate_book(self, authorid=None, price=None, amount=None, description: str = None,
-                      name: str = None) -> CreateBookDto:
+                      name: str = None,imageUrl= None) -> CreateBookDto:
         book = {
             "name": name if name else self._faker.name(),
             "description": description if description else "description",
             "price": price if price else 50,
             "amountInStock": amount if amount else 10,
-            "imageUrl": images.IMAGES[self._faker.random.randint(0,len(images.IMAGES) - 1)],
+            "imageUrl": images.IMAGES[self._faker.random.randint(0,len(images.IMAGES) - 1)] if imageUrl else None,
             "authorId": authorid if authorid else self._faker.random.randint(4, 200)
         }
         return CreateBookDto(**book)

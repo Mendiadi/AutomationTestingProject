@@ -64,10 +64,11 @@ class StorePage(BasePage):
                 buy_btn = self._driver.locate_element(self._locators['buy_btn'], book)
                 try:
                     self._driver.move_to_element(buy_btn)
+                    alert_var = self._driver.switch_to_alert()
                 except:
                     self.page_resize(0.8)
                     buy_btn.click()
-                alert_var = self._driver.switch_to_alert()
+                    alert_var = self._driver.switch_to_alert()
                 self.page_resize(1.0)
                 return alert_var
             else:
@@ -89,7 +90,7 @@ class StorePage(BasePage):
         with allure.step(f"get book price is - {txt}"):
             return txt
 
-    def get_book_stock(self, book):
+    def get_book_stock(self, book) -> int:
         with allure.step(f"check book stock = {book}"):
             text = self._driver.locate_element(self._locators['book_price_cap'], book)
             txt = self._driver.text(text)

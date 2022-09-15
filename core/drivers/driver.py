@@ -52,7 +52,8 @@ class Driver(ABC):
     @abstractmethod
     def get_screenshot(self) -> bytes:
         pass
-
+    def switch_to_default(self):
+        pass
     @property
     def title(self) -> str:
         if self._type == SELENIUM:

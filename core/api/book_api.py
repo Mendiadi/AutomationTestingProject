@@ -38,7 +38,22 @@ class BookApi(BaseAPI):
                 return BookDto(**self._response.json())
             return self.as_dict()
 
-    @rest.put(param="id",data_t=rest.JSON)
-    def put_book(self,book,id:int):
+    @rest.put(param="id", data_t=rest.JSON)
+    def put_book(self, book, id: int):
         with allure.step(f"put book by id -> id= {id} and body = {book}"):
+            return self.as_dict()
+
+    @rest.get(url="/findauthor/", param="authorId")
+    def find_book_by_author_id(self, authorId: int):
+        with allure.step(f"find author from api id= {authorId}"):
+            if self._response.ok:
+                book_list = []
+                for book in self._response.json():
+                    book_list.append(BookDto(**book))
+                return book_list
+            return self.as_dict()
+
+    @rest.put(url="/purchase/",param="id")
+    def purchase_book(self,id:int):
+        with allure.step(f"purchase book from api id = {id}"):
             return self.as_dict()

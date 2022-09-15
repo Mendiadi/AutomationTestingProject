@@ -11,7 +11,7 @@ class TestStore:
     def test_add_book_apear(self, get_main_page,book_api,authors_api,random_data):
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)
-        book_created = random_data.generate_book(authorid=author.id)
+        book_created = random_data.generate_book(authorid=author.id,imageUrl=True)
         book = book_api.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         store_page.reload()
@@ -26,7 +26,7 @@ class TestStore:
     def test_buy_no_login_book(self, get_main_page, book_api, random_data, authors_api):
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)
-        book_created = random_data.generate_book(authorid=author.id, name="shay")
+        book_created = random_data.generate_book(authorid=author.id, name="shay",imageUrl=True)
         book = book_api.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         store_page.reload()
@@ -64,17 +64,30 @@ class TestStore:
         amount_in_stock_ui = store_page.get_book_stock(book_after_buy)
         LOGGER.info(amount_in_stock_api)
         assert str(book.amountInStock - 1) in amount_in_stock_ui
-
         assert book.amountInStock - 1 == amount_in_stock_api
         assert f"Thank you for your purchase of {book.name}" in msg
 
+    @allure.title("case buy book from api and check for update")
+    def test_buy_book_from_api_to_ui(self,random_data,book_api,get_test_data,get_main_page,authors_api):
+        author_created = random_data.generate_author()
+        author = authors_api.post_authors(author_created)
+        book_created = random_data.generate_book(name="waves of sea",authorid=author.id,imageUrl=True)
+        book = book_api.post_books(book_created)
+        store_page = get_main_page.click_bookstore()
+        book_element = store_page.get_book(title=book.name)
+        book_element_stock_before = store_page.get_book_stock(book_element)
+        book_api.purchase_book(id=book.id)
+        store_page.reload()
+        book_element_after = store_page.get_book(book.name)
+        book_element_stock_after = store_page.get_book_stock(book_element_after)
+        assert book_element_stock_before != book_element_stock_after
 
 
     @allure.title("case post books and see if they apear at screen")
     def test_books_updated(self, get_main_page, book_api, random_data, authors_api):
         author_new = random_data.generate_author("moshe")
         author = authors_api.post_authors(author_new)
-        book_created = random_data.generate_book(name="moshe is hot", authorid=author.id)
+        book_created = random_data.generate_book(name="moshe is hot", authorid=author.id,imageUrl=True)
         book_api.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         books = store_page.get_books_by_author("moshe")
@@ -108,12 +121,13 @@ class TestStore:
     def test_buy_multiple(self,get_main_page,get_test_data,random_data,authors_api,book_api):
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)
-        for i in range(10):
+        for i in range(6):
             book = random_data.generate_book(authorid=author.id)
             book_api.post_books(book)
-        get_main_page.reload()
+
         login_page = get_main_page.login(get_test_data.email,get_test_data.password)
         store_page = login_page.click_bookstore()
+        get_main_page.reload()
         books = store_page.get_books()
         for book in books:
             store_page.purchase(book)
@@ -123,7 +137,7 @@ class TestStore:
     def test_book_image_change(self,get_main_page,book_api,authors_api,random_data):
         author_created = random_data.generate_author(name="dor dayan")
         author = authors_api.post_authors(author_created)
-        book_created = random_data.generate_book(authorid=author.id)
+        book_created = random_data.generate_book(authorid=author.id,imageUrl=True)
         book_before = book_api.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         store_page.reload()
@@ -142,7 +156,7 @@ class TestStore:
         author_new = random_data.generate_author("david")
         author = authors_api.post_authors(author_new)
         book_created = random_data.generate_book(name="im happy", authorid=author.id,
-                                    description="My first day in earth",price="30",amount="5")
+                                    description="My first day in earth",price="30",amount="5",imageUrl=True)
         book_ = book_api.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         store_page.reload()

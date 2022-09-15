@@ -124,7 +124,7 @@ class ParamNotSigned(RestError):
 # functions starts here:
 
 
-class Rest:
+class HTTP:
     """
         Holder for some methods
     """
@@ -187,7 +187,7 @@ class Rest:
         except KeyError:
             raise ParamNotSigned(self._session, param, data, func)
         url_ = self._base_url + url + param_ if url else self._base_url
-        data = Rest.try_to_json(data)
+        data = HTTP.try_to_json(data)
         return data, url_ if (url_.count(param_, 30) > 1 or url) or not url_ else f"{url_}/{param_}"
 
     @staticmethod
@@ -213,8 +213,8 @@ class Rest:
 
         def decorate(func, **kwargs) -> []:
             def wrapper(self, *args, **kwargs) -> []:
-                data, url_ = Rest.parse(url, kwargs, param, self, args, func)
-                self._response = Rest.get_response(type_, self._session, url_, data, data_t)
+                data, url_ = HTTP.parse(url, kwargs, param, self, args, func)
+                self._response = HTTP.get_response(type_, self._session, url_, data, data_t)
                 lg.info(f'{func.__name__} -> DATA: {data}\n params: {param} RESPONSE: {self.as_dict()} ')
                 return func(self, *args, **kwargs)
 
@@ -236,7 +236,7 @@ def get(
     :return: response with fun that use this decorator
     :rtype: Any
     """
-    return Rest.request(Req.GET, url, param, data_t)
+    return HTTP.request(Req.GET, url, param, data_t)
 
 
 def delete(
@@ -252,7 +252,7 @@ def delete(
         :return: response with fun that use this decorator
         :rtype: Any
         """
-    return Rest.request(Req.DELETE, url, param, data_t)
+    return HTTP.request(Req.DELETE, url, param, data_t)
 
 
 def post(
@@ -268,7 +268,7 @@ def post(
         :return: response with fun that use this decorator
         :rtype: Any
     """
-    return Rest.request(Req.POST, url, param, data_t)
+    return HTTP.request(Req.POST, url, param, data_t)
 
 
 def put(
@@ -284,7 +284,7 @@ def put(
         :return: response with fun that use this decorator
         :rtype: Any
     """
-    return Rest.request(Req.PUT, url, param, data_t)
+    return HTTP.request(Req.PUT, url, param, data_t)
 
 
 #####################################################
