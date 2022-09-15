@@ -34,6 +34,17 @@ class Driver(ABC):
         pass
 
     @abstractmethod
+    def get_attribute(self, element, name: str) -> [str]:
+        pass
+
+    @abstractmethod
+    def switch_to_tab(self,val:int):
+        pass
+
+    def url(self):
+        pass
+
+    @abstractmethod
     def script_execute(self, __script: str):
         pass
 
@@ -68,7 +79,10 @@ class Driver(ABC):
         :return: string of text content
         """
         if self._type == PLAYWRIGHT:
-            return locator.text_content()
+            try:
+                return locator.text_content()
+            except:
+                return
         elif self._type == SELENIUM:
             return locator.text
 

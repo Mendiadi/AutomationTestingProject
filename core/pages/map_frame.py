@@ -3,9 +3,10 @@ from selenium.webdriver.common.by import By
 import keyboard
 import allure
 class MapFrame:
-    def __init__(self,driver:Driver):
+    def __init__(self,driver:Driver,input__=None):
         self._driver = driver
         self._tab = 0
+        self.input__ = input__
 
     _locators = {"map": (By.XPATH, '//*[@id="mapDiv"]/div/div/div[4]/div/div/div/div'),
 
@@ -22,7 +23,7 @@ class MapFrame:
             return txt
 
     def get_map_cordin_in_float(self):
-        link = self._driver.locate_element(self._locators['link'])
+        link = self._driver.locate_element(self._locators['link'],self.input__)
         link.click()
         self._tab = self._driver.switch_to_tab(1)
 
@@ -38,7 +39,7 @@ class MapFrame:
 
 
     def change_look_style(self) -> str:
-        btn = self._driver.locate_element(self._locators["map_change_look"])
+        btn = self._driver.locate_element(self._locators["map_change_look"],self.input__)
         txt = self._driver.get_attribute(btn,"title")
         btn.click()
         with allure.step(f"change map look style = {txt}"):

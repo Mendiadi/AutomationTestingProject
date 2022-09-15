@@ -8,7 +8,7 @@ import logging
 class PlayWright(Driver):
     def __init__(self, driver, type_):
         super().__init__(driver, type_)
-
+        self._driver_temp = None
     def switch_to_alert(self, input__=None):
         btn = input__[0].query_selector(self.By(*input__[1]))
         with self._driver.expect_event("dialog") as dialog:
@@ -18,6 +18,19 @@ class PlayWright(Driver):
             txt = dialog.value
 
             return txt
+
+    def switch_to_tab(self, val: int):
+        pages = self._driver.context.pages
+        if len(self._driver.context.pages) > 1:
+            self._driver =pages[val]
+        return val
+
+    def get_attribute(self, element, name: str) -> [str]:
+        return element.get_attribute(name)
+
+    @property
+    def url(self):
+        return self._driver.url
 
     def element_is_visible(self, locator):
         return self._driver.is_visible(self.By(*locator)), "locator"
@@ -54,8 +67,8 @@ class PlayWright(Driver):
         except Exception as e:
             logging.info(f"log msg from Driver - {e}")
             element = driver.query_selector(self.By(*locator))
-        finally:
-            return element
+
+        return element
 
     def locate_elements(self, locator: tuple) -> [ElementHandle]:
         """
@@ -70,6 +83,9 @@ class PlayWright(Driver):
         # else:
         #     raise TimeoutError
 
+    def switch_to_default(self):
+        self._drvier = self._driver_temp
+
     def locate_frame(self, locator: tuple) -> FrameLocator:
         """
         Locate frame
@@ -77,8 +93,8 @@ class PlayWright(Driver):
         :return: frame
         :rtype: FrameLocator
         """
-        frame = self._driver.frame_locator(self.By(*locator))
-        return frame
+        frame = self._driver.frame_locator(locator)
+        self._driver = frame
 
     def script_execute(self, __script: str):
         """

@@ -18,5 +18,10 @@ class AuthorPage(BasePage):
 
     def on_map(self):
         frame = self._driver.locate_element(self._locators["map_frame"])
-        self._driver.locate_frame(frame)
-        return MapFrame(self._driver)
+        if self._driver.type == "selenium" :
+            self._driver.locate_frame(frame)
+            return MapFrame(self._driver)
+        else:
+            p = self._driver.locate_frame(frame)
+            return MapFrame(self._driver,p)
+

@@ -1,5 +1,4 @@
 import logging
-import time
 import allure
 import pytest
 LOGGER = logging.getLogger(__name__)
@@ -132,7 +131,7 @@ class TestStore:
         book_before_img = store_page.get_book_image_url(book_from_ui)
         assert book_before_img == book_before.imageUrl
         book_before.imageUrl = random_data.image_temp()
-        book_api.put_book(book_before.convert_to_book_dto())
+        book_api.put_book(book_before.convert_to_book_dto(),id=book_before.id)
         store_page.reload()
         book_after = store_page.get_book(title=book_before.name)
         book_after_img = store_page.get_book_image_url(book_after)

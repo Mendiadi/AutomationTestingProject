@@ -72,6 +72,8 @@ def init_driver(get_test_data, request):
             if request.node.rep_call.failed:
                 play_w_img = obj_driver.get_screenshot()
             page.close()
+
+
     if request.node.rep_call.failed:
         try:
             if obj_driver.type == SELENIUM:

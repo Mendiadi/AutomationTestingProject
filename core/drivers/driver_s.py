@@ -7,6 +7,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.action_chains import ActionChains
 import selenium.common.exceptions as se
 
+
 class Selenium(Driver):
     def __init__(self, driver, type_):
         self.wait = 5
@@ -27,7 +28,7 @@ class Selenium(Driver):
         try:
             result = WebDriverWait(self._driver, self.wait).until(EC.visibility_of_element_located(locator))
             return result.is_displayed(), result
-        except Exception as  e:
+        except Exception as e:
             logging.info(f"log msg from Driver - {e}")
             return False, "element not found"
 
@@ -43,7 +44,7 @@ class Selenium(Driver):
             driver = self._driver
         try:
             element = driver.find_element(*locator)
-        except (se.TimeoutException,se.NoSuchElementException,se.ElementNotVisibleException) as e:
+        except (se.TimeoutException, se.NoSuchElementException, se.ElementNotVisibleException) as e:
             logging.info(f"log msg from Driver - {e}")
             element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(locator))
         except se.StaleElementReferenceException as e:
@@ -52,17 +53,19 @@ class Selenium(Driver):
             element = driver.find_element(*locator)
 
         return element
-    def switch_to_tab(self,val:int):
+
+    def switch_to_tab(self, val: int):
         if len(self._driver.window_handles) > 1:
             self._driver.switch_to.window(self._driver.window_handles[val])
         return val
 
-    def get_attribute(self,element,name:str) -> [str]:
+    def get_attribute(self, element, name: str) -> [str]:
         return element.get_attribute(name)
 
     @property
     def url(self):
         return self._driver.current_url
+
     def locate_elements(self, locator: tuple[[], str]) -> [WebElement]:
         """
        Locating elements with wait timeout and option to mark that elements
@@ -85,7 +88,6 @@ class Selenium(Driver):
             time.sleep(1)
             logging.info(f"log msg from Driver - {e}")
             self._driver.switch_to.frame(locator)
-
 
     def switch_to_default(self):
         """
