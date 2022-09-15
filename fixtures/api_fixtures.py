@@ -1,3 +1,6 @@
+import logging
+
+import allure
 import pytest
 from core.api import rest
 from core.api import AccountApi
@@ -42,6 +45,7 @@ def bearer_au_session(fix_user, url, fix_admin_user):
     user_dict = {"user": fix_user['user'].to_json(), "main_user_id": fix_user['userid']}
 
     with rest.Session() as new_session:
+
         new_session.session.post(url=f"{url}{URL_SWAGGER}{ACCOUNT_URL}/register", json=ApiUserDto(
             fix_admin_user.email, fix_admin_user.password, "admin", "admin").to_json())
         new_session.set_login_url(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/login')
@@ -50,8 +54,9 @@ def bearer_au_session(fix_user, url, fix_admin_user):
             new_session.session.post(f'{url}{URL_SWAGGER}{ACCOUNT_URL}/register', json=user_dict['user'])
 
             new_session.update_token(user_dict, True)
+        allure.step(f"login {new_session.headers}")
         yield new_session
-
+        allure.step(f"logout {new_session.headers}")
 
 @pytest.fixture(scope="session")
 def get_account_api(bearer_au_session, url) -> AccountApi:
@@ -71,19 +76,8 @@ def authors_api(bearer_au_session, url):
     url = url + URL_SWAGGER + AUTHORS_URL
     session = bearer_au_session
     api = AuthorsApi(url, session)
-    yield api
-    authors = api.get_authors()
-    for author in authors:
-        if author.id > 3:
-            api.delete_author(id=author.id)
+    return api
 
-@pytest.fixture(scope="session")
-def safe_lunch(book_api,fix_admin_user,fix_user):
-    book_api.session.update_token(fix_admin_user.to_json())
-    books = book_api.get_books()
-    if len(books) > 4:
-        for i,book in enumerate(books):
-            if i >= 4:
-                book_api.delete_book(id=book.id)
-    book_api.session.update_token(fix_user['user'].to_json())
+
+
 
