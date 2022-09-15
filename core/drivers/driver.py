@@ -2,11 +2,12 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from commons import LibNotSupport
 from commons.constant import *
+from playwright.sync_api import Page
 
 
 class Driver(ABC):
 
-    def __init__(self, driver, type_):
+    def __init__(self, driver:Page, type_):
         self._driver = driver
         self._type = type_
 

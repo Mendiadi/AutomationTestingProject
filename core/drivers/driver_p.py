@@ -1,12 +1,12 @@
 from core.drivers import Driver
-from playwright.sync_api import Locator, ElementHandle, FrameLocator
+from playwright.sync_api import Locator, ElementHandle, FrameLocator,Page
 from commons import LocatorWithError
 import os
 import logging
 
 
 class PlayWright(Driver):
-    def __init__(self, driver, type_):
+    def __init__(self, driver:Page, type_):
         super().__init__(driver, type_)
         self._driver_temp = None
     def switch_to_alert(self, input__=None):
@@ -62,6 +62,7 @@ class PlayWright(Driver):
         """
         if driver is None:
             driver = self._driver
+
         try:
             element = driver.locator(self.By(*locator))
         except Exception as e:
@@ -84,17 +85,18 @@ class PlayWright(Driver):
         #     raise TimeoutError
 
     def switch_to_default(self):
-        self._drvier = self._driver_temp
+        pass
 
-    def locate_frame(self, locator: tuple) -> FrameLocator:
+    def locate_frame(self, locator: tuple):
         """
         Locate frame
         :param locator: frame locator
         :return: frame
         :rtype: FrameLocator
         """
-        frame = self._driver.frame_locator(locator)
-        self._driver = frame
+
+        frame = self._driver.frame_locator(self.By(*locator))
+        return frame
 
     def script_execute(self, __script: str):
         """

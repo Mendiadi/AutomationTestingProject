@@ -12,8 +12,7 @@ class AuthorPage(BasePage):
     }
     def out_map(self,map_:MapFrame):
         map_.__del__()
-        if self._driver.type == "selenium":
-            self._driver.switch_to_default()
+        self._driver.switch_to_default()
         return self._driver.url
 
     def on_map(self):
@@ -22,6 +21,6 @@ class AuthorPage(BasePage):
             self._driver.locate_frame(frame)
             return MapFrame(self._driver)
         else:
-            p = self._driver.locate_frame(frame)
-            return MapFrame(self._driver,p)
+            frame = self._driver.locate_frame(self._locators["map_frame"])
+            return MapFrame(self._driver,frame)
 
