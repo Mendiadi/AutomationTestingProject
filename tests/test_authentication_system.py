@@ -103,6 +103,7 @@ class TestAuthenticationAPI:
 class TestAuthenticationUI:
 
     def test_logout(self):
+        pytest.skip()
         pass
 
     @pytest.mark.regression
@@ -117,15 +118,19 @@ class TestAuthenticationUI:
         assert text == 'Welcome to our store'
 
     def test_login_invalid_cases(self):
+        pytest.skip()
         pass
 
     def test_register_invalid_cases(self):
+        pytest.skip()
         pass
 
     def test_register_exists(self):
+        pytest.skip()
         pass
 
     def test_register_and_login(self):
+        pytest.skip()
         pass
 
     @allure.feature("Feature: Register")

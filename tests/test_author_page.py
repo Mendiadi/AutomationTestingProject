@@ -2,6 +2,7 @@ import logging
 import time
 
 import allure
+import pytest
 
 
 @allure.epic("UI Author Page")
@@ -11,21 +12,27 @@ class TestAuthorPage:
 
 
     def test_validate_books(self):
+        pytest.skip()
         pass
 
     def test_validate_name_headline(self):
+        pytest.skip()
         pass
 
     def test_validate_data_vs_database(self):
+        pytest.skip()
         pass
 
     def validate_data_updated_in_books(self):
+        pytest.skip()
         pass
 
     def test_add_and_delete_books(self):
+        pytest.skip()
         pass
 
     def test_validate_home_location_updated(self):
+        pytest.skip()
         pass
 
     def test_validate_map_cordinate(self,get_main_page,authors_api):
@@ -48,7 +55,10 @@ class TestAuthorPage:
         map = author_page.on_map()
         map_cor = map.get_map_details()
         logging.info(map_cor)
-        map.change_look_style()
-        time.sleep(5)
+        change_look_style = map.change_look_style()
+        assert change_look_style != "Show street map"
+        change_look_style_again = map.change_look_style()
+        assert change_look_style_again != "Show satellite imagery"
+
 
 

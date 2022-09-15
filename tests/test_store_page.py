@@ -1,7 +1,7 @@
 import logging
 import time
 import allure
-
+import pytest
 LOGGER = logging.getLogger(__name__)
 
 
@@ -65,8 +65,11 @@ class TestStore:
         amount_in_stock_ui = store_page.get_book_stock(book_after_buy)
         LOGGER.info(amount_in_stock_api)
         assert str(book.amountInStock - 1) in amount_in_stock_ui
+
         assert book.amountInStock - 1 == amount_in_stock_api
         assert f"Thank you for your purchase of {book.name}" in msg
+
+
 
     @allure.title("case post books and see if they apear at screen")
     def test_books_updated(self, get_main_page, book_api, random_data, authors_api):
@@ -95,9 +98,11 @@ class TestStore:
 
 
     def test_buy_book_that_no_stock(self):
+        pytest.skip()
         pass
 
     def test_buy_book_no_stock_and_login(self):
+        pytest.skip()
         pass
 
     @allure.title("post 10 new books and buy all the books in the store once ")
@@ -114,6 +119,24 @@ class TestStore:
         for book in books:
             store_page.purchase(book)
             LOGGER.info(store_page.get_book_title(book))
+
+    @allure.title("verify that book image updated in ui")
+    def test_book_image_change(self,get_main_page,book_api,authors_api,random_data):
+        author_created = random_data.generate_author(name="dor dayan")
+        author = authors_api.post_authors(author_created)
+        book_created = random_data.generate_book(authorid=author.id)
+        book_before = book_api.post_books(book_created)
+        store_page = get_main_page.click_bookstore()
+        store_page.reload()
+        book_from_ui = store_page.get_book(title=book_before.name)
+        book_before_img = store_page.get_book_image_url(book_from_ui)
+        assert book_before_img == book_before.imageUrl
+        book_before.imageUrl = random_data.image_temp()
+        book_api.put_book(book_before.convert_to_book_dto())
+        store_page.reload()
+        book_after = store_page.get_book(title=book_before.name)
+        book_after_img = store_page.get_book_image_url(book_after)
+        assert book_after_img != book_before_img and book_after_img == random_data.image_temp()
 
 
     def test_book_data_same_as_db(self,get_main_page,random_data,book_api,authors_api):

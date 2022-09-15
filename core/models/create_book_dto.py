@@ -8,5 +8,5 @@ class CreateBookDto(Model):
     description: str
     price: float
     amountInStock: int
-    imageUrl: str
-    authorId: int
+    imageUrl: str = None
+    authorId: int = None

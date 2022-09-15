@@ -1,6 +1,7 @@
 from core.drivers import Driver
 from selenium.webdriver.common.by import By
 import keyboard
+import allure
 class MapFrame:
     def __init__(self,driver:Driver):
         self._driver = driver
@@ -17,12 +18,14 @@ class MapFrame:
     def get_map_details(self):
         map = self._driver.locate_element(self._locators["map"])
         txt = self._driver.text(map)
-        return txt
+        with allure.step(f"get map details = {txt}"):
+            return txt
 
     def get_map_cordin_in_float(self):
         link = self._driver.locate_element(self._locators['link'])
         link.click()
         self._tab = self._driver.switch_to_tab(1)
+
         return self._convert_cordinates(self._driver.url)
 
     def _convert_cordinates(self,val:str) -> tuple[float,float]:
@@ -30,14 +33,16 @@ class MapFrame:
         b = val.find("&")
         x = val[a+1:b:]
         y = x.split(",")
-        return (float(y[0]),float(y[1]))
+        with allure.step(f"get map latitude, longtude = {x[0]},{y[1]}"):
+            return (float(y[0]),float(y[1]))
 
 
     def change_look_style(self) -> str:
         btn = self._driver.locate_element(self._locators["map_change_look"])
-        txt = self._driver.text(btn)
+        txt = self._driver.get_attribute(btn,"title")
         btn.click()
-        return txt
+        with allure.step(f"change map look style = {txt}"):
+            return txt
 
     def scroll_left(self):
         keyboard.press("left")

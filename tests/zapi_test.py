@@ -8,9 +8,11 @@ from core.models import GetAuthorDto
 class TestAuthors:
 
     def test_post_author_invalid_data(self):
+        pytest.skip()
         pass
 
     def test_put_author_invalid_data(self):
+        pytest.skip()
         pass
 
 
@@ -150,6 +152,7 @@ class TestBook:
         assert excepted in book['msg'] and book['code'] == 400
 
     def test_post_book_invalid_author(self):
+        pytest.skip()
         pass
 
     @allure.title("case post books")

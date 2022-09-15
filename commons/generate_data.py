@@ -1,9 +1,13 @@
 import math
-
+from commons import images
 from faker import Faker
 from core.models import ApiUserDto
 from core.models.create_author_dto import CreateAuthorDto
 from core.models import CreateBookDto
+
+
+
+
 
 
 class RandomData:
@@ -48,7 +52,10 @@ class RandomData:
             "description": description if description else "description",
             "price": price if price else 50,
             "amountInStock": amount if amount else 10,
-            "imageUrl": self._faker.url(),
+            "imageUrl": images.IMAGES[self._faker.random.randint(0,len(images.IMAGES) - 1)],
             "authorId": authorid if authorid else self._faker.random.randint(4, 200)
         }
         return CreateBookDto(**book)
+
+    def image_temp(self):
+        return images.img_temp

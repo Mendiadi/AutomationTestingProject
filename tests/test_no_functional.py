@@ -2,7 +2,7 @@ import logging
 import allure
 
 LOGGER = logging.getLogger(__name__)
-
+import  pytest
 
 @allure.epic("UI Readability of buttons tests")
 class TestReadability:
@@ -30,10 +30,13 @@ class TestReadability:
         assert "Store" in store_btn_txt
 
     def test_readability_of_buttons_store(self):
+        pytest.skip()
         pass
 
     def test_readability_of_buttons_authors(self):
+        pytest.skip()
         pass
 
     def test_readability_of_buttons_author_page(self):
+        pytest.skip()
         pass

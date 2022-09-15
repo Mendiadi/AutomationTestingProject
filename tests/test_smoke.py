@@ -29,15 +29,19 @@ class TestSmoke:
 
 
     def test_store_element_loading(self,get_main_page):
+        pytest.skip()
         pass
 
     def test_authors_element_loading(self,get_main_page):
+        pytest.skip()
         pass
 
     def test_authors_page_loading_elements(self):
+        pytest.skip()
         pass
 
     def test_base_page_load_element(self):
+        pytest.skip()
         pass
 
 

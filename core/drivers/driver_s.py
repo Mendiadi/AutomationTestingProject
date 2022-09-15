@@ -57,6 +57,9 @@ class Selenium(Driver):
             self._driver.switch_to.window(self._driver.window_handles[val])
         return val
 
+    def get_attribute(self,element,name:str) -> [str]:
+        return element.get_attribute(name)
+
     @property
     def url(self):
         return self._driver.current_url
