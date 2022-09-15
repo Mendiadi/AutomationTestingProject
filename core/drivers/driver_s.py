@@ -52,7 +52,14 @@ class Selenium(Driver):
             element = driver.find_element(*locator)
 
         return element
+    def switch_to_tab(self,val:int):
+        if len(self._driver.window_handles) > 1:
+            self._driver.switch_to.window(self._driver.window_handles[val])
+        return val
 
+    @property
+    def url(self):
+        return self._driver.current_url
     def locate_elements(self, locator: tuple[[], str]) -> [WebElement]:
         """
        Locating elements with wait timeout and option to mark that elements

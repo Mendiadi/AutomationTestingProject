@@ -41,6 +41,7 @@ def init_driver(get_test_data, request):
                 options=chrome_options,
                 desired_capabilities=capabilities
             )
+            page.switch_to.window()
             page.get(get_test_data.url)
 
         else:
