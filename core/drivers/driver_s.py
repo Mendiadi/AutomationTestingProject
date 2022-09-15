@@ -20,9 +20,14 @@ class Selenium(Driver):
         return t
 
     def move_to_element(self, element):
-        actions = ActionChains(self._driver)
-        actions.scroll_to_element(element)
-        element.click()
+        try:
+            actions = ActionChains(self._driver)
+            actions.scroll_to_element(element)
+            element.click()
+        except Exception as e:
+            logging.info(e)
+            actions.move_to_element(element)
+
 
     def element_is_visible(self, locator) -> [bool]:
         try:

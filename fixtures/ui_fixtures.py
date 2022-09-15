@@ -98,3 +98,5 @@ def get_main_page(init_driver):
     page = LoginPage(init_driver)
     yield page
     del page
+
+

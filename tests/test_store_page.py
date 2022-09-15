@@ -8,7 +8,7 @@ LOGGER = logging.getLogger(__name__)
 class TestStore:
 
     @allure.title("case add book and verify is apear in page ")
-    def test_add_book_apear(self, get_main_page,book_api,authors_api,random_data):
+    def test_add_book_apear(self, get_main_page,book_api,authors_api,random_data,safe_lunch):
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)
         book_created = random_data.generate_book(authorid=author.id,imageUrl=True)
@@ -23,7 +23,7 @@ class TestStore:
         assert book_created.name == book.name
 
     @allure.title("case buy book without login")
-    def test_buy_no_login_book(self, get_main_page, book_api, random_data, authors_api):
+    def test_buy_no_login_book(self, get_main_page, book_api, random_data, authors_api,safe_lunch):
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)
         book_created = random_data.generate_book(authorid=author.id, name="shay",imageUrl=True)
@@ -38,7 +38,7 @@ class TestStore:
         assert "Must be signed in to purchase." in msg
 
     @allure.title("get books by author")
-    def test_update_and_get_books_by_author(self, get_main_page):
+    def test_update_and_get_books_by_author(self, get_main_page,safe_lunch):
         store_page = get_main_page.click_bookstore()
         books = store_page.get_books_by_author("George Orwell")
         for book in books:
@@ -47,7 +47,7 @@ class TestStore:
             assert book_title == "1984" or "Animal Farm"
 
     @allure.title("case buy book with login and created book")
-    def test_case_buy_book(self, get_main_page, book_api, random_data, authors_api, get_test_data):
+    def test_case_buy_book(self, get_main_page, book_api, random_data, authors_api, get_test_data,safe_lunch):
         get_main_page.login(get_test_data.email, get_test_data.password).click_bookstore()
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)
@@ -68,7 +68,7 @@ class TestStore:
         assert f"Thank you for your purchase of {book.name}" in msg
 
     @allure.title("case buy book from api and check for update")
-    def test_buy_book_from_api_to_ui(self,random_data,book_api,get_test_data,get_main_page,authors_api):
+    def test_buy_book_from_api_to_ui(self,random_data,book_api,get_test_data,get_main_page,authors_api,safe_lunch):
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)
         book_created = random_data.generate_book(name="waves of sea",authorid=author.id,imageUrl=True)
@@ -84,7 +84,7 @@ class TestStore:
 
 
     @allure.title("case post books and see if they apear at screen")
-    def test_books_updated(self, get_main_page, book_api, random_data, authors_api):
+    def test_books_updated(self, get_main_page, book_api, random_data, authors_api,safe_lunch):
         author_new = random_data.generate_author("moshe")
         author = authors_api.post_authors(author_new)
         book_created = random_data.generate_book(name="moshe is hot", authorid=author.id,imageUrl=True)
@@ -96,7 +96,7 @@ class TestStore:
             assert "moshe is hot" == text
 
     @allure.title("check if all the books in db are visible")
-    def test_verify_books(self, get_main_page, book_api):
+    def test_verify_books(self, get_main_page, book_api,safe_lunch):
         boos_api = book_api.get_books()
         store_page = get_main_page.click_bookstore()
         books = store_page.get_books()
@@ -118,7 +118,7 @@ class TestStore:
         pass
 
     @allure.title("post 10 new books and buy all the books in the store once ")
-    def test_buy_multiple(self,get_main_page,get_test_data,random_data,authors_api,book_api):
+    def test_buy_multiple(self,get_main_page,get_test_data,random_data,authors_api,book_api,safe_lunch):
         author_created = random_data.generate_author()
         author = authors_api.post_authors(author_created)
         for i in range(6):
@@ -134,7 +134,7 @@ class TestStore:
             LOGGER.info(store_page.get_book_title(book))
 
     @allure.title("verify that book image updated in ui")
-    def test_book_image_change(self,get_main_page,book_api,authors_api,random_data):
+    def test_book_image_change(self,get_main_page,book_api,authors_api,random_data,safe_lunch):
         author_created = random_data.generate_author(name="dor dayan")
         author = authors_api.post_authors(author_created)
         book_created = random_data.generate_book(authorid=author.id,imageUrl=True)
@@ -152,7 +152,7 @@ class TestStore:
         assert book_after_img != book_before_img and book_after_img == random_data.image_temp()
 
 
-    def test_book_data_same_as_db(self,get_main_page,random_data,book_api,authors_api):
+    def test_book_data_same_as_db(self,get_main_page,random_data,book_api,authors_api,safe_lunch):
         author_new = random_data.generate_author("david")
         author = authors_api.post_authors(author_new)
         book_created = random_data.generate_book(name="im happy", authorid=author.id,

@@ -16,7 +16,6 @@ class PlayWright(Driver):
             btn.click()
             dialog.is_done()
             txt = dialog.value
-
             return txt
 
     def switch_to_tab(self, val: int):
@@ -35,6 +34,14 @@ class PlayWright(Driver):
 
     def element_is_visible(self, locator):
         return self._driver.is_visible(self.By(*locator)), "locator"
+
+    def move_to_element(self, element):
+
+        try:
+            self._driver.hover(element)
+        except Exception as e:
+            logging.info(e)
+            return
 
     @staticmethod
     def By(by, locator):
@@ -66,10 +73,13 @@ class PlayWright(Driver):
 
         try:
             element = driver.locator(self.By(*locator))
-        except Exception as e:
+        except AttributeError as e:
             logging.info(f"log msg from Driver - {e}")
             element = driver.query_selector(self.By(*locator))
-
+        except Exception as e:
+            logging.info(e)
+            self._driver.reload()
+            element = self._driver.query_selector(self.By(*locator))
         return element
 
     def locate_elements(self, locator: tuple) -> [ElementHandle]:
@@ -80,7 +90,9 @@ class PlayWright(Driver):
        :rtype: [ElementHandle]
         """
         # if self._driver.is_visible(locator, timeout=wait):
+
         elements = self._driver.query_selector_all(self.By(*locator))
+
         return elements
         # else:
         #     raise TimeoutError
@@ -96,7 +108,9 @@ class PlayWright(Driver):
         :rtype: FrameLocator
         """
 
+
         frame = self._driver.frame_locator(self.By(*locator))
+
         return frame
 
     def script_execute(self, __script: str):

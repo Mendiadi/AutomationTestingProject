@@ -76,3 +76,14 @@ def authors_api(bearer_au_session, url):
     for author in authors:
         if author.id > 3:
             api.delete_author(id=author.id)
+
+@pytest.fixture(scope="session")
+def safe_lunch(book_api,fix_admin_user,fix_user):
+    book_api.session.update_token(fix_admin_user.to_json())
+    books = book_api.get_books()
+    if len(books) > 4:
+        for i,book in enumerate(books):
+            if i >= 4:
+                book_api.delete_book(id=book.id)
+    book_api.session.update_token(fix_user['user'].to_json())
+

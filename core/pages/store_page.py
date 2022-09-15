@@ -66,16 +66,23 @@ class StorePage(BasePage):
                     self._driver.move_to_element(buy_btn)
                     alert_var = self._driver.switch_to_alert()
                 except:
-                    self.page_resize(0.8)
+                    self.page_resize(0.75)
                     buy_btn.click()
                     alert_var = self._driver.switch_to_alert()
                 self.page_resize(1.0)
                 return alert_var
             else:
-                self.page_resize(0.8)
-                alert_var = self._driver.switch_to_alert((book, self._locators['buy_btn']))
-                self.page_resize(1.0)
-                return str(alert_var.message)
+                try:
+                    self.page_resize(0.8)
+                    alert_var = self._driver.switch_to_alert((book, self._locators['buy_btn']))
+                    return str(alert_var.message)
+                except:
+                    self.page_resize(0.7)
+                    self._driver.move_to_element(self._locators['buy_btn'])
+                    alert_var = self._driver.switch_to_alert((book, self._locators['buy_btn']))
+                    return str(alert_var.message)
+                finally:
+                    self.page_resize(1.0)
 
     def get_book_author(self, book) -> str:
         text = self._driver.locate_element(self._locators["book_author"], book)

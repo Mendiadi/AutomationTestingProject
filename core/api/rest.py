@@ -342,12 +342,17 @@ class Session(SessionContextManager):
         :return: None ot status code
         """
         from commons import utils
+        lg.info(f"session token updated with account {user}")
         if isinstance(user, str):
             headers = {'Authorization': f'Bearer {user}'}
             self._session.headers.update(headers)
             return
-        res = self._session.post(url=self._login_url, json=user['user'])
-
+        try:
+            user_ = user['user']
+        except KeyError:
+            user_ = user
+        finally:
+            res = self._session.post(url=self._login_url, json=user_)
         if is_created_now:
             user["main_user_id"] = res.json()["userId"]
             user_dict = {"id": res.json()["userId"]}
