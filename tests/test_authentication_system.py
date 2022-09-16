@@ -11,10 +11,9 @@ class TestAuthenticationAPI:
 
     @allure.feature("Feature: Register")
     @allure.title("test register valid")
-    def test_register(self, get_account_api, random_data):
-        api = get_account_api
+    def test_register(self, api, random_data):
         user = random_data.generate_account()
-        res = api.register(user)
+        res = api.account.register(user)
         assert res['code'] == 200
 
     def test_register_invalid_data(self):
@@ -26,17 +25,15 @@ class TestAuthenticationAPI:
 
     @allure.feature("Feature: Register")
     @allure.title("Register exists account")
-    def test_register_exists_user(self, get_account_api, fix_user):
-        api = get_account_api
+    def test_register_exists_user(self, api, fix_user):
         user = fix_user['user']
-        res = api.register(user)
+        res = api.account.register(user)
         assert res['code'] == 400 and "DuplicateUserName" in res['msg']
 
     @allure.feature("Feature: Login")
     @allure.title("Login user not exists")
-    def test_login_user_not_exists(self, get_account_api, random_data):
-        api = get_account_api
-        res = api.login({
+    def test_login_user_not_exists(self, api, random_data):
+        res = api.account.login({
             "email": random_data.email(),
             "password": random_data.password()
         })
@@ -44,18 +41,16 @@ class TestAuthenticationAPI:
 
     @allure.feature("Feature: Login")
     @allure.title("Login without email")
-    def test_login_no_email(self, get_account_api, random_data):
-        api = get_account_api
-        res = api.login({
+    def test_login_no_email(self, api, random_data):
+        res = api.account.login({
             "password": random_data.password()
         })
         assert res['code'] == 400 and "The Email field is required" in res['msg']
 
     @allure.feature("Feature: Login")
     @allure.title("Login without password")
-    def test_login_no_password(self, get_account_api, random_data):
-        api = get_account_api
-        res = api.login({
+    def test_login_no_password(self, api, random_data):
+        res = api.account.login({
             "email": random_data.email()
         })
         assert res['code'] == 400 and "The Password field is required" in res['msg']
@@ -65,9 +60,8 @@ class TestAuthenticationAPI:
                                  , ("asdfdsasdfdsdfss", "Your password is limited to 4 to 15 characters")])
     @allure.feature("Feature: Login")
     @allure.title("Login invalid  password")
-    def test_login_invalid_password(self, get_account_api, random_data, excepted, password):
-        api = get_account_api
-        res = api.login({
+    def test_login_invalid_password(self, api, random_data, excepted, password):
+        res = api.account.login({
             "email": random_data.email(),
             "password": password
         })
@@ -75,27 +69,24 @@ class TestAuthenticationAPI:
 
     @allure.feature("Feature: Login")
     @allure.title("Login valid")
-    def test_login(self, get_account_api, fix_user):
+    def test_login(self, api, fix_user):
         login_user = fix_user['user'].convert_to_login_dto_obj()
         excepted_userid = fix_user['userid']
-        api = get_account_api
-        user = api.login(login_user)
+        user = api.account.login(login_user)
         assert user.token is not None
 
     @allure.title("Refresh token valid")
-    def test_refresh_token(self, get_account_api, fix_user):
-        api = get_account_api
+    def test_refresh_token(self, api, fix_user):
         user = fix_user['user'].convert_to_login_dto_obj()
-        user_res = api.login(user)
-        res = api.refresh_token(user_res)
+        user_res = api.account.login(user)
+        res = api.account.refresh_token(user_res)
         assert res['code'] == 200
         assert res['res'].userId == user_res.userId
         assert res['res'].token != user_res.token
 
     @allure.title("Refresh token invalid data")
-    def test_refresh_invalid_token(self, get_account_api):
-        api = get_account_api
-        res = api.refresh_token("i")
+    def test_refresh_invalid_token(self,api):
+        res = api.account.refresh_token("i")
         assert res['code'] == 400
 
 

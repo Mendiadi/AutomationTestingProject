@@ -2,7 +2,7 @@ import json
 import yaml
 
 
-def json_read(path) -> json:
+def json_read(path:str) -> json:
     try:
         with open(path, "r") as json_file:
             json_file = json.load(json_file)
@@ -22,8 +22,8 @@ def parse_yaml():
             print(exc)
 
 
-def write_to_json(data: dict, path):
-    json_object = json.dumps(data, indent=1)
+def write_to_json(data: dict, path:str,indent=1) -> None:
+    json_object = json.dumps(data, indent=indent)
     with open(path, "w") as outfile:
         outfile.write(json_object)
 

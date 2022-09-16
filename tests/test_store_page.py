@@ -9,11 +9,11 @@ LOGGER = logging.getLogger(__name__)
 class TestStore:
 
     @allure.title("case add book and verify is apear in page ")
-    def test_add_book_apear(self, get_main_page, book_api, authors_api, random_data):
+    def test_add_book_apear(self, get_main_page, api, random_data):
         author_created = random_data.generate_author()
-        author = authors_api.post_authors(author_created)
+        author = api.authors.post_authors(author_created)
         book_created = random_data.generate_book(authorid=author.id, imageUrl=True)
-        book = book_api.post_books(book_created)
+        book = api.books.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         store_page.reload()
         book_elem = store_page.get_book(title=book.name)
@@ -22,23 +22,23 @@ class TestStore:
         LOGGER.info(f"title: {book_title} author: {book_author}")
         assert author.name in book_author
         assert book_created.name == book.name
-        authors_api.delete_author(id=author.id)
+        api.authors.delete_author(id=author.id)
 
     @allure.title("case buy book without login")
-    def test_buy_no_login_book(self, get_main_page, book_api, random_data, authors_api):
+    def test_buy_no_login_book(self, get_main_page, api, random_data):
         author_created = random_data.generate_author()
-        author = authors_api.post_authors(author_created)
+        author = api.authors.post_authors(author_created)
         book_created = random_data.generate_book(authorid=author.id, name="shay", imageUrl=True)
-        book = book_api.post_books(book_created)
+        book = api.books.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         store_page.reload()
         book1 = store_page.get_book(title=book_created.name)
         LOGGER.info(book1)
         msg = store_page.purchase(book1)
         LOGGER.info(msg)
-        assert book.amountInStock == book_api.get_book_by_id(id=book.id).amountInStock
+        assert book.amountInStock == api.books.get_book_by_id(id=book.id).amountInStock
         assert "Must be signed in to purchase." in msg
-        authors_api.delete_author(id=author.id)
+        api.authors.delete_author(id=author.id)
 
     @allure.title("get books by author")
     def test_update_and_get_books_by_author(self, get_main_page):
@@ -50,18 +50,18 @@ class TestStore:
             assert book_title == "1984" or "Animal Farm"
 
     @allure.title("case buy book with login and created book")
-    def test_case_buy_book(self, get_main_page, book_api, random_data, authors_api, get_test_data):
+    def test_case_buy_book(self, get_main_page, api, random_data, get_test_data):
         get_main_page.login(get_test_data.email, get_test_data.password).click_bookstore()
         author_created = random_data.generate_author()
-        author = authors_api.post_authors(author_created)
+        author = api.authors.post_authors(author_created)
         book_created = random_data.generate_book(authorid=author.id)
-        book = book_api.post_books(book_created)
+        book = api.books.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         store_page.reload()
         book1 = store_page.get_book(title=book_created.name)
         LOGGER.info(book1)
         msg = store_page.purchase(book1)
-        amount_in_stock_api = book_api.get_book_by_id(id=book.id).amountInStock
+        amount_in_stock_api = api.books.get_book_by_id(id=book.id).amountInStock
         store_page.reload()
         book_after_buy = store_page.get_book(title=book.name)
         amount_in_stock_ui = store_page.get_book_stock(book_after_buy)
@@ -69,40 +69,40 @@ class TestStore:
         assert str(book.amountInStock - 1) in amount_in_stock_ui
         assert book.amountInStock - 1 == amount_in_stock_api
         assert f"Thank you for your purchase of {book.name}" in msg
-        authors_api.delete_author(id=author.id)
+        api.authors.delete_author(id=author.id)
 
     @allure.title("case buy book from api and check for update")
-    def test_buy_book_from_api_to_ui(self, random_data, book_api, get_test_data, get_main_page, authors_api):
+    def test_buy_book_from_api_to_ui(self, random_data, api, get_test_data, get_main_page):
         author_created = random_data.generate_author()
-        author = authors_api.post_authors(author_created)
+        author = api.authors.post_authors(author_created)
         book_created = random_data.generate_book(name="waves of sea", authorid=author.id, imageUrl=True)
-        book = book_api.post_books(book_created)
+        book = api.books.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         book_element = store_page.get_book(title=book.name)
         book_element_stock_before = store_page.get_book_stock(book_element)
-        book_api.purchase_book(id=book.id)
+        api.books.purchase_book(id=book.id)
         store_page.reload()
         book_element_after = store_page.get_book(book.name)
         book_element_stock_after = store_page.get_book_stock(book_element_after)
         assert book_element_stock_before != book_element_stock_after
-        authors_api.delete_author(id=author.id)
+        api.authors.delete_author(id=author.id)
 
     @allure.title("case post books and see if they apear at screen")
-    def test_books_updated(self, get_main_page, book_api, random_data, authors_api):
+    def test_books_updated(self, get_main_page, api, random_data):
         author_new = random_data.generate_author("moshe")
-        author = authors_api.post_authors(author_new)
+        author = api.authors.post_authors(author_new)
         book_created = random_data.generate_book(name="moshe is hot", authorid=author.id, imageUrl=True)
-        book_api.post_books(book_created)
+        api.books.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         books = store_page.get_books_by_author("moshe")
         for book in books:
             text = store_page.get_book_title(book)
             assert "moshe is hot" == text
-        authors_api.delete_author(id=author.id)
+        api.authors.delete_author(id=author.id)
 
     @allure.title("check if all the books in db are visible")
-    def test_verify_books(self, get_main_page, book_api):
-        boos_api = book_api.get_books()
+    def test_verify_books(self, get_main_page, api):
+        boos_api = api.books.get_books()
         store_page = get_main_page.click_bookstore()
         books = store_page.get_books()
         LOGGER.info(books)
@@ -126,12 +126,12 @@ class TestStore:
         pass
 
     @allure.title("post 10 new books and buy all the books in the store once ")
-    def test_buy_multiple(self, get_main_page, get_test_data, random_data, authors_api, book_api):
+    def test_buy_multiple(self, get_main_page, get_test_data, random_data, api):
         author_created = random_data.generate_author()
-        author = authors_api.post_authors(author_created)
+        author = api.authors.post_authors(author_created)
         for i in range(5):
             book = random_data.generate_book(authorid=author.id)
-            book_api.post_books(book)
+            api.books.post_books(book)
         login_page = get_main_page.login(get_test_data.email, get_test_data.password)
         store_page = login_page.click_bookstore()
         get_main_page.reload()
@@ -139,35 +139,35 @@ class TestStore:
         for book in books:
             store_page.purchase(book)
             LOGGER.info(store_page.get_book_title(book))
-        authors_api.delete_author(id=author.id)
+        api.authors.delete_author(id=author.id)
 
     @allure.title("verify that book image updated in ui")
-    def test_book_image_change(self, get_main_page, book_api, authors_api, random_data):
+    def test_book_image_change(self, get_main_page, api, random_data):
         author_created = random_data.generate_author(name="dor dayan")
-        author = authors_api.post_authors(author_created)
+        author = api.authors.post_authors(author_created)
         book_created = random_data.generate_book(authorid=author.id, imageUrl=True)
-        book_before = book_api.post_books(book_created)
+        book_before = api.books.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         store_page.reload()
         book_from_ui = store_page.get_book(title=book_before.name)
         book_before_img = store_page.get_book_image_url(book_from_ui)
         assert book_before_img == book_before.imageUrl
         book_before.imageUrl = random_data.image_temp()
-        book_api.put_book(book_before.convert_to_book_dto(), id=book_before.id)
+        api.books.put_book(book_before.convert_to_book_dto(), id=book_before.id)
         store_page.reload()
         book_after = store_page.get_book(title=book_before.name)
         book_after_img = store_page.get_book_image_url(book_after)
         assert book_after_img != book_before_img and book_after_img == random_data.image_temp()
-        authors_api.delete_author(id=author.id)
+        api.authors.delete_author(id=author.id)
 
     @allure.title("verify that book in ui as same data as db")
-    def test_book_data_same_as_db(self, get_main_page, random_data, book_api, authors_api):
+    def test_book_data_same_as_db(self, get_main_page, random_data, api):
         author_new = random_data.generate_author("david")
-        author = authors_api.post_authors(author_new)
+        author = api.authors.post_authors(author_new)
         book_created = random_data.generate_book(name="im happy", authorid=author.id,
                                                  description="My first day in earth", price="30", amount="5",
                                                  imageUrl=True)
-        book_ = book_api.post_books(book_created)
+        book_ = api.books.post_books(book_created)
         store_page = get_main_page.click_bookstore()
         store_page.reload()
         book = store_page.get_book(title="im happy")
@@ -180,8 +180,8 @@ class TestStore:
                b_desc == "My first day in earth" and "30" in b_price and "5" in b_stock
         LOGGER.info(f"{b_title}, {b_stock},{b_author},{b_price},{b_desc}")
         book_.description = "im love you"
-        book_api.put_book(book_.convert_to_book_dto(), id=book_.id)
+        api.books.put_book(book_.convert_to_book_dto(), id=book_.id)
         store_page.reload()
         book_after = store_page.get_book(title=book_.name)
         assert store_page.get_book_decription(book_after) == "im love you"
-        authors_api.delete_author(id=author.id)
+        api.authors.delete_author(id=author.id)
