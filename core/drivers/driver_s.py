@@ -10,7 +10,7 @@ import selenium.common.exceptions as se
 
 class Selenium(Driver):
     def __init__(self, driver, type_):
-        self.wait = 5
+        self.wait = 15
         super().__init__(driver, type_)
 
     def switch_to_alert(self, input__=""):
