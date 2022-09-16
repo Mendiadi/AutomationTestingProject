@@ -20,7 +20,7 @@ class TestSmoke:
         register_result = register_page.element_visible_register()
         results = (register_result,login_result)
         for result in results:
-            for element_is_found,msg in result:
+            for element_is_found in result:
                 assert element_is_found
 
     @log_name

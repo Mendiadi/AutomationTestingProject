@@ -32,6 +32,6 @@ class LoginPage(AuthenticationPage):
     def elements_visible_login(self):
         res = self.elements_visible()
         elem = self._driver.element_is_visible(self._locators['register'])
-        res.append(elem)
-        log_data(*res,msg="elements visible")
+        res.append(str(elem))
+        log_data(msg=f"elements visible login page -> {res}")
         return res

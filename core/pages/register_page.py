@@ -40,6 +40,6 @@ class RegisterPage(AuthenticationPage):
         res = self.elements_visible()
         for locator in self._locators.values():
             isfound = self._driver.element_is_visible(locator)
-            res.append(isfound)
-        log_data(*res, msg="elements visible")
+            res.append(str(isfound))
+        log_data(msg=f"elements visible register -> {res}")
         return res

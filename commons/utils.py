@@ -32,6 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 def log_data(*args,msg=""):
+
     logger.info(f"""
        {msg} -> {" | ".join(args)}
     """)
