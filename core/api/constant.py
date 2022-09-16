@@ -6,5 +6,7 @@ URL = 'http://localhost'
 api_links = {
     "register": "/register",
     "login": '/login',
-    "token": '/refreshtoken'
+    "token": '/refreshtoken',
+    "findbyAuthor": "/findauthor/",
+    "purchaseBook": "/purchase/"
 }

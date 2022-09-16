@@ -7,7 +7,7 @@ from core.models import Book
 
 
 class AuthorsApi(BaseAPI):
-    def __init__(self, url: str, session):
+    def __init__(self, url: str, session:rest.Session):
         super().__init__(url, session)
 
 

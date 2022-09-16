@@ -11,9 +11,6 @@ from commons.constant import *
 from core.drivers import Driver
 
 
-
-
-
 @pytest.fixture
 def get_test_data(pytestconfig):
     data = load_test_data()
@@ -73,7 +70,6 @@ def init_driver(get_test_data, request):
                 play_w_img = obj_driver.get_screenshot()
             page.close()
 
-
     if request.node.rep_call.failed:
         try:
             if obj_driver.type == SELENIUM:
@@ -83,7 +79,7 @@ def init_driver(get_test_data, request):
                               attachment_type=allure.attachment_type.PNG)
             else:
                 allure.attach(play_w_img, attachment_type=allure.attachment_type.PNG)
-                if IMG_PLAYWRIGHT in os.listdir("..") or IMG_PLAYWRIGHT in os.listdir() :
+                if IMG_PLAYWRIGHT in os.listdir("..") or IMG_PLAYWRIGHT in os.listdir():
                     os.remove(IMG_PLAYWRIGHT)
         except:
             pass
@@ -92,11 +88,8 @@ def init_driver(get_test_data, request):
                 page.close()
 
 
-
 @pytest.fixture
 def get_main_page(init_driver):
     page = LoginPage(init_driver)
     yield page
     del page
-
-

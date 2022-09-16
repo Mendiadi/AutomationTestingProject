@@ -12,7 +12,7 @@ class LoginPage(AutenticationPage):
         "register": (By.XPATH, '//*[@id="root"]/div/button')
     }
 
-    def login(self, email: str, password: str):
+    def login(self, email: str, password: str) -> StorePage:
         self.send_email(email)
         self.send_password(password)
         self.on_submit()

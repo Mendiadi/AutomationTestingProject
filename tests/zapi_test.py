@@ -17,15 +17,15 @@ class TestAuthors:
 
     @pytest.mark.regression
     @allure.title("case Add author")
-    def test_post_authors(self, api, random_data):
-        author = api.authors.post_authors(random_data.generate_author())
+    def test_post_authors(self, api, data):
+        author = api.authors.post_authors(data.generate_author())
         authors = api.authors.get_authors()
         assert author in authors
 
     @pytest.mark.smoke
     @allure.title("case Delete author")
-    def test_delete_author(self, api, random_data):
-        author = api.authors.post_authors(random_data.generate_author())
+    def test_delete_author(self, api, data):
+        author = api.authors.post_authors(data.generate_author())
         res = api.authors.delete_author(id=author.id)
         assert res['code'] is 204
         authors = api.authors.get_authors()
@@ -33,8 +33,8 @@ class TestAuthors:
 
     @pytest.mark.smoke
     @allure.title("case Get authors")
-    def test_get_authors(self, api, random_data):
-        author = api.authors.post_authors(random_data.generate_author())
+    def test_get_authors(self, api, data):
+        author = api.authors.post_authors(data.generate_author())
         api.authors.delete_author(id=17)
         authors = api.authors.get_authors()
         assert author in authors
@@ -43,14 +43,14 @@ class TestAuthors:
         assert author not in authors
 
     @allure.title("case get by id")
-    def test_author_by_id(self, api, random_data):
-        author = api.authors.post_authors(random_data.generate_author())
+    def test_author_by_id(self, api, data):
+        author = api.authors.post_authors(data.generate_author())
         author2 = api.authors.get_author_by_id(id=author.id)
         assert author2 == author
 
     @allure.title("case put by id")
-    def test_put_author_by_id(self, api, random_data):
-        author = api.authors.post_authors(random_data.generate_author())
+    def test_put_author_by_id(self, api, data):
+        author = api.authors.post_authors(data.generate_author())
         author.name = "eyal"
         author_obj = GetAuthorDto.create_from_author(author)
         api.authors.put_author_by_id(author_obj, id=author.id)
@@ -71,10 +71,10 @@ class TestAuthors:
 class TestBook:
 
     @allure.title("get book by id")
-    def test_get_book_by_id_valid(self, api, random_data):
-        author_create = random_data.generate_author(name="sami")
+    def test_get_book_by_id_valid(self, api, data):
+        author_create = data.generate_author(name="sami")
         author = api.authors.post_authors(author_create)
-        book_create = random_data.generate_book(name="my sami book", authorid=author.id)
+        book_create = data.generate_book(name="my sami book", authorid=author.id)
         book = api.books.post_books(book_create)
         get_book = api.books.get_book_by_id(id=book.id)
         book = book.convert_to_book_dto()
@@ -91,21 +91,21 @@ class TestBook:
         assert excepted in res['msg']
 
     @allure.title("get books")
-    def test_get_books(self, api, random_data):
-        author_create = random_data.generate_author("mr sami")
+    def test_get_books(self, api, data):
+        author_create = data.generate_author("mr sami")
         author = api.authors.post_authors(author_create)
-        book_dto = random_data.generate_book(authorid=author.id)
+        book_dto = data.generate_book(authorid=author.id)
         book = api.books.post_books(book_dto)
         books = api.books.get_books()
         assert book.convert_to_book_dto() in books
         api.authors.delete_author(id=author.id)
 
     @allure.title("case delete book normal user")
-    def test_delete_book_normal_user(self, api, random_data):
-        author_dto = random_data.generate_author()
+    def test_delete_book_normal_user(self, api, data):
+        author_dto = data.generate_author()
         author = api.authors.post_authors(author_dto)
         author = api.authors.get_author_by_id(id=author.id)
-        book_dto = random_data.generate_book(authorid=author.id, name="shay")
+        book_dto = data.generate_book(authorid=author.id, name="shay")
         book = api.books.post_books(book_dto)
         books = api.books.get_books()
         book = book.convert_to_book_dto()
@@ -116,7 +116,7 @@ class TestBook:
         api.authors.delete_author(id=author.id)
 
     @allure.title("case delete book invalid id")
-    def test_delete_book_invalid_id(self, api, random_data):
+    def test_delete_book_invalid_id(self, api, data):
         res = api.books.delete_book(id="sds")
         assert res['code'] > 200
 
@@ -130,16 +130,16 @@ class TestBook:
     @pytest.mark.parametrize("id,excepted", [((-1), "The field AuthorId must be between 1 and 2147483647."),
                                              (2147483647, "The field AuthorId must be between 1 and 2147483647.")
         , ("sfsf", "The JSON value could not be converted to System.Int32.")])
-    def test_post_book_invalid_id(self, id, excepted, random_data, api):
-        book_dto = random_data.generate_book(authorid=id)
+    def test_post_book_invalid_id(self, id, excepted, data, api):
+        book_dto = data.generate_book(authorid=id)
         book = api.books.post_books(book_dto)
         assert book['code'] == 400
         assert excepted in book['msg']
 
     @pytest.mark.parametrize("name,excepted", [(2, "The JSON value could not be converted to System.String.")
         , (None, "The JSON value could not be converted to System.String.")])
-    def test_post_book_no_name(self, random_data, api, name, excepted):
-        book_dto = random_data.generate_book(name=3)
+    def test_post_book_no_name(self, data, api, name, excepted):
+        book_dto = data.generate_book(name=3)
         book = api.books.post_books(book_dto)
         assert excepted in book['msg'] and book['code'] == 400
 
@@ -148,10 +148,10 @@ class TestBook:
         pass
 
     @allure.title("case post books")
-    def test_post_book(self, api, random_data):
-        new_author = random_data.generate_author()
+    def test_post_book(self, api, data):
+        new_author = data.generate_author()
         author = api.authors.post_authors(new_author)
-        new_book = random_data.generate_book(authorid=author.id)
+        new_book = data.generate_book(authorid=author.id)
         book = api.books.post_books(new_book)
         books = api.books.get_books()
         author = api.authors.get_author_by_id(id=author.id)
@@ -162,10 +162,10 @@ class TestBook:
         api.authors.delete_author(id=author.id)
 
     @allure.title("case put update book")
-    def test_put_book(self, api, random_data):
-        new_author = random_data.generate_author()
+    def test_put_book(self, api, data):
+        new_author = data.generate_author()
         author = api.authors.post_authors(new_author)
-        new_book = random_data.generate_book(authorid=author.id)
+        new_book = data.generate_book(authorid=author.id)
         book = api.books.post_books(new_book)
         book.name = "adi hagever"
         book.amountInStock = 5
@@ -176,10 +176,10 @@ class TestBook:
 
     @allure.title("case put book invalid id")
     @pytest.mark.parametrize("id,excepted", [(10, 400), (-20, 400), ("ss", 400)])
-    def test_put_book_invalid_id(self, api, random_data, id, excepted):
-        new_author = random_data.generate_author()
+    def test_put_book_invalid_id(self, api, data, id, excepted):
+        new_author = data.generate_author()
         author = api.authors.post_authors(new_author)
-        new_book = random_data.generate_book(authorid=author.id)
+        new_book = data.generate_book(authorid=author.id)
         book = api.books.post_books(new_book)
         res = api.books.put_book(book, id=id)
         assert res['code'] == excepted
@@ -192,11 +192,11 @@ class TestBook:
         assert res['code'] == 400
 
     @allure.title("case delete book admin user")
-    def test_delete_book_from_admin(self, fix_admin_user,api,random_data):
-        author_dto = random_data.generate_author()
+    def test_delete_book_from_admin(self, fix_admin_user, api, data):
+        author_dto = data.generate_author()
         author = api.authors.post_authors(author_dto)
         author = api.authors.get_author_by_id(id=author.id)
-        book_dto = random_data.generate_book(authorid=author.id, name="shay")
+        book_dto = data.generate_book(authorid=author.id, name="shay")
         book = api.books.post_books(book_dto)
         res = api.account.login(fix_admin_user)
         api.session.update_token(res.token)
@@ -225,8 +225,8 @@ class TestAPISUnauthorized:
         res = api.books.delete_book(id=5)
         assert res['code'] == 401
 
-    def test_unauthorized_post_book(self, api, random_data):
-        book = random_data.generate_book(authorid=2)
+    def test_unauthorized_post_book(self, api, data):
+        book = data.generate_book(authorid=2)
         res = api.books.post_books(book)
         assert res['code'] == 401
 
@@ -234,13 +234,13 @@ class TestAPISUnauthorized:
         res = api.books.put_book({}, id=10)
         assert res['code'] == 401
 
-    def test_unauthorized_post_author(self, api, random_data):
-        author = random_data.generate_author()
+    def test_unauthorized_post_author(self, api, data):
+        author = data.generate_author()
         res = api.authors.post_authors(author)
         assert res['code'] == 401
 
-    def test_unauthorized_put_author(self,api, random_data):
-        author = random_data.generate_author()
+    def test_unauthorized_put_author(self, api, data):
+        author = data.generate_author()
         res = api.authors.put_author_by_id(author, id=4)
         assert res['code'] == 401
 

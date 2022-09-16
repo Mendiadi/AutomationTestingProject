@@ -12,7 +12,7 @@ from core.api import API
 
 
 @pytest.fixture(scope="session")
-def random_data():
+def data():
     return RandomData()
 
 
@@ -37,7 +37,7 @@ def url(pytestconfig):
 
 
 @pytest.fixture(scope="session")
-def bearer_au_session(fix_user, url, fix_admin_user):
+def bearer_au_session(fix_user, url, fix_admin_user) -> rest.Session:
     user_dict = {"user": fix_user['user'].to_json(), "main_user_id": fix_user['userid']}
     with rest.Session() as new_session:
         new_session.session.post(url=f"{url}{URL_SWAGGER}{ACCOUNT_URL}/register", json=ApiUserDto(
@@ -51,22 +51,22 @@ def bearer_au_session(fix_user, url, fix_admin_user):
 
 
 @pytest.fixture(scope="session")
-def api(bearer_au_session, url):
+def api(bearer_au_session, url) -> API:
     account_endpoint = url + URL_SWAGGER + ACCOUNT_URL
     books_endpoint = url + URL_SWAGGER + BOOKS_URL
     authors_endpoint = url + URL_SWAGGER + AUTHORS_URL
     session = bearer_au_session
     api = API(books=BookApi(
-                books_endpoint,
-                session
-            ),authors=AuthorsApi(
-                authors_endpoint,
-                session
-            ),account=AccountApi(
-                account_endpoint,
-                session
-            ),session= session
-            )
+        books_endpoint,
+        session
+    ), authors=AuthorsApi(
+        authors_endpoint,
+        session
+    ), account=AccountApi(
+        account_endpoint,
+        session
+    ), session=session
+    )
     yield api
     for author in api.authors.get_authors():
         if author.id > 5:

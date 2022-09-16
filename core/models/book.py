@@ -23,4 +23,4 @@ class Book(Model):
         authorId = self.authorId
 
         id = self.id
-        return BookDto(name,description,price,amountInStock,imageUrl,authorId,id)
+        return BookDto(name, description, price, amountInStock, imageUrl, authorId, id)

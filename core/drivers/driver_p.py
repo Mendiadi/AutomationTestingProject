@@ -1,5 +1,5 @@
 from core.drivers import Driver
-from playwright.sync_api import Locator, ElementHandle, FrameLocator,Page
+from playwright.sync_api import Locator, ElementHandle, FrameLocator, Page
 from commons import LocatorWithError
 import os
 import logging
@@ -9,6 +9,7 @@ class PlayWright(Driver):
     def __init__(self, driver, type_):
         super().__init__(driver, type_)
         self._driver_temp = None
+
     def switch_to_alert(self, input__=None):
         btn = input__[0].query_selector(self.By(*input__[1]))
         with self._driver.expect_event("dialog") as dialog:
@@ -22,14 +23,14 @@ class PlayWright(Driver):
         logging.info(self._driver.url)
         pages = self._driver.context.pages
         if len(self._driver.context.pages) > 1:
-            self._driver =pages[val]
+            self._driver = pages[val]
         return val
 
     def get_attribute(self, element, name: str) -> [str]:
         return element.get_attribute(name)
 
-    @property
-    def url(self):
+
+    def url(self) -> str:
         return self._driver.url
 
     def element_is_visible(self, locator):
@@ -107,7 +108,6 @@ class PlayWright(Driver):
         :return: frame
         :rtype: FrameLocator
         """
-
 
         frame = self._driver.frame_locator(self.By(*locator))
 

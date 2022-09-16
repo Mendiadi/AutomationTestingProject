@@ -29,7 +29,7 @@ class Selenium(Driver):
             actions.move_to_element(element)
 
 
-    def element_is_visible(self, locator) -> [bool]:
+    def element_is_visible(self, locator):
         try:
             result = WebDriverWait(self._driver, self.wait).until(EC.visibility_of_element_located(locator))
             return result.is_displayed(), result
@@ -67,8 +67,8 @@ class Selenium(Driver):
     def get_attribute(self, element, name: str) -> [str]:
         return element.get_attribute(name)
 
-    @property
-    def url(self):
+
+    def url(self) -> str:
         return self._driver.current_url
 
     def locate_elements(self, locator: tuple[[], str]) -> [WebElement]:

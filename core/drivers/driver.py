@@ -1,5 +1,5 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod,abstractproperty
 from commons import LibNotSupport
 from commons.constant import *
 from playwright.sync_api import Page
@@ -39,10 +39,11 @@ class Driver(ABC):
         pass
 
     @abstractmethod
-    def switch_to_tab(self,val:int):
+    def switch_to_tab(self, val: int):
         pass
 
-    def url(self):
+
+    def url(self) -> str:
         pass
 
     @abstractmethod
@@ -52,8 +53,10 @@ class Driver(ABC):
     @abstractmethod
     def get_screenshot(self) -> bytes:
         pass
+
     def switch_to_default(self):
         pass
+
     @property
     def title(self) -> str:
         if self._type == SELENIUM:

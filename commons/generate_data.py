@@ -6,10 +6,6 @@ from core.models.create_author_dto import CreateAuthorDto
 from core.models import CreateBookDto
 
 
-
-
-
-
 class RandomData:
     def __init__(self):
         self._faker = Faker()
@@ -45,17 +41,18 @@ class RandomData:
         homelo *= math.sin(homelo)
         return CreateAuthorDto(name, homala, homelo)
 
-    def generate_book(self, authorid=None, price=None, amount=None, description: str = None,
-                      name: str = None,imageUrl= None) -> CreateBookDto:
+    def generate_book(self, authorid=None, price: int = None, amount: int = None, description: str = None,
+                      name: str = None, imageUrl: str = None) -> CreateBookDto:
         book = {
             "name": name if name else self._faker.name(),
             "description": description if description else "description",
             "price": price if price else 50,
             "amountInStock": amount if amount else 10,
-            "imageUrl": images.IMAGES[self._faker.random.randint(0,len(images.IMAGES) - 1)] if imageUrl else None,
+            "imageUrl": images.IMAGES[self._faker.random.randint(0, len(images.IMAGES) - 1)] if imageUrl else None,
             "authorId": authorid if authorid else self._faker.random.randint(4, 200)
         }
         return CreateBookDto(**book)
 
-    def image_temp(self):
+    @staticmethod
+    def image_temp() -> str:
         return images.img_temp

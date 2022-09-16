@@ -1,7 +1,7 @@
 from core.api.base_api import BaseAPI
 from core.api import rest
-from core.models.book import Book
-from core.models.book_dto import BookDto
+from core.models import Book, BookDto
+from core.api.constant import api_links
 import allure
 
 
@@ -43,7 +43,7 @@ class BookApi(BaseAPI):
         with allure.step(f"put book by id -> id= {id} and body = {book}"):
             return self.as_dict()
 
-    @rest.get(url="/findauthor/", param="authorId")
+    @rest.get(url=api_links["findbyAuthor"], param="authorId")
     def find_book_by_author_id(self, authorId: int):
         with allure.step(f"find author from api id= {authorId}"):
             if self._response.ok:
@@ -53,7 +53,7 @@ class BookApi(BaseAPI):
                 return book_list
             return self.as_dict()
 
-    @rest.put(url="/purchase/",param="id")
-    def purchase_book(self,id:int):
+    @rest.put(url=api_links["purchaseBook"], param="id")
+    def purchase_book(self, id: int):
         with allure.step(f"purchase book from api id = {id}"):
             return self.as_dict()

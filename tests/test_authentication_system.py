@@ -11,14 +11,13 @@ class TestAuthenticationAPI:
 
     @allure.feature("Feature: Register")
     @allure.title("test register valid")
-    def test_register(self, api, random_data):
-        user = random_data.generate_account()
+    def test_register(self, api, data):
+        user = data.generate_account()
         res = api.account.register(user)
         assert res['code'] == 200
 
     def test_register_invalid_data(self):
         pass
-
 
     def test_login_invalid_email(self):
         pass
@@ -32,26 +31,26 @@ class TestAuthenticationAPI:
 
     @allure.feature("Feature: Login")
     @allure.title("Login user not exists")
-    def test_login_user_not_exists(self, api, random_data):
+    def test_login_user_not_exists(self, api, data):
         res = api.account.login({
-            "email": random_data.email(),
-            "password": random_data.password()
+            "email": data.email(),
+            "password": data.password()
         })
         assert res['code'] == 401 and "Unauthorized" in res['msg']
 
     @allure.feature("Feature: Login")
     @allure.title("Login without email")
-    def test_login_no_email(self, api, random_data):
+    def test_login_no_email(self, api, data):
         res = api.account.login({
-            "password": random_data.password()
+            "password": data.password()
         })
         assert res['code'] == 400 and "The Email field is required" in res['msg']
 
     @allure.feature("Feature: Login")
     @allure.title("Login without password")
-    def test_login_no_password(self, api, random_data):
+    def test_login_no_password(self, api, data):
         res = api.account.login({
-            "email": random_data.email()
+            "email": data.email()
         })
         assert res['code'] == 400 and "The Password field is required" in res['msg']
 
@@ -60,9 +59,9 @@ class TestAuthenticationAPI:
                                  , ("asdfdsasdfdsdfss", "Your password is limited to 4 to 15 characters")])
     @allure.feature("Feature: Login")
     @allure.title("Login invalid  password")
-    def test_login_invalid_password(self, api, random_data, excepted, password):
+    def test_login_invalid_password(self, api, data, excepted, password):
         res = api.account.login({
-            "email": random_data.email(),
+            "email": data.email(),
             "password": password
         })
         assert res['code'] == 400 and excepted in res['msg']
@@ -85,7 +84,7 @@ class TestAuthenticationAPI:
         assert res['res'].token != user_res.token
 
     @allure.title("Refresh token invalid data")
-    def test_refresh_invalid_token(self,api):
+    def test_refresh_invalid_token(self, api):
         res = api.account.refresh_token("i")
         assert res['code'] == 400
 
@@ -126,7 +125,7 @@ class TestAuthenticationUI:
 
     @allure.feature("Feature: Register")
     @allure.title("verify register")
-    def test_register(self, get_main_page, random_data):
+    def test_register(self, get_main_page, data):
         register_page = get_main_page.click_register()
-        register_page.register(random_data.email(), random_data.password(), random_data.firstname(),
-                               random_data.lastname())
+        register_page.register(data.email(), data.password(), data.firstname(),
+                               data.lastname())
