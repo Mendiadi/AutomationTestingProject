@@ -1,4 +1,3 @@
-
 import allure
 import pytest
 from commons.utils import log_name
@@ -9,15 +8,15 @@ from commons.utils import log_name
 class TestSmoke:
     @log_name
     @allure.title("verify open page")
-    def test_page_open(self, get_main_page):
+    def test_page_open(self, main_page):
         excepted_title = "React App"
-        assert get_main_page.title == excepted_title
+        assert main_page.title == excepted_title
 
     @log_name
     @allure.title("sanity login page nad register load properly")
-    def test_login_page_loading_elements(self,get_main_page):
-        login_result = get_main_page.elements_visible_login()
-        register_page = get_main_page.click_register()
+    def test_login_page_loading_elements(self,main_page):
+        login_result = main_page.elements_visible_login()
+        register_page = main_page.click_register()
         register_result = register_page.element_visible_register()
         results = (register_result,login_result)
         for result in results:
@@ -25,12 +24,12 @@ class TestSmoke:
                 assert element_is_found
 
     @log_name
-    def test_store_element_loading(self,get_main_page):
+    def test_store_element_loading(self,main_page):
         pytest.skip()
         pass
 
     @log_name
-    def test_authors_element_loading(self,get_main_page):
+    def test_authors_element_loading(self,main_page):
         pytest.skip()
         pass
 

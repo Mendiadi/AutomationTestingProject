@@ -37,8 +37,8 @@ class TestAuthorPage:
         pass
 
     @log_name
-    def test_validate_map_cordinate(self, get_main_page, api):
-        authors_page = get_main_page.click_authors_btn()
+    def test_validate_map_cordinate(self, main_page, api):
+        authors_page = main_page.click_authors_btn()
         author = authors_page.find_author_by_name("George Orwell")
         author_page = authors_page.go_to_author(author)
         map = author_page.on_map()
@@ -49,8 +49,8 @@ class TestAuthorPage:
         assert author.homeLongitude == lo
 
     @log_name
-    def test_map_change_look(self, get_main_page):
-        authors_page = get_main_page.click_authors_btn()
+    def test_map_change_look(self, main_page):
+        authors_page = main_page.click_authors_btn()
         author = authors_page.find_author_by_name("George Orwell")
         author_page = authors_page.go_to_author(author)
         map = author_page.on_map()

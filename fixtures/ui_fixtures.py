@@ -89,7 +89,7 @@ def init_driver(get_test_data, request):
 
 
 @pytest.fixture
-def get_main_page(init_driver):
+def main_page(init_driver):
     page = LoginPage(init_driver)
     yield page
     del page

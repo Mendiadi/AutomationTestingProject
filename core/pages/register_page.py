@@ -1,9 +1,9 @@
 import allure
-from core.pages.authorized_pages import AutenticationPage
+from core.pages.authorized_pages import AuthenticationPage
 from selenium.webdriver.common.by import By
 from commons.utils import log_data
 
-class RegisterPage(AutenticationPage):
+class RegisterPage(AuthenticationPage):
 
     def __init__(self, driver):
         super().__init__(driver)

@@ -108,8 +108,8 @@ class TestAuthenticationUI:
     @pytest.mark.regression
     @allure.feature("Feature: Login")
     @allure.title("verify Login valid")
-    def test_login_valid(self, get_main_page, get_test_data):
-        store_page = get_main_page.login(get_test_data.email, get_test_data.password)
+    def test_login_valid(self, main_page, get_test_data):
+        store_page = main_page.login(get_test_data.email, get_test_data.password)
         text = store_page.get_label_h1_text()
         assert text == 'Welcome to our store'
 
@@ -136,7 +136,7 @@ class TestAuthenticationUI:
     @log_name
     @allure.feature("Feature: Register")
     @allure.title("verify register")
-    def test_register(self, get_main_page, data):
-        register_page = get_main_page.click_register()
+    def test_register(self, main_page, data):
+        register_page = main_page.click_register()
         register_page.register(data.email(), data.password(), data.firstname(),
                                data.lastname())
