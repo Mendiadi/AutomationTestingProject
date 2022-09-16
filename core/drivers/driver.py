@@ -1,8 +1,8 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod,abstractproperty
+from abc import ABC, abstractmethod
 from commons import LibNotSupport
 from commons.constant import *
-from playwright.sync_api import Page
+
 
 
 class Driver(ABC):

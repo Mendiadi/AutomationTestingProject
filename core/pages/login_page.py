@@ -2,7 +2,7 @@ from core.pages.authorized_pages import AutenticationPage
 import allure
 from selenium.webdriver.common.by import By
 from core.pages.store_page import StorePage
-
+from commons.utils import log_data
 
 class LoginPage(AutenticationPage):
     def __init__(self, driver):
@@ -13,6 +13,7 @@ class LoginPage(AutenticationPage):
     }
 
     def login(self, email: str, password: str) -> StorePage:
+        log_data(email,password,msg="perform login")
         self.send_email(email)
         self.send_password(password)
         self.on_submit()
@@ -32,4 +33,5 @@ class LoginPage(AutenticationPage):
         res = self.elements_visible()
         elem = self._driver.element_is_visible(self._locators['register'])
         res.append(elem)
+        log_data(*res,msg="elements visible")
         return res

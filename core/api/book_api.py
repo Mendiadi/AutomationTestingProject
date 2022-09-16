@@ -20,7 +20,7 @@ class BookApi(BaseAPI):
         return self.as_dict()
 
     @rest.post(data_t=rest.JSON)
-    def post_books(self, book) -> Book:
+    def post_books(self, book) -> [Book]:
         with allure.step(f"post book: {book}"):
             if self._response.ok:
                 return Book(**self._response.json())
@@ -32,7 +32,7 @@ class BookApi(BaseAPI):
             return self.as_dict()
 
     @rest.get(param="id")
-    def get_book_by_id(self, id: int) -> BookDto:
+    def get_book_by_id(self, id: int) -> [BookDto]:
         with allure.step(f"get book by id -> id= {id}"):
             if self._response.ok:
                 return BookDto(**self._response.json())

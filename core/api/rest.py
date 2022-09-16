@@ -215,7 +215,8 @@ class HTTP:
             def wrapper(self, *args, **kwargs) -> []:
                 data, url_ = HTTP.parse(url, kwargs, param, self, args, func)
                 self._response = HTTP.get_response(type_, self._session, url_, data, data_t)
-                lg.info(f'{func.__name__} -> DATA: {data}\n params: {param} RESPONSE: {self.as_dict()} ')
+                lg.info(f'\nREQUEST: {func.__name__}\nTYPE: {type_} -> \nBODY: {data}\nARGS: '
+                        f'{param}\nRESPONSE: {self.as_dict()}\nURL: {url_} ')
                 return func(self, *args, **kwargs)
 
             return wrapper

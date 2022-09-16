@@ -1,7 +1,7 @@
 import allure
 from core.pages.base_page import BasePage
 from selenium.webdriver.common.by import By
-
+from commons.utils import log_data
 
 class StorePage(BasePage):
 
@@ -41,7 +41,7 @@ class StorePage(BasePage):
     @allure.step("get book img url")
     def get_book_image_url(self, book) -> str:
         img = self._driver.locate_element(self._locators['image_url'], book)
-        return self._driver.get_attribute(img,"src")
+        return self._driver.get_attribute(img, "src")
 
     def get_book(self, title: str = None):
         with allure.step(f"get the book by title = {title}"):
@@ -59,6 +59,7 @@ class StorePage(BasePage):
 
     def purchase(self, book) -> str:
         book_name = self.get_book_title(book)
+        log_data(book_name,msg="purchase book title= ")
         with allure.step(f"purchase {book_name} from the store"):
             if self._driver.type.lower() == "selenium":
                 buy_btn = self._driver.locate_element(self._locators['buy_btn'], book)
@@ -90,21 +91,21 @@ class StorePage(BasePage):
         with allure.step(f"get book author is - {txt}"):
             return txt
 
-    def get_book_price(self, book):
+    def get_book_price(self, book) -> str:
         text = self._driver.locate_element(self._locators['book_price_cap'], book)
         txt = self._driver.text(text)
         txt = txt[0:txt.find("L")]
         with allure.step(f"get book price is - {txt}"):
             return txt
 
-    def get_book_stock(self, book) -> int:
+    def get_book_stock(self, book) -> str:
         with allure.step(f"check book stock = {book}"):
             text = self._driver.locate_element(self._locators['book_price_cap'], book)
             txt = self._driver.text(text)
             return txt[txt.find("L"):]
 
     @allure.step("read book description")
-    def get_book_decription(self, book):
+    def get_book_decription(self, book) -> str:
         text = self._driver.locate_element(self._locators["description"], book)
         txt = self._driver.text(text)
         with allure.step(f"get book decription is - {txt}"):

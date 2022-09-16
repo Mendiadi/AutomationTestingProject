@@ -2,7 +2,7 @@ import time
 import logging
 from core.drivers import Driver
 from selenium.webdriver.common.by import By
-import keyboard
+from commons.utils import log_data
 import allure
 
 
@@ -52,6 +52,7 @@ class MapFrame:
         btn = self._driver.locate_element(self._locators["map_change_look"], self._frame)
         txt = self._driver.get_attribute(btn, "title")
         btn.click()
+        log_data(txt,msg="map style changed ->")
         with allure.step(f"change map look style = {txt}"):
             return txt
 

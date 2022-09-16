@@ -1,7 +1,7 @@
 import allure
 from core.pages.authorized_pages import AutenticationPage
 from selenium.webdriver.common.by import By
-
+from commons.utils import log_data
 
 class RegisterPage(AutenticationPage):
 
@@ -25,6 +25,7 @@ class RegisterPage(AutenticationPage):
         self._driver.send_keys(field, lastname)
 
     def register(self, email: str, password: str, firstname: str, lastname: str):
+        log_data(email,password,firstname,lastname,msg="perform register -> ")
         self.send_email(email)
         self.send_password(password)
         self.send_firstname(firstname)
@@ -40,4 +41,5 @@ class RegisterPage(AutenticationPage):
         for locator in self._locators.values():
             isfound = self._driver.element_is_visible(locator)
             res.append(isfound)
+        log_data(*res, msg="elements visible")
         return res

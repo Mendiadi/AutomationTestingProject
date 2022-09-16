@@ -67,7 +67,5 @@ def api(bearer_au_session, url) -> API:
         session
     ), session=session
     )
-    yield api
-    for author in api.authors.get_authors():
-        if author.id > 5:
-            api.authors.delete_author(id=author.id)
+    return api
+

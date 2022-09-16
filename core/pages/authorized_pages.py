@@ -1,9 +1,10 @@
 from core.pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 import allure
+from commons.utils import log_data
 
 
-class AutenticationPage(BasePage):
+class AuthenticationPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 

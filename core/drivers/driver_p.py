@@ -1,6 +1,7 @@
 from core.drivers import Driver
-from playwright.sync_api import Locator, ElementHandle, FrameLocator, Page
+from playwright.sync_api import Locator, ElementHandle, FrameLocator
 from commons import LocatorWithError
+from commons.utils import log_data
 import os
 import logging
 
@@ -20,7 +21,7 @@ class PlayWright(Driver):
             return txt
 
     def switch_to_tab(self, val: int):
-        logging.info(self._driver.url)
+        log_data(msg=" switching tab current url" + self._driver.url)
         pages = self._driver.context.pages
         if len(self._driver.context.pages) > 1:
             self._driver = pages[val]
@@ -34,14 +35,14 @@ class PlayWright(Driver):
         return self._driver.url
 
     def element_is_visible(self, locator):
-        return self._driver.is_visible(self.By(*locator)), "locator"
+        return self._driver.is_visible(self.By(*locator))
 
     def move_to_element(self, element):
 
         try:
             self._driver.hover(element)
         except Exception as e:
-            logging.info(e)
+            log_data(e)
             return
 
     @staticmethod
@@ -75,10 +76,10 @@ class PlayWright(Driver):
         try:
             element = driver.locator(self.By(*locator))
         except AttributeError as e:
-            logging.info(f"log msg from Driver - {e}")
+            log_data(f"log msg from Driver - {e}")
             element = driver.query_selector(self.By(*locator))
         except Exception as e:
-            logging.info(e)
+            log_data(e)
             self._driver.reload()
             element = self._driver.query_selector(self.By(*locator))
         return element

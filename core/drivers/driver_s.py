@@ -1,12 +1,10 @@
-import logging
-import time
 from core.drivers import Driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.action_chains import ActionChains
 import selenium.common.exceptions as se
-
+from commons.utils import log_data
 
 class Selenium(Driver):
     def __init__(self, driver, type_):
@@ -25,17 +23,17 @@ class Selenium(Driver):
             actions.scroll_to_element(element)
             element.click()
         except Exception as e:
-            logging.info(e)
+            log_data(e)
             actions.move_to_element(element)
 
 
     def element_is_visible(self, locator):
         try:
             result = WebDriverWait(self._driver, self.wait).until(EC.visibility_of_element_located(locator))
-            return result.is_displayed(), result
+            return result.is_displayed()
         except Exception as e:
-            logging.info(f"log msg from Driver - {e}")
-            return False, "element not found"
+            log_data(f"log msg from Driver - {e}")
+            return False
 
     def locate_element(self, locator: tuple[[], str], driver: [] = None) -> WebElement:
         """
@@ -50,10 +48,10 @@ class Selenium(Driver):
         try:
             element = driver.find_element(*locator)
         except (se.TimeoutException, se.NoSuchElementException, se.ElementNotVisibleException) as e:
-            logging.info(f"log msg from Driver - {e}")
+            log_data(f"log msg from Driver - {e}")
             element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(locator))
         except se.StaleElementReferenceException as e:
-            logging.info(f"log msg from Driver - {e}")
+            log_data(f"log msg from Driver - {e}")
             self.refresh()
             element = driver.find_element(*locator)
 
@@ -90,8 +88,7 @@ class Selenium(Driver):
         try:
             self._driver.switch_to.frame(locator)
         except Exception as e:
-            time.sleep(1)
-            logging.info(f"log msg from Driver - {e}")
+            log_data(f"log msg from Driver - {e}")
             self._driver.switch_to.frame(locator)
 
     def switch_to_default(self):

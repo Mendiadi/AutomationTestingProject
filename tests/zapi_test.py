@@ -1,7 +1,7 @@
-import logging
 import pytest
 import allure
 from core.models import GetAuthorDto
+from commons.utils import log_name
 
 
 @allure.epic("Authors testing from api")
@@ -15,13 +15,16 @@ class TestAuthors:
         pytest.skip()
         pass
 
+    @log_name
     @pytest.mark.regression
     @allure.title("case Add author")
     def test_post_authors(self, api, data):
         author = api.authors.post_authors(data.generate_author())
         authors = api.authors.get_authors()
         assert author in authors
+        api.authors.delete_author(id=author.id)
 
+    @log_name
     @pytest.mark.smoke
     @allure.title("case Delete author")
     def test_delete_author(self, api, data):
@@ -31,6 +34,7 @@ class TestAuthors:
         authors = api.authors.get_authors()
         assert author not in authors
 
+    @log_name
     @pytest.mark.smoke
     @allure.title("case Get authors")
     def test_get_authors(self, api, data):
@@ -42,12 +46,14 @@ class TestAuthors:
         authors = api.authors.get_authors()
         assert author not in authors
 
+    @log_name
     @allure.title("case get by id")
     def test_author_by_id(self, api, data):
         author = api.authors.post_authors(data.generate_author())
         author2 = api.authors.get_author_by_id(id=author.id)
         assert author2 == author
 
+    @log_name
     @allure.title("case put by id")
     def test_put_author_by_id(self, api, data):
         author = api.authors.post_authors(data.generate_author())
@@ -56,6 +62,7 @@ class TestAuthors:
         api.authors.put_author_by_id(author_obj, id=author.id)
         assert author.name == "eyal"
 
+    @log_name
     @pytest.mark.parametrize("query", ["m", "at", "geroge", "l"])
     @allure.title("case valid search given true results")
     def test_search(self, api, query):
@@ -70,6 +77,7 @@ class TestAuthors:
 @allure.epic("books from api")
 class TestBook:
 
+    @log_name
     @allure.title("get book by id")
     def test_get_book_by_id_valid(self, api, data):
         author_create = data.generate_author(name="sami")
@@ -82,6 +90,7 @@ class TestBook:
         api.authors.delete_author(id=author.id)
         assert api.books.get_book_by_id(id=book.id)['code'] == 404
 
+    @log_name
     @pytest.mark.parametrize("id,excepted,code",
                              [((-7), "Not Found", 404), ("df", "The value \'df\' is not valid", 400)])
     @allure.title("get book by id invalid")
@@ -90,6 +99,7 @@ class TestBook:
         assert res['code'] == code
         assert excepted in res['msg']
 
+    @log_name
     @allure.title("get books")
     def test_get_books(self, api, data):
         author_create = data.generate_author("mr sami")
@@ -100,6 +110,7 @@ class TestBook:
         assert book.convert_to_book_dto() in books
         api.authors.delete_author(id=author.id)
 
+    @log_name
     @allure.title("case delete book normal user")
     def test_delete_book_normal_user(self, api, data):
         author_dto = data.generate_author()
@@ -115,17 +126,20 @@ class TestBook:
         assert book in books
         api.authors.delete_author(id=author.id)
 
+    @log_name
     @allure.title("case delete book invalid id")
     def test_delete_book_invalid_id(self, api, data):
         res = api.books.delete_book(id="sds")
         assert res['code'] > 200
 
+    @log_name
     @allure.title("case post book invalid data")
     def test_post_book_invalid_data(self, api):
         res = api.books.post_books("{moshe:123,tamir:adi}")
         assert res['code'] == 400
         assert 'The JSON value could not be converted' in res['msg']
 
+    @log_name
     @allure.title("try to post book with invalid id ")
     @pytest.mark.parametrize("id,excepted", [((-1), "The field AuthorId must be between 1 and 2147483647."),
                                              (2147483647, "The field AuthorId must be between 1 and 2147483647.")
@@ -136,6 +150,8 @@ class TestBook:
         assert book['code'] == 400
         assert excepted in book['msg']
 
+
+    @log_name
     @pytest.mark.parametrize("name,excepted", [(2, "The JSON value could not be converted to System.String.")
         , (None, "The JSON value could not be converted to System.String.")])
     def test_post_book_no_name(self, data, api, name, excepted):
@@ -143,10 +159,12 @@ class TestBook:
         book = api.books.post_books(book_dto)
         assert excepted in book['msg'] and book['code'] == 400
 
+    @log_name
     def test_post_book_invalid_author(self):
         pytest.skip()
         pass
 
+    @log_name
     @allure.title("case post books")
     def test_post_book(self, api, data):
         new_author = data.generate_author()
@@ -155,12 +173,11 @@ class TestBook:
         book = api.books.post_books(new_book)
         books = api.books.get_books()
         author = api.authors.get_author_by_id(id=author.id)
-        logging.info(f"book - ,{author},{author.books}")
         assert [book.id == b.id for b in books]
         assert [book.id == b['id'] for b in author.books]
-        logging.info(f"book - {books},{author},{author.books}")
         api.authors.delete_author(id=author.id)
 
+    @log_name
     @allure.title("case put update book")
     def test_put_book(self, api, data):
         new_author = data.generate_author()
@@ -174,6 +191,7 @@ class TestBook:
         assert same_book.name == "adi hagever" and same_book.amountInStock == 5
         api.authors.delete_author(id=author.id)
 
+    @log_name
     @allure.title("case put book invalid id")
     @pytest.mark.parametrize("id,excepted", [(10, 400), (-20, 400), ("ss", 400)])
     def test_put_book_invalid_id(self, api, data, id, excepted):
@@ -185,12 +203,13 @@ class TestBook:
         assert res['code'] == excepted
         api.authors.delete_author(id=author.id)
 
-
+    @log_name
     @allure.title("case put book invalid data")
     def test_put_book_invalid_data(self, api):
         res = api.books.put_book({}, id=4)
         assert res['code'] == 400
 
+    @log_name
     @allure.title("case delete book admin user")
     def test_delete_book_from_admin(self, fix_admin_user, api, data):
         author_dto = data.generate_author()
@@ -217,34 +236,39 @@ class TestBook:
     def find_book_by_author_invalid(self):
         pass
 
-
+@allure.epic("API verify Ahotorized required")
 class TestAPISUnauthorized:
-
+    @log_name
     def test_unauthorized_delete_book(self, api):
         api.session.headers.clear()
         res = api.books.delete_book(id=5)
         assert res['code'] == 401
 
+    @log_name
     def test_unauthorized_post_book(self, api, data):
         book = data.generate_book(authorid=2)
         res = api.books.post_books(book)
         assert res['code'] == 401
 
+    @log_name
     def test_put_book_unauthorized(self, api):
         res = api.books.put_book({}, id=10)
         assert res['code'] == 401
 
+    @log_name
     def test_unauthorized_post_author(self, api, data):
         author = data.generate_author()
         res = api.authors.post_authors(author)
         assert res['code'] == 401
 
+    @log_name
     def test_unauthorized_put_author(self, api, data):
         author = data.generate_author()
         res = api.authors.put_author_by_id(author, id=4)
         assert res['code'] == 401
 
-    def test_unauthorized_delete_author(self,api, fix_user):
+    @log_name
+    def test_unauthorized_delete_author(self, api, fix_user):
         res = api.authors.delete_author(id=5)
         response = api.account.login(fix_user['user'])
         api.session.update_token(response.token)

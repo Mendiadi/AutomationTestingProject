@@ -1,20 +1,19 @@
-import logging
+
 import allure
 import pytest
+from commons.utils import log_name
 
-LOGGER = logging.getLogger(__name__)
 
 @allure.epic("UI Loading tests")
 @pytest.mark.smoke
 class TestSmoke:
-
+    @log_name
     @allure.title("verify open page")
     def test_page_open(self, get_main_page):
-        LOGGER.info(f"executing test case: search valid")
         excepted_title = "React App"
-        LOGGER.info(f"actual: {get_main_page.title} | excepted: {excepted_title}")
         assert get_main_page.title == excepted_title
 
+    @log_name
     @allure.title("sanity login page nad register load properly")
     def test_login_page_loading_elements(self,get_main_page):
         login_result = get_main_page.elements_visible_login()
@@ -23,23 +22,24 @@ class TestSmoke:
         results = (register_result,login_result)
         for result in results:
             for element_is_found,msg in result:
-                LOGGER.info(f"{element_is_found} | {msg}")
                 assert element_is_found
 
-
-
+    @log_name
     def test_store_element_loading(self,get_main_page):
         pytest.skip()
         pass
 
+    @log_name
     def test_authors_element_loading(self,get_main_page):
         pytest.skip()
         pass
 
+    @log_name
     def test_authors_page_loading_elements(self):
         pytest.skip()
         pass
 
+    @log_name
     def test_base_page_load_element(self):
         pytest.skip()
         pass
