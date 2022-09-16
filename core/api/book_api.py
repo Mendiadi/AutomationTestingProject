@@ -5,7 +5,7 @@ from core.api.constant import api_links
 import allure
 
 
-class BookApi(BaseAPI):
+class BookAPI(BaseAPI):
     def __init__(self, url: str, session):
         super().__init__(url, session)
 

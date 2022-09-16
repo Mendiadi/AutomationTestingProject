@@ -10,3 +10,9 @@ api_links = {
     "findbyAuthor": "/findauthor/",
     "purchaseBook": "/purchase/"
 }
+ENDPOINTS = {
+    "_books_": URL_SWAGGER + BOOKS_URL,
+    "_account_":URL_SWAGGER + ACCOUNT_URL,
+    "_authors_":URL_SWAGGER + AUTHORS_URL
+}
+

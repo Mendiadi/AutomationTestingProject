@@ -7,3 +7,6 @@ class BaseAPI:
     def as_dict(self, obj=None):
         return {"code": self._response.status_code, "msg": self._response.text, "obj": obj}
 
+
+    def __str__(self):
+        return f"API {self._base_url} service"

@@ -1,16 +1,16 @@
 import pytest
 from core.api import rest
-from core.api import AccountApi
-from core.api import BookApi
-from core.api import AuthorsApi
+from core.api import AccountAPI
+from core.api import BookAPI
+from core.api import AuthorsAPI
 from core.api.constant import *
 from commons import json_read
 from commons import RandomData
 from core.models import LoginDto
 from core.models import ApiUserDto
-from core.api import API
-
-
+from core.api import Services
+from core.api.constant import ENDPOINTS
+from commons.utils import log_data
 @pytest.fixture(scope="session")
 def data():
     return RandomData()
@@ -39,6 +39,7 @@ def url(pytestconfig):
 @pytest.fixture(scope="session")
 def bearer_au_session(fix_user, url, fix_admin_user) -> rest.Session:
     user_dict = {"user": fix_user['user'].to_json(), "main_user_id": fix_user['userid']}
+
     with rest.Session() as new_session:
         new_session.session.post(url=f"{url}{URL_SWAGGER}{ACCOUNT_URL}/register", json=ApiUserDto(
             fix_admin_user.email, fix_admin_user.password, "admin", "admin").to_json())
@@ -51,21 +52,13 @@ def bearer_au_session(fix_user, url, fix_admin_user) -> rest.Session:
 
 
 @pytest.fixture(scope="session")
-def api(bearer_au_session, url) -> API:
-    account_endpoint = url + URL_SWAGGER + ACCOUNT_URL
-    books_endpoint = url + URL_SWAGGER + BOOKS_URL
-    authors_endpoint = url + URL_SWAGGER + AUTHORS_URL
+def api(bearer_au_session, url) -> Services:
     session = bearer_au_session
-    api = API(books=BookApi(
-        books_endpoint,
-        session
-    ), authors=AuthorsApi(
-        authors_endpoint,
-        session
-    ), account=AccountApi(
-        account_endpoint,
-        session
-    ), session=session
-    )
+    api = Services()
+    services = {"_books_":BookAPI,"_account_":AccountAPI,"_authors_":AuthorsAPI}
+    for name, service in services.items():
+        api[name] = service(f"{url}{ENDPOINTS[name]}",session)
+    api._session_ = session
+    log_data(str(api))
     return api
 

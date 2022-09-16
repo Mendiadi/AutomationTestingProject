@@ -6,7 +6,7 @@ from core.models import GetAuthorDto
 from core.models import Book
 
 
-class AuthorsApi(BaseAPI):
+class AuthorsAPI(BaseAPI):
     def __init__(self, url: str, session:rest.Session):
         super().__init__(url, session)
 

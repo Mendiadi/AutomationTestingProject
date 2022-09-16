@@ -3,7 +3,6 @@ import allure
 from commons.utils import log_name
 
 
-
 @allure.epic("API Authentication system")
 class TestAuthenticationAPI:
     @log_name
@@ -13,6 +12,9 @@ class TestAuthenticationAPI:
         user = data.generate_account()
         res = api.account.register(user)
         assert res['code'] == 200
+        after_res = api.account.register(user)
+        assert after_res['code'] == 400
+        assert f"Username \'{user.email}\' is already taken." in after_res['msg']
 
     @log_name
     def test_register_invalid_data(self):
@@ -22,6 +24,7 @@ class TestAuthenticationAPI:
     def test_login_invalid_email(self):
         pass
 
+
     @log_name
     @allure.feature("Feature: Register")
     @allure.title("Register exists account")
@@ -29,6 +32,7 @@ class TestAuthenticationAPI:
         user = fix_user['user']
         res = api.account.register(user)
         assert res['code'] == 400 and "DuplicateUserName" in res['msg']
+
 
     @log_name
     @allure.feature("Feature: Login")
@@ -48,6 +52,7 @@ class TestAuthenticationAPI:
             "password": data.password()
         })
         assert res['code'] == 400 and "The Email field is required" in res['msg']
+
 
     @log_name
     @allure.feature("Feature: Login")

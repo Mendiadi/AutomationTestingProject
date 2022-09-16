@@ -75,7 +75,7 @@
 
 import requests
 import enum
-import logging as lg
+from commons.utils import log_data
 
 
 # constant variables
@@ -215,8 +215,8 @@ class HTTP:
             def wrapper(self, *args, **kwargs) -> []:
                 data, url_ = HTTP.parse(url, kwargs, param, self, args, func)
                 self._response = HTTP.get_response(type_, self._session, url_, data, data_t)
-                lg.info(f'\nREQUEST: {func.__name__}\nTYPE: {type_} -> \nBODY: {data}\nARGS: '
-                        f'{param}\nRESPONSE: {self.as_dict()}\nURL: {url_} ')
+                log_data((f'\nREQUEST: {func.__name__}\nTYPE: {type_} -> \nBODY: {data}\nARGS: '
+                        f'{param}\nRESPONSE: {self.as_dict()}\nURL: {url_} '))
                 return func(self, *args, **kwargs)
 
             return wrapper
@@ -301,14 +301,15 @@ class SessionContextManager:
 
     def __enter__(self):
         self._session.headers.update(self._headers)
-        lg.info(f"session started... {self._session.headers.items()}")
+        log_data(f"session started... {self._session.headers.items()}")
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._session.close()
-        lg.info(f"""session closed.. cookies = {self._session.cookies.items()}
+        log_data(f"""session closed.. cookies = {self._session.cookies.items()}
                        auth = {self._session.auth} headers = {self._session.headers.items()}
                          exe_type: {exc_type},exe_val {exc_val}, exe_tb {exc_tb}""")
+
 
 
 class Session(SessionContextManager):
@@ -324,6 +325,7 @@ class Session(SessionContextManager):
 
     def set_login_url(self, url):
         self._login_url = url
+
 
     @property
     def session(self):
@@ -343,7 +345,7 @@ class Session(SessionContextManager):
         :return: None ot status code
         """
         from commons import utils
-        lg.info(f"session token updated with account {user}")
+        log_data(f"session token updated with account {user}")
         if isinstance(user, str):
             headers = {'Authorization': f'Bearer {user}'}
             self._session.headers.update(headers)
@@ -363,6 +365,6 @@ class Session(SessionContextManager):
             token = res.json()['token']
         except KeyError:
             token = res
-        headers = {'Authorization': f'Bearer {token}'}
+        headers = {"accept": "application/json",'Authorization': f'Bearer {token}'}
         self._session.headers.update(headers)
         return res.status_code

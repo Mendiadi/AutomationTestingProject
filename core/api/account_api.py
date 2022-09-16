@@ -5,7 +5,7 @@ from core.api.base_api import BaseAPI
 from core.api.constant import api_links
 
 
-class AccountApi(BaseAPI):
+class AccountAPI(BaseAPI):
 
     def __init__(self, url: str, session: rest.Session):
         super().__init__(url, session)

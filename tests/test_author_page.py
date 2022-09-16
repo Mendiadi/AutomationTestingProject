@@ -48,6 +48,7 @@ class TestAuthorPage:
         assert author.homeLatitude == la
         assert author.homeLongitude == lo
 
+
     @log_name
     def test_map_change_look(self, main_page):
         authors_page = main_page.click_authors_btn()
