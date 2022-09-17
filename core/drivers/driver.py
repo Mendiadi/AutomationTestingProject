@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from commons import LibNotSupport
+
 from commons.constant import *
 
 
@@ -11,16 +11,7 @@ class Driver(ABC):
         self._driver = driver
         self._type = type_
 
-    @staticmethod
-    def create_driver(lib, driver) -> Driver:
-        from core.drivers.driver_p import PlayWright
-        from core.drivers.driver_s import Selenium
-        DRIVERS = {
-            SELENIUM: Selenium,
-            PLAYWRIGHT: PlayWright}
-        if lib not in DRIVERS:
-            raise LibNotSupport(f"lib must be {SELENIUM} or {PLAYWRIGHT} not {type(lib)}")
-        return DRIVERS[lib](driver, lib)
+
 
     @abstractmethod
     def locate_element(self, locator: tuple[[], str], driver: [] = None) -> []:
