@@ -24,6 +24,9 @@ class TestAuthors:
         assert author in authors
         api.authors.delete_author(id=author.id)
 
+    def test_delete_author_by_id_invalid(self):
+        pass
+
     @log_name
     @pytest.mark.smoke
     @allure.title("case Delete author")
@@ -150,7 +153,6 @@ class TestBook:
         assert book['code'] == 400
         assert excepted in book['msg']
 
-
     @log_name
     @pytest.mark.parametrize("name,excepted", [(2, "The JSON value could not be converted to System.String.")
         , (None, "The JSON value could not be converted to System.String.")])
@@ -235,6 +237,7 @@ class TestBook:
 
     def find_book_by_author_invalid(self):
         pass
+
 
 @allure.epic("API verify Ahotorized required")
 class TestAPISUnauthorized:

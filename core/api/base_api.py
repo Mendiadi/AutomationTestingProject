@@ -5,7 +5,9 @@ class BaseAPI:
         self._response = None
 
     def as_dict(self, obj=None):
-        return {"code": self._response.status_code, "msg": self._response.text, "obj": obj}
+        return {"code": self._response.status_code,
+                "reason": self._response.reason,
+                "msg": self._response.text, "obj": obj}
 
 
     def __str__(self):

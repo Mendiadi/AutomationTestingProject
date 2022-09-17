@@ -11,7 +11,7 @@ from commons.constant import *
 from core.drivers import Driver
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def get_test_data(pytestconfig):
     data = load_test_data()
     data.url = pytestconfig.getoption("url")

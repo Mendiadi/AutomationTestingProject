@@ -1,4 +1,6 @@
 import json
+import os
+
 import yaml
 import logging
 import functools
@@ -25,14 +27,13 @@ def parse_yaml(path: str) -> None:
 
 def write_to_json(data: dict, path: str, indent: int = 1) -> None:
     json_object = json.dumps(data, indent=indent)
-    with open(path, "w") as outfile:
+    with open(os.path.abspath(path), "w") as outfile:
         outfile.write(json_object)
 
 logger = logging.getLogger(__name__)
 
 
 def log_data(*args,msg=""):
-
     logger.info(f"""
        {msg} -> {" | ".join(args)}
     """)

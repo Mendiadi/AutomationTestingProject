@@ -2,10 +2,12 @@ from core.api import BookAPI,AccountAPI,AuthorsAPI
 from core.api.rest import Session
 from commons.utils import log_data
 
+
 class Services:
     """
         holder class for services endpoints in one place
     """
+
 
     @property
     def books(self) -> BookAPI:
