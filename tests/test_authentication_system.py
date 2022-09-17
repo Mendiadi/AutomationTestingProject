@@ -119,6 +119,7 @@ class TestAuthenticationUI:
         store_page = main_page.login(get_test_data.email, get_test_data.password)
         text = store_page.get_label_h1_text()
         assert text == 'Welcome to our store'
+        assert False
 
     @log_name
     def test_login_invalid_cases(self):

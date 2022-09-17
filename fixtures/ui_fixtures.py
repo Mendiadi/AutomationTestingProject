@@ -25,41 +25,41 @@ def init_driver(get_test_data, request) -> Driver:
         yield driver
         if request.node.rep_call.failed:
             try:
-                if driver.type == SELENIUM:
-                    driver.script_execute("document.body.bgColor = 'white';")
-                    allure.attach(driver.get_screenshot(),
-                                  name=request.function.__name__,
-                                  attachment_type=allure.attachment_type.PNG)
-                else:
-                    play_w_img = driver.get_screenshot()
-                    allure.attach(play_w_img, attachment_type=allure.attachment_type.PNG)
-                    if IMG_PLAYWRIGHT in os.listdir("..") or IMG_PLAYWRIGHT in os.listdir():
-                        os.remove(IMG_PLAYWRIGHT)
+                driver.script_execute("document.body.bgColor = 'white';")
+                allure.attach(driver.get_screenshot(),
+                                name=request.function.__name__,
+                                attachment_type=allure.attachment_type.PNG)
             except:
                 pass
-
+        if IMG_PLAYWRIGHT in os.listdir("..") or IMG_PLAYWRIGHT in os.listdir():
+            os.remove(IMG_PLAYWRIGHT)
 
 
 @pytest.fixture
 def main_page(init_driver,api):
     page = LoginPage(init_driver)
     yield page
-    for author in api.authors.get_authors():
-        api.authors.delete_author(id=author.id)
     del page
 
+# @pytest.fixture(autouse=True)
+# def safe_load(api):
+#     authors =  api.authors.get_authors()
+#     for author in authors:
+#         api.authors.delete_author(id=author.id)
 
-@pytest.fixture(autouse=False)
-def book_setup(api,data):
+@pytest.fixture(scope="class")
+def book_setup(api,data,request):
     author_created = data.generate_author()
     author = api.authors.post_authors(author_created)
     book_created = data.generate_book(authorid=author.id, imageUrl=True)
     book = api.books.post_books(book_created)
-    yield book
+    request.cls.book = book
+    yield
     api.authors.delete_author(id=author.id)
 
-@pytest.fixture(autouse=False)
-def author_setup(api,data):
+@pytest.fixture(scope="class")
+def author_setup(api,data,request):
     author = api.authors.post_authors(data.generate_author(la=33.343, lo=34.345))
-    yield author
+    request.cls.author = author
+    yield
     api.authors.delete_author(id=author.id)
