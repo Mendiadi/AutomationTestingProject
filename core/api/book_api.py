@@ -11,7 +11,7 @@ class BookAPI(BaseAPI):
 
     @allure.step("get books from api")
     @rest.get()
-    def get_books(self) -> ...-list[BookDto]|dict[...]:
+    def get_books(self) -> [list[BookDto]]:
         if self._response.ok:
             books = []
             for book in self._response.json():
@@ -32,7 +32,7 @@ class BookAPI(BaseAPI):
             return self.as_dict()
 
     @rest.get(param="id")
-    def get_book_by_id(self, id: int) -> ...-[BookDto]:
+    def get_book_by_id(self, id: int) -> [BookDto]:
         with allure.step(f"get book by id -> id= {id}"):
             if self._response.ok:
                 return BookDto(**self._response.json())
@@ -44,7 +44,7 @@ class BookAPI(BaseAPI):
             return self.as_dict()
 
     @rest.get(url=api_links["findbyAuthor"], param="authorId")
-    def find_book_by_author_id(self, authorId: int) -> ...-list[BookDto]-dict[...]:
+    def find_book_by_author_id(self, authorId: int) -> list[BookDto]:
         with allure.step(f"find author from api id= {authorId}"):
             if self._response.ok:
                 book_list = []

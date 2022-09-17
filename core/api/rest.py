@@ -131,7 +131,7 @@ class HTTP:
     """
 
     @staticmethod
-    def try_to_json(data: ...) -> ... | dict[...]:
+    def try_to_json(data: ...) -> dict[...]:
         """
             try to make a dict if obj is sent
         :param data: obj or dict to send data with request
@@ -173,7 +173,7 @@ class HTTP:
             kw: dict,
             param: str,
             self: [],
-            args: ... | dict[...],
+            args: ... ,
             func: [Callable[..., __name__], __name__]
     ) -> tuple[..., str]:
         """
@@ -212,7 +212,7 @@ class HTTP:
         :param data_t: data type json or data
         """
 
-        def decorate(func: [__name__ - Callable[..., __name__]]) -> ...:
+        def decorate(func: [Callable[..., __name__]]) -> ...:
             def wrapper(self: ..., *args: ..., **kwargs: ...) -> ...:
                 data, url_ = HTTP.parse(url, kwargs, param, self, args, func)
                 self._response = HTTP.get_response(type_, self._session, url_, data, data_t)
@@ -336,7 +336,7 @@ class Session(SessionContextManager):
     def headers(self) -> ...:
         return self._session.headers
 
-    def update_token(self, user, is_created_now=False) -> ... - int - None:
+    def update_token(self, user, is_created_now=False) -> [int]:
         """
         Update the login user and authorize
         create new users if database are empty

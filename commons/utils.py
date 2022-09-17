@@ -33,7 +33,7 @@ def write_to_json(data: dict, path: str, indent: int = 1) -> None:
 logger = logging.getLogger(__name__)
 
 
-def log_data(*args:[Iterable[...],...],msg:str="") -> None:
+def log_data(*args:[...],msg:str="") -> None:
     logger.info(f"""
        {msg} -> {" | ".join(args)}
     """)

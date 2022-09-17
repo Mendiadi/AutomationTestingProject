@@ -11,19 +11,19 @@ class AccountAPI(BaseAPI):
         super().__init__(url, session)
 
     @rest.post(url=api_links["register"], data_t=rest.JSON)
-    def register(self, acc: Mapping[str, ...]) -> ... - Mapping[str, ...]:
+    def register(self, acc: ...) -> dict[...]:
         with allure.step(f"Register {acc} from api"):
             return self.as_dict(acc)
 
     @rest.post(url=api_links['login'], data_t=rest.JSON)
-    def login(self, user: Mapping[str, ...]) -> ... - [AuthResponseDto, dict]:
+    def login(self, user: ...) -> [AuthResponseDto, dict]:
         with allure.step(f"Login to {user} from api"):
             if self._response.ok:
                 return AuthResponseDto(**self._response.json())
             return self.as_dict(user)
 
     @rest.post(url=api_links['token'], data_t=rest.JSON)
-    def refresh_token(self, user: Mapping[str, ...]) -> ... - [AuthResponseDto, dict]:
+    def refresh_token(self, user: ...) -> [AuthResponseDto, dict]:
         with allure.step(f"refresh token to  {user}"):
             if self._response.ok:
                 return {'res': AuthResponseDto(**self._response.json()), 'code': self._response.status_code}

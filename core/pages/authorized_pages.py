@@ -1,7 +1,7 @@
 from core.pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 import allure
-from commons.utils import log_data
+
 
 
 class AuthenticationPage(BasePage):

@@ -12,7 +12,7 @@ class AuthorsAPI(BaseAPI):
 
 
     @rest.post(data_t=rest.JSON)
-    def post_authors(self, author: ...-GetAuthorDto|dict) -> ...-Author|dict:
+    def post_authors(self, author: [GetAuthorDto]) -> [Author]:
         with allure.step(f"post authors from api  {author}"):
             if self._response.ok:
                 return Author(**self._response.json())
@@ -20,7 +20,7 @@ class AuthorsAPI(BaseAPI):
 
     @allure.step("get authors from api")
     @rest.get()
-    def get_authors(self) -> Iterable[Author]-dict[...]:
+    def get_authors(self) -> [Iterable[Author]]:
         if self._response.ok:
             authors_list = []
             for author in self._response.json():
@@ -42,14 +42,14 @@ class AuthorsAPI(BaseAPI):
             return self.as_dict(id)
 
     @rest.get(param="id")
-    def get_author_by_id(self, id: int) -> ...-Author-dict[...]:
+    def get_author_by_id(self, id: int) -> [Author]:
         with allure.step(f"get author by id =  {id}"):
             if self._response.ok:
                 return Author(**self._response.json())
             return self.as_dict(id)
 
     @rest.put(param="id", data_t=rest.JSON)
-    def put_author_by_id(self, author:...-GetAuthorDto-Mapping[...], id: int) -> dict[...]:
+    def put_author_by_id(self, author:..., id: int) -> dict[...]:
         with allure.step(f"update author {id}"):
             return self.as_dict(author)
 
