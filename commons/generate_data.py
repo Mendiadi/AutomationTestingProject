@@ -41,7 +41,7 @@ class RandomData:
         homelo *= math.sin(homelo)
         return CreateAuthorDto(name, homala, homelo)
 
-    def generate_book(self, authorid=None, price: int = None, amount: int = None, description: str = None,
+    def generate_book(self, authorid:int=None, price: int = None, amount: int = None, description: str = None,
                       name: str = None, imageUrl: str = None) -> CreateBookDto:
         book = {
             "name": name if name else self._faker.name(),

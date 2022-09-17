@@ -29,14 +29,13 @@ class TestReadability:
     @log_name
     def test_readability_of_buttons_store(self):
         pytest.skip()
-        pass
+
 
     @log_name
     def test_readability_of_buttons_authors(self):
         pytest.skip()
-        pass
 
     @log_name
     def test_readability_of_buttons_author_page(self):
         pytest.skip()
-        pass
+

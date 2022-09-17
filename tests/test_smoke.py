@@ -26,22 +26,22 @@ class TestSmoke:
     @log_name
     def test_store_element_loading(self,main_page):
         pytest.skip()
-        pass
+
 
     @log_name
     def test_authors_element_loading(self,main_page):
         pytest.skip()
-        pass
+
 
     @log_name
     def test_authors_page_loading_elements(self):
         pytest.skip()
-        pass
+
 
     @log_name
     def test_base_page_load_element(self):
         pytest.skip()
-        pass
+
 
 
 

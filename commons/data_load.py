@@ -18,7 +18,7 @@ class TestsData:
     driver_path: str
     selenium_grid: bool
 
-    def valid(self):
+    def valid(self) -> None:
         if not isinstance(self.url, str):
             raise TypeError(f"url that given in init.json file are {type(self.url)} but needs to be str")
         if not isinstance(self.email, str):
@@ -44,5 +44,5 @@ class TestsData:
         return TestsData(**json_read(path))
 
 
-def load_test_data():
+def load_test_data() -> TestsData:
     return TestsData.load(DATA_FILE)

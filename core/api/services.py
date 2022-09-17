@@ -1,4 +1,4 @@
-from core.api import BookAPI,AccountAPI,AuthorsAPI
+from core.api import BookAPI, AccountAPI, AuthorsAPI
 from core.api.rest import Session
 from commons.utils import log_data
 
@@ -8,13 +8,14 @@ class Services:
         holder class for services endpoints in one place
     """
 
-
     @property
     def books(self) -> BookAPI:
         return self._books_
+
     @property
     def account(self) -> AccountAPI:
         return self._account_
+
     @property
     def authors(self) -> AuthorsAPI:
         return self._authors_
@@ -24,7 +25,7 @@ class Services:
         return self._session_
 
     def __str__(self):
-        return f"api services: {[f'{name} : {service}' for name ,service in self.__dict__.items()]}"
+        return f"api services: {[f'{name} : {service}' for name, service in self.__dict__.items()]}"
 
     def __getattribute__(self, item):
         return super(Services, self).__getattribute__(item)
@@ -35,5 +36,3 @@ class Services:
 
     def __setitem__(self, key, value):
         setattr(self, key, value)
-
-

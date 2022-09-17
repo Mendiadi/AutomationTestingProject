@@ -113,17 +113,16 @@ class TestStore:
     @log_name
     def test_finish_book_stock(self):
         pytest.skip()
-        pass
 
     @log_name
     def test_buy_book_that_no_stock(self):
         pytest.skip()
-        pass
+
 
     @log_name
     def test_buy_book_no_stock_and_login(self):
         pytest.skip()
-        pass
+
 
     @log_name
     @allure.title("post 10 new books and buy all the books in the store once ")

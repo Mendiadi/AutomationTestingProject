@@ -76,6 +76,7 @@
 import requests
 import enum
 from commons.utils import log_data
+from typing import Callable
 
 
 # constant variables
@@ -114,7 +115,7 @@ class ParamNotSigned(RestError):
 
     """
 
-    def __init__(self, session, param, arg, func):
+    def __init__(self, session: ..., param: ..., arg: ..., func: __name__):
         self.msg = f"""param '{param}' is not signed when first call from '{func.__name__}' with '{arg}'
                    consider if you use 'param' argument for our decorators you should
                    call like {func.__name__}({param}={arg})"""
@@ -130,7 +131,7 @@ class HTTP:
     """
 
     @staticmethod
-    def try_to_json(data):
+    def try_to_json(data: ...) -> ... | dict[...]:
         """
             try to make a dict if obj is sent
         :param data: obj or dict to send data with request
@@ -146,7 +147,7 @@ class HTTP:
             type_: Req,
             ptr__: requests.Session,
             url: str,
-            data: [],
+            data: {...},
             data_t: str
     ) -> requests.Response:
         """
@@ -172,9 +173,9 @@ class HTTP:
             kw: dict,
             param: str,
             self: [],
-            args,
-            func
-    ) -> tuple:
+            args: ... | dict[...],
+            func: [Callable[..., __name__], __name__]
+    ) -> tuple[..., str]:
         """
         get all data from the decorator and configure
         how its need to be sent to request
@@ -196,7 +197,7 @@ class HTTP:
             url: str = None,
             param: str = None,
             data_t: str = DATA
-    ) -> []:
+    ) -> ...:
         """
         Decorator with two nasted function to crate the magic function!
         the first function initial the second with same args->
@@ -211,12 +212,12 @@ class HTTP:
         :param data_t: data type json or data
         """
 
-        def decorate(func, **kwargs) -> []:
-            def wrapper(self, *args, **kwargs) -> []:
+        def decorate(func: [__name__ - Callable[..., __name__]]) -> ...:
+            def wrapper(self: ..., *args: ..., **kwargs: ...) -> ...:
                 data, url_ = HTTP.parse(url, kwargs, param, self, args, func)
                 self._response = HTTP.get_response(type_, self._session, url_, data, data_t)
                 log_data((f'\nREQUEST: {func.__name__}\nTYPE: {type_} -> \nBODY: {data}\nARGS: '
-                        f'{param}\nRESPONSE: {self.as_dict()}\nURL: {url_} '))
+                          f'{param}\nRESPONSE: {self.as_dict()}\nURL: {url_} '))
                 return func(self, *args, **kwargs)
 
             return wrapper
@@ -228,7 +229,7 @@ def get(
         url: str = None,
         param: str = None,
         data_t: str = DATA
-):
+) -> ...:
     """
     Create GET request and returns the response
     :param url: url or part of it
@@ -244,7 +245,7 @@ def delete(
         url: str = None,
         param: str = None,
         data_t: str = DATA
-):
+) -> ...:
     """
         Create DELETE request and returns the response
         :param url: url or part of it
@@ -260,7 +261,7 @@ def post(
         url: str = None,
         param: str = None,
         data_t: str = DATA
-):
+) -> ...:
     """
         Create POST request and returns the response
         :param url: url or part of it
@@ -276,7 +277,7 @@ def put(
         url: str = None,
         param: str = None,
         data_t: str = DATA
-):
+) -> ...:
     """
         Create PUT request and returns the response
         :param url: url or part of it
@@ -295,6 +296,7 @@ class SessionContextManager:
         Context Manager to make a session
         and simply auto closed and logs after session ends
     """
+
     def __init__(self, headers: [] = ""):
         self._headers = headers
         self._session = requests.session()
@@ -311,31 +313,30 @@ class SessionContextManager:
                          exe_type: {exc_type},exe_val {exc_val}, exe_tb {exc_tb}""")
 
 
-
 class Session(SessionContextManager):
     """
         Session Context Manager class
         to make some operations on session
 
     """
-    def __init__(self, headers: [] = ""):
+
+    def __init__(self, headers: ... = ...):
         super().__init__(headers)
         self._headers = headers
         self._login_url: str
 
-    def set_login_url(self, url):
+    def set_login_url(self, url: str) -> None:
         self._login_url = url
 
-
     @property
-    def session(self):
+    def session(self) -> requests.Session:
         return self._session
 
     @property
-    def headers(self):
+    def headers(self) -> ...:
         return self._session.headers
 
-    def update_token(self, user, is_created_now=False):
+    def update_token(self, user, is_created_now=False) -> ... - int - None:
         """
         Update the login user and authorize
         create new users if database are empty
@@ -365,6 +366,6 @@ class Session(SessionContextManager):
             token = res.json()['token']
         except KeyError:
             token = res
-        headers = {"accept": "application/json",'Authorization': f'Bearer {token}'}
+        headers = {"accept": "application/json", 'Authorization': f'Bearer {token}'}
         self._session.headers.update(headers)
         return res.status_code

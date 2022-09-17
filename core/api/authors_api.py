@@ -4,7 +4,7 @@ from core.api.base_api import BaseAPI
 from core.models import Author
 from core.models import GetAuthorDto
 from core.models import Book
-
+from typing import Iterable,Mapping
 
 class AuthorsAPI(BaseAPI):
     def __init__(self, url: str, session:rest.Session):
@@ -12,7 +12,7 @@ class AuthorsAPI(BaseAPI):
 
 
     @rest.post(data_t=rest.JSON)
-    def post_authors(self, author: GetAuthorDto):
+    def post_authors(self, author: ...-GetAuthorDto|dict) -> ...-Author|dict:
         with allure.step(f"post authors from api  {author}"):
             if self._response.ok:
                 return Author(**self._response.json())
@@ -20,7 +20,7 @@ class AuthorsAPI(BaseAPI):
 
     @allure.step("get authors from api")
     @rest.get()
-    def get_authors(self):
+    def get_authors(self) -> Iterable[Author]-dict[...]:
         if self._response.ok:
             authors_list = []
             for author in self._response.json():
@@ -37,25 +37,25 @@ class AuthorsAPI(BaseAPI):
         return self.as_dict()
 
     @rest.delete(param="id")
-    def delete_author(self, id: int):
+    def delete_author(self, id: int) -> dict[...]:
         with allure.step(f"delete author id={id}"):
             return self.as_dict(id)
 
     @rest.get(param="id")
-    def get_author_by_id(self, id: int):
+    def get_author_by_id(self, id: int) -> ...-Author-dict[...]:
         with allure.step(f"get author by id =  {id}"):
             if self._response.ok:
                 return Author(**self._response.json())
             return self.as_dict(id)
 
     @rest.put(param="id", data_t=rest.JSON)
-    def put_author_by_id(self, author, id: int):
+    def put_author_by_id(self, author:...-GetAuthorDto-Mapping[...], id: int) -> dict[...]:
         with allure.step(f"update author {id}"):
             return self.as_dict(author)
 
     @rest.get(url='/search/', param="query")
-    def search(self, query: str):
-        with allure.step(f"search for {query}"):
+    def search(self, query: str) -> Iterable[Author]:
+        with allure.step(f"search for {query}") :
             authors = []
             for author in self._response.json():
                 authors.append(Author(**author))

@@ -90,8 +90,8 @@ class TestAuthors:
         else:
             assert [query not in author.name for author in authors_get]
 
-    def test_get_author_by_id_invalid(self):
-        pass
+    def test_get_author_by_id_invalid(self):...
+
 
 @allure.epic("books from api")
 class TestBook:
@@ -245,17 +245,17 @@ class TestBook:
         api.authors.delete_author(id=author.id)
 
     def test_purchase_book(self):
-        pass
+        ...
 
     def test_purchase_book_invalid(self):
-        pass
+        ...
 
     def test_find_book_by_author(self):
-        pass
+        ...
 
     @allure.title("")
     def find_book_by_author_invalid(self):
-        pass
+        ...
 
 
 @allure.epic("API verify authorized required")

@@ -17,12 +17,12 @@ class TestAuthenticationAPI:
         assert f"Username \'{user.email}\' is already taken." in after_res['msg']
 
     @log_name
-    def test_register_invalid_data(self):
-        pass
+    def test_register_invalid_data(self):...
+
 
     @log_name
-    def test_login_invalid_email(self):
-        pass
+    def test_login_invalid_email(self):...
+
 
 
     @log_name
@@ -109,7 +109,7 @@ class TestAuthenticationUI:
     @log_name
     def test_logout(self):
         pytest.skip()
-        pass
+
 
     @log_name
     @pytest.mark.regression
@@ -123,22 +123,22 @@ class TestAuthenticationUI:
     @log_name
     def test_login_invalid_cases(self):
         pytest.skip()
-        pass
+
 
     @log_name
     def test_register_invalid_cases(self):
         pytest.skip()
-        pass
+
 
     @log_name
     def test_register_exists(self):
         pytest.skip()
-        pass
+
 
     @log_name
     def test_register_and_login(self):
         pytest.skip()
-        pass
+
 
     @log_name
     @allure.feature("Feature: Register")

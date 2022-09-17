@@ -1,9 +1,9 @@
 import json
 import os
-
 import yaml
 import logging
 import functools
+from typing import Callable,Iterable
 
 def json_read(path: str) -> json:
     try:
@@ -33,12 +33,12 @@ def write_to_json(data: dict, path: str, indent: int = 1) -> None:
 logger = logging.getLogger(__name__)
 
 
-def log_data(*args,msg=""):
+def log_data(*args:[Iterable[...],...],msg:str="") -> None:
     logger.info(f"""
        {msg} -> {" | ".join(args)}
     """)
 
-def log_name(func):
+def log_name(func:Callable) -> Callable[...,None]:
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         logger.info(f"Executing {func.__name__}\n")
