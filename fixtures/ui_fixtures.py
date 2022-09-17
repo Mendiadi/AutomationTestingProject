@@ -4,7 +4,7 @@ import allure
 from core.pages.login_page import LoginPage
 from commons import load_test_data
 from commons.constant import *
-from core.drivers import DriverContextManager
+from core.drivers import DriverContextManager,Driver
 
 
 @pytest.fixture(scope="session")
@@ -18,7 +18,7 @@ def get_test_data(pytestconfig):
 
 
 @pytest.fixture
-def init_driver(get_test_data, request):
+def init_driver(get_test_data, request) -> Driver:
     get_test_data.valid()
     with DriverContextManager(get_test_data) as d:
         driver = d.init()

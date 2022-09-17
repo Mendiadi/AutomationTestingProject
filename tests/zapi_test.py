@@ -145,7 +145,7 @@ class TestBook:
     @log_name
     @allure.title("try to post book with invalid id ")
     @pytest.mark.parametrize("id,excepted", [((-1), "The field AuthorId must be between 1 and 2147483647."),
-                                             (2147483647, "The field AuthorId must be between 1 and 2147483647.")
+                                             (2147483648, "The field AuthorId must be between 1 and 2147483647.")
         , ("sfsf", "The JSON value could not be converted to System.Int32.")])
     def test_post_book_invalid_id(self, id, excepted, data, api):
         book_dto = data.generate_book(authorid=id)
@@ -162,9 +162,11 @@ class TestBook:
         assert excepted in book['msg'] and book['code'] == 400
 
     @log_name
-    def test_post_book_invalid_author(self):
-        pytest.skip()
-        pass
+    @allure.title("case post book with no exists author id")
+    def test_post_book_no_exists_author(self, api, data):
+        api.authors.delete_author(id=100)
+        res = api.books.post_books(data.generate_book(authorid=100))
+        assert res['code'] == 400
 
     @log_name
     @allure.title("case post books")
@@ -235,44 +237,65 @@ class TestBook:
     def test_find_book_by_author(self):
         pass
 
+    @allure.title("")
     def find_book_by_author_invalid(self):
         pass
 
 
-@allure.epic("API verify Ahotorized required")
+@allure.epic("API verify authorized required")
 class TestAPISUnauthorized:
+
     @log_name
+    @allure.title("case delete book")
     def test_unauthorized_delete_book(self, api):
         api.session.headers.clear()
         res = api.books.delete_book(id=5)
         assert res['code'] == 401
+        assert res['reason'] == "Unauthorized"
 
     @log_name
+    @allure.title("case post book")
     def test_unauthorized_post_book(self, api, data):
         book = data.generate_book(authorid=2)
         res = api.books.post_books(book)
         assert res['code'] == 401
+        assert res['reason'] == "Unauthorized"
 
     @log_name
+    @allure.title("case put book")
     def test_put_book_unauthorized(self, api):
         res = api.books.put_book({}, id=10)
         assert res['code'] == 401
+        assert res['reason'] == "Unauthorized"
 
     @log_name
+    @allure.title("case post author")
     def test_unauthorized_post_author(self, api, data):
         author = data.generate_author()
         res = api.authors.post_authors(author)
         assert res['code'] == 401
+        assert res['reason'] == "Unauthorized"
 
     @log_name
+    @allure.title("case put author")
     def test_unauthorized_put_author(self, api, data):
         author = data.generate_author()
         res = api.authors.put_author_by_id(author, id=4)
         assert res['code'] == 401
+        assert res['reason'] == "Unauthorized"
 
     @log_name
+    @allure.title("case purchase book")
+    def test_unauthorized_purchase_book(self, data, api):
+        res = api.books.purchase_book(id=3)
+        assert res['code'] == 401
+        assert res['reason'] == "Unauthorized"
+
+    @log_name
+    @allure.title("case delete author")
     def test_unauthorized_delete_author(self, api, fix_user):
         res = api.authors.delete_author(id=5)
         response = api.account.login(fix_user['user'])
         api.session.update_token(response.token)
         assert res['code'] == 401
+        assert res['reason'] == "Unauthorized"

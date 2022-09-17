@@ -7,6 +7,7 @@ from commons.utils import log_name
 @allure.epic("UI store page")
 class TestStore:
 
+
     @log_name
     @allure.title("case add book and verify is apear in page ")
     def test_add_book_apear(self, main_page, api, data):
