@@ -1,5 +1,5 @@
 import pytest
-from core.api import rest
+from core.api import Services
 from core.api import AccountAPI
 from core.api import BookAPI
 from core.api import AuthorsAPI
@@ -8,7 +8,7 @@ from commons import json_read
 from commons import RandomData
 from core.models import LoginDto
 from core.models import ApiUserDto
-from core.api import Services
+from core.api import session as se
 from core.api.constant import ENDPOINTS
 from commons.utils import log_data
 
@@ -31,17 +31,17 @@ def fix_admin_user():
     return LoginDto(**user['admin'])
 
 
-
 @pytest.fixture(scope="session")
-def bearer_au_session(fix_user, fix_admin_user,get_test_data) -> rest.Session:
+def bearer_au_session(fix_user, fix_admin_user, get_test_data) -> se.Session:
     user_dict = {"user": fix_user['user'].to_json(), "main_user_id": fix_user['userid']}
-    with rest.Session() as new_session:
+    with se.Session() as new_session:
         new_session.session.post(url=f"{get_test_data.url[:-1]}{URL_SWAGGER}{ACCOUNT_URL}/register", json=ApiUserDto(
             fix_admin_user.email, fix_admin_user.password, "admin", "admin").to_json())
         new_session.set_login_url(f'{get_test_data.url[:-1]}{URL_SWAGGER}{ACCOUNT_URL}/login')
         code = new_session.update_token(user_dict)
         if code == 401:
-            new_session.session.post(f'{get_test_data.url[:-1]}{URL_SWAGGER}{ACCOUNT_URL}/register', json=user_dict['user'])
+            new_session.session.post(f'{get_test_data.url[:-1]}{URL_SWAGGER}{ACCOUNT_URL}/register',
+                                     json=user_dict['user'])
             new_session.update_token(user_dict, True)
         yield new_session
 
@@ -50,10 +50,9 @@ def bearer_au_session(fix_user, fix_admin_user,get_test_data) -> rest.Session:
 def api(bearer_au_session, get_test_data) -> Services:
     session = bearer_au_session
     api = Services()
-    services = {"_books_":BookAPI,"_account_":AccountAPI,"_authors_":AuthorsAPI}
+    services = {"_books_": BookAPI, "_account_": AccountAPI, "_authors_": AuthorsAPI}
     for name, service in services.items():
-        api[name] = service(f"{get_test_data.url[:-1]}{ENDPOINTS[name]}",session)
+        api[name] = service(f"{get_test_data.url[:-1]}{ENDPOINTS[name]}", session)
     api._session_ = session
     log_data(str(api))
     return api
-

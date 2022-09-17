@@ -2,7 +2,7 @@ import pytest
 import allure
 from commons.utils import log_name
 
-
+@pytest.mark.usefixtures("safe_load")
 @allure.epic("API Authentication system")
 class TestAuthenticationAPI:
     @log_name
@@ -119,7 +119,7 @@ class TestAuthenticationUI:
         store_page = main_page.login(get_test_data.email, get_test_data.password)
         text = store_page.get_label_h1_text()
         assert text == 'Welcome to our store'
-        assert False
+
 
     @log_name
     def test_login_invalid_cases(self):

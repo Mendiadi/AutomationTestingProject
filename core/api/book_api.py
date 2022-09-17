@@ -44,7 +44,7 @@ class BookAPI(BaseAPI):
             return self.as_dict()
 
     @rest.get(url=api_links["findbyAuthor"], param="authorId")
-    def find_book_by_author_id(self, authorId: int) -> list[BookDto]:
+    def find_book_by_author_id(self, authorId: int) -> [list[BookDto]]:
         with allure.step(f"find author from api id= {authorId}"):
             if self._response.ok:
                 book_list = []

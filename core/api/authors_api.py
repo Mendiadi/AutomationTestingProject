@@ -1,13 +1,14 @@
 import allure
+from core.api import session as se
 from core.api import rest
 from core.api.base_api import BaseAPI
 from core.models import Author
 from core.models import GetAuthorDto
 from core.models import Book
-from typing import Iterable,Mapping
+from typing import Iterable
 
 class AuthorsAPI(BaseAPI):
-    def __init__(self, url: str, session:rest.Session):
+    def __init__(self, url: str, session:se.Session):
         super().__init__(url, session)
 
 

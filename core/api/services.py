@@ -1,5 +1,5 @@
 from core.api import BookAPI, AccountAPI, AuthorsAPI
-from core.api.rest import Session
+from core.api import session as se
 from commons.utils import log_data
 
 
@@ -21,7 +21,7 @@ class Services:
         return self._authors_
 
     @property
-    def session(self) -> Session:
+    def session(self) -> se.Session:
         return self._session_
 
     def __str__(self):

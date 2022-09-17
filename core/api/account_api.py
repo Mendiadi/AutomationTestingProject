@@ -1,13 +1,14 @@
 import allure
+from core.api import session as se
 from core.api import rest
 from core.models import AuthResponseDto
 from core.api.base_api import BaseAPI
 from core.api.constant import api_links
-from typing import Mapping
+
 
 class AccountAPI(BaseAPI):
 
-    def __init__(self, url: str, session: rest.Session):
+    def __init__(self, url: str, session: se.Session):
         super().__init__(url, session)
 
     @rest.post(url=api_links["register"], data_t=rest.JSON)

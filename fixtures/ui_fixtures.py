@@ -41,11 +41,14 @@ def main_page(init_driver,api):
     yield page
     del page
 
-# @pytest.fixture(autouse=True)
-# def safe_load(api):
-#     authors =  api.authors.get_authors()
-#     for author in authors:
-#         api.authors.delete_author(id=author.id)
+@pytest.fixture(scope="class")
+def safe_load(api):
+    print("start")
+    yield
+    print("done")
+    authors =  api.authors.get_authors()
+    for author in authors:
+        api.authors.delete_author(id=author.id)
 
 @pytest.fixture(scope="class")
 def book_setup(api,data,request):
