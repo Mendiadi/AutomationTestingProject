@@ -14,12 +14,12 @@ def get_test_data(pytestconfig):
     data.lib = pytestconfig.getoption("lib")
     data.browser = pytestconfig.getoption("browser")
     data.selenium_grid = pytestconfig.getoption("grid")
+    data.valid()
     return data
 
 
 @pytest.fixture
 def init_driver(get_test_data, request) -> Driver:
-    get_test_data.valid()
     with DriverContextManager(get_test_data) as d:
         driver = d.init()
         yield driver
