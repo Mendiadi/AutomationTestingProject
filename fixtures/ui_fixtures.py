@@ -46,9 +46,17 @@ def main_page(init_driver):
     yield page
     del page
 
+@pytest.fixture(autouse=False)
+def book_setup(api,data):
+    author_created = data.generate_author()
+    author = api.authors.post_authors(author_created)
+    book_created = data.generate_book(authorid=author.id, imageUrl=True)
+    book = api.books.post_books(book_created)
+    yield book
+    api.authors.delete_author(id=author.id)
 
 @pytest.fixture(autouse=False)
 def author_setup(api,data):
-    author = api.authors.post_authors(data.generate_author(name="adi", la=33.343, lo=34.345))
+    author = api.authors.post_authors(data.generate_author(la=33.343, lo=34.345))
     yield author
     api.authors.delete_author(id=author.id)
