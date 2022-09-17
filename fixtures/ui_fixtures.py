@@ -41,10 +41,13 @@ def init_driver(get_test_data, request) -> Driver:
 
 
 @pytest.fixture
-def main_page(init_driver):
+def main_page(init_driver,api):
     page = LoginPage(init_driver)
     yield page
+    for author in api.authors.get_authors():
+        api.authors.delete_author(id=author.id)
     del page
+
 
 @pytest.fixture(autouse=False)
 def book_setup(api,data):

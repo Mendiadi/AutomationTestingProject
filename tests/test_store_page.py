@@ -10,14 +10,15 @@ class TestStore:
 
     @log_name
     @allure.title("case add book and verify is apear in page ")
-    def test_add_book_apear(self,book_setup, main_page):
+    def test_add_book_apear(self,author_setup, main_page,api,data):
+        book = api.books.post_books(data.generate_book(authorid=author_setup.id))
         store_page = main_page.click_bookstore()
         store_page.reload()
-        book_elem = store_page.get_book(title=book_setup.name)
+        book_elem = store_page.get_book(title=book.name)
         book_title = store_page.get_book_title(book_elem)
         book_author = store_page.get_book_author(book_elem)
-        assert book_setup.name in book_author
-        assert book_title == book_setup.name
+        assert author_setup.name in book_author
+        assert book_title == book.name
 
     @log_name
     @allure.title("case buy book without login")
@@ -34,7 +35,9 @@ class TestStore:
     @allure.title("get books by author")
     def test_update_and_get_books_by_author(self, main_page,api,data):
         author = api.authors.post_authors(data.generate_author(name="dor david"))
+        book_ = api.books.post_books(data.generate_book(authorid=author.id))
         store_page = main_page.click_bookstore()
+        store_page.reload()
         books = store_page.get_books_by_author("dor david")
         for book in books:
             book_title = store_page.get_book_title(book)
@@ -59,38 +62,29 @@ class TestStore:
 
     @log_name
     @allure.title("case buy book from api and check for update")
-    def test_buy_book_from_api_to_ui(self, data, api, get_test_data, main_page):
-        author_created = data.generate_author()
-        author = api.authors.post_authors(author_created)
-        book_created = data.generate_book(name="waves of sea", authorid=author.id, imageUrl=True)
-        book = api.books.post_books(book_created)
+    def test_buy_book_from_api_to_ui(self,book_setup,api, main_page):
         store_page = main_page.click_bookstore()
         book_element = store_page.get_book(title="waves of sea")
         book_element_stock_before = store_page.get_book_stock(book_element)
-        api.books.purchase_book(id=book.id)
+        api.books.purchase_book(id=book_setup.id)
         store_page.reload()
-        book_element_after = store_page.get_book(book.name)
+        book_element_after = store_page.get_book(book_setup.name)
         book_element_stock_after = store_page.get_book_stock(book_element_after)
         assert book_element_stock_before != book_element_stock_after
-        api.authors.delete_author(id=author.id)
+
 
     @log_name
     @allure.title("case post books and see if they apear at screen")
-    def test_books_updated(self, main_page, api, data):
-        author_new = data.generate_author("moshe")
-        author = api.authors.post_authors(author_new)
-        book_created = data.generate_book(name="moshe is hot", authorid=author.id, imageUrl=True)
-        api.books.post_books(book_created)
+    def test_books_updated(self, book_setup,main_page):
         store_page = main_page.click_bookstore()
-        books = store_page.get_books_by_author("moshe")
-        for book in books:
-            text = store_page.get_book_title(book)
-            assert "moshe is hot" == text
-        api.authors.delete_author(id=author.id)
+        book = store_page.get_book(book_setup.name)
+        text = store_page.get_book_title(book)
+        assert book_setup.name == text
+
 
     @log_name
     @allure.title("check if all the books in db are visible")
-    def test_verify_books(self, main_page, api):
+    def test_verify_books(self,book_setup, main_page, api):
         boos_api = api.books.get_books()
         store_page = main_page.click_bookstore()
         books = store_page.get_books()
