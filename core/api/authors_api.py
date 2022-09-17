@@ -13,7 +13,7 @@ class AuthorsAPI(BaseAPI):
 
     @rest.post(data_t=rest.JSON)
     def post_authors(self, author: GetAuthorDto):
-        with allure.step(f"post authors from api  {author.to_json()}"):
+        with allure.step(f"post authors from api  {author}"):
             if self._response.ok:
                 return Author(**self._response.json())
             return self.as_dict(author)

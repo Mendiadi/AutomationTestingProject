@@ -7,9 +7,15 @@ from commons.utils import log_name
 @allure.epic("Authors testing from api")
 class TestAuthors:
 
-    def test_post_author_invalid_data(self):
-        pytest.skip()
-        pass
+    @log_name
+    @allure.title("case post author invalid")
+    @pytest.mark.parametrize("data,excepted",[({},"The Name field is required."),
+                                              ({"name":2},"The JSON value could not be converted to System.String.")])
+    def test_post_author_invalid_data(self,api,data,excepted):
+        res = api.authors.post_authors(data)
+        assert res['code'] == 400
+        assert res['reason'] == "Bad Request"
+        assert excepted in res['msg']
 
     def test_put_author_invalid_data(self):
         pytest.skip()
@@ -24,8 +30,16 @@ class TestAuthors:
         assert author in authors
         api.authors.delete_author(id=author.id)
 
-    def test_delete_author_by_id_invalid(self):
-        pass
+    @log_name
+    @pytest.mark.parametrize("id,excepted", [("2", "Not Found"),
+                            (-9, "Not Found")])
+    @allure.title("case delete author by id")
+    def test_delete_author_by_id_invalid(self,api,id,excepted):
+        res = api.authors.delete_author(id=id)
+        assert res['code'] == 404
+        assert res['reason'] == excepted
+
+
 
     @log_name
     @pytest.mark.smoke
@@ -76,6 +90,8 @@ class TestAuthors:
         else:
             assert [query not in author.name for author in authors_get]
 
+    def test_get_author_by_id_invalid(self):
+        pass
 
 @allure.epic("books from api")
 class TestBook:
