@@ -131,7 +131,7 @@ class HTTP:
     """
 
     @staticmethod
-    def try_to_json(data: ...) -> dict[...]:
+    def try_to_json(data: {...}) -> dict[...]:
         """
             try to make a dict if obj is sent
         :param data: obj or dict to send data with request
@@ -197,7 +197,7 @@ class HTTP:
             url: str = None,
             param: str = None,
             data_t: str = DATA
-    ) -> ...:
+    ) -> {...}:
         """
         Decorator with two nasted function to crate the magic function!
         the first function initial the second with same args->
@@ -212,8 +212,8 @@ class HTTP:
         :param data_t: data type json or data
         """
 
-        def decorate(func: [Callable[..., __name__]]) -> ...:
-            def wrapper(self: ..., *args: ..., **kwargs: ...) -> ...:
+        def decorate(func: [Callable[..., __name__]],**kwargs:...) -> {...}:
+            def wrapper(self: ..., *args: ..., **kwargs: ...) -> {...}:
                 data, url_ = HTTP.parse(url, kwargs, param, self, args, func)
                 self._response = HTTP.get_response(type_, self._session, url_, data, data_t)
                 log_data((f'\nREQUEST: {func.__name__}\nTYPE: {type_} -> \nBODY: {data}\nARGS: '
@@ -245,7 +245,7 @@ def delete(
         url: str = None,
         param: str = None,
         data_t: str = DATA
-) -> ...:
+) -> {...}:
     """
         Create DELETE request and returns the response
         :param url: url or part of it
@@ -261,7 +261,7 @@ def post(
         url: str = None,
         param: str = None,
         data_t: str = DATA
-) -> ...:
+) -> {...}:
     """
         Create POST request and returns the response
         :param url: url or part of it
@@ -277,7 +277,7 @@ def put(
         url: str = None,
         param: str = None,
         data_t: str = DATA
-) -> ...:
+) -> {...}:
     """
         Create PUT request and returns the response
         :param url: url or part of it
@@ -320,7 +320,7 @@ class Session(SessionContextManager):
 
     """
 
-    def __init__(self, headers: ... = ...):
+    def __init__(self, headers: {...} = ""):
         super().__init__(headers)
         self._headers = headers
         self._login_url: str
@@ -333,7 +333,7 @@ class Session(SessionContextManager):
         return self._session
 
     @property
-    def headers(self) -> ...:
+    def headers(self) -> {...}:
         return self._session.headers
 
     def update_token(self, user, is_created_now=False) -> [int]:

@@ -31,5 +31,6 @@ class AuthorsPage(BasePage):
 
     def go_to_author(self, author):
         from core.pages import author_page
-        self._driver.locate_element(self._locators["go_to_author_btn"], author).click()
-        return author_page.AuthorPage(self._driver)
+        if author:
+            self._driver.locate_element(self._locators["go_to_author_btn"], author).click()
+            return author_page.AuthorPage(self._driver)

@@ -41,13 +41,14 @@ class TestStore:
 
     @log_name
     @allure.title("get books by author")
-    def test_update_and_get_books_by_author(self, main_page):
+    def test_update_and_get_books_by_author(self, main_page,api,data):
+        author = api.authors.post_authors(data.generate_author(name="dor david"))
         store_page = main_page.click_bookstore()
-        books = store_page.get_books_by_author("George Orwell")
+        books = store_page.get_books_by_author("dor david")
         for book in books:
             book_title = store_page.get_book_title(book)
             assert book_title == "1984" or "Animal Farm"
-
+        api.authors.delete_author(id=author.id)
     @log_name
     @allure.title("case buy book with login and created book")
     def test_case_buy_book(self, main_page, api, data, get_test_data):
@@ -75,7 +76,7 @@ class TestStore:
         book_created = data.generate_book(name="waves of sea", authorid=author.id, imageUrl=True)
         book = api.books.post_books(book_created)
         store_page = main_page.click_bookstore()
-        book_element = store_page.get_book(title=book.name)
+        book_element = store_page.get_book(title="waves of sea")
         book_element_stock_before = store_page.get_book_stock(book_element)
         api.books.purchase_book(id=book.id)
         store_page.reload()

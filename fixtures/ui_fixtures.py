@@ -45,3 +45,10 @@ def main_page(init_driver):
     page = LoginPage(init_driver)
     yield page
     del page
+
+
+@pytest.fixture(autouse=False)
+def author_setup(api,data):
+    author = api.authors.post_authors(data.generate_author(name="adi", la=33.343, lo=34.345))
+    yield author
+    api.authors.delete_author(id=author.id)

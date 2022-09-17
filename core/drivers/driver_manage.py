@@ -60,6 +60,7 @@ class DriverContextManager:
         self._page.get(self._config.url)
         self._page.maximize_window()
 
+
     def __enter__(self):
         if self._config.lib == PLAYWRIGHT:
             self._on_playwright()

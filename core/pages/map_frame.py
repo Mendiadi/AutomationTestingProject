@@ -37,9 +37,9 @@ class MapFrame:
 
         self._tab = self._driver.switch_to_tab(1)
 
-        return self._convert_cordinates(self._driver.url())
+        return self.parse_la_lo_from_gmaps(self._driver.url())
 
-    def _convert_cordinates(self, val: str) -> tuple[float, float]:
+    def parse_la_lo_from_gmaps(self, val: str) -> tuple[float, float]:
         a = val.find("=")
         b = val.find("&")
         x = val[a + 1:b:]

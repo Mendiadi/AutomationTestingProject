@@ -1,3 +1,5 @@
+import keyboard
+
 from core.drivers import Driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -49,16 +51,17 @@ class Selenium(Driver):
             element = driver.find_element(*locator)
         except (se.TimeoutException, se.NoSuchElementException, se.ElementNotVisibleException) as e:
             log_data(f"log msg from Driver - {e}")
+
             element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(locator))
-        except se.StaleElementReferenceException as e:
+        except (se.StaleElementReferenceException,se.TimeoutException) as e:
             log_data(f"log msg from Driver - {e}")
             self.refresh()
             element = driver.find_element(*locator)
-
         return element
 
     def switch_to_tab(self, val: int):
         if len(self._driver.window_handles) > 1:
+            self._driver.window_handles.pop()
             self._driver.switch_to.window(self._driver.window_handles[val])
         return val
 

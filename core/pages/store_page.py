@@ -46,9 +46,8 @@ class StorePage(BasePage):
     def get_book(self, title: str = None):
         with allure.step(f"get the book by title = {title}"):
             books = self.get_books()
-
             for book in books:
-                if title == self.get_book_title(book):
+                if title in self.get_book_title(book):
                     return book
             return None
 
