@@ -1,5 +1,3 @@
-import time
-
 import pytest
 import allure
 from commons.utils import log_name

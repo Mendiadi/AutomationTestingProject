@@ -1,10 +1,10 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 
 from commons.constant import *
 
 
-class Driver(ABC):
+class Driver(metaclass=ABCMeta):
 
     def __init__(self, driver, type_):
         self._driver = driver
