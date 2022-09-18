@@ -14,10 +14,12 @@ class TestStore:
         store_page = main_page.click_bookstore()
         store_page.reload()
         book_elem = store_page.get_book(title=book.name)
-        book_title = store_page.get_book_title(book_elem)
-        book_author = store_page.get_book_author(book_elem)
-        assert self.author.name in book_author
-        assert book_title == book.name
+        assert self.author.name in store_page.get_book_author(book_elem)
+        assert store_page.get_book_title(book_elem) == book.name
+        assert book.description == store_page.get_book_decription(book_elem)
+        assert str(book.amountInStock) in store_page.get_book_stock(book_elem)
+        assert str(book.price) in store_page.get_book_price(book_elem)
+        assert book.imageUrl == store_page.get_book_image_url(book_elem)
 
     @log_name
     @allure.title("case buy book without login")
