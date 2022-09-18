@@ -11,7 +11,9 @@ class StorePage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
         self._scanner = threading.Thread(target=self._scan_for_alerts)
-        self._purchase_msg = None
+        self._scanner.setDaemon(True)
+        self._purchase_msg = ""
+        self._kill = False
     _locators = {
 
         "h1_label": (By.TAG_NAME, 'h1'),
@@ -28,19 +30,23 @@ class StorePage(BasePage):
         is_alive = True
         start = time.time()
         end = 0
-        while end - start < 1 and is_alive:
+        while end - start < 1.5 and is_alive:
             try:
-                self._purchase_msg =  self._driver.switch_to_alert()
+                self._purchase_msg = self._driver.switch_to_alert()
                 is_alive = False
             except Exception as e:
                 log_data(e)
-                time.sleep(0.5)
+                time.sleep(0.25)
             end = time.time()
 
 
     def _scanner_(self):
-        self._scanner.start()
-        self._scanner.join()
+        if not self._scanner.is_alive():
+            self._scanner.start()
+            self._scanner.join(1)
+            self._kill = True
+
+
 
     def get_label_h1_text(self) -> str:
         label = self._driver.locate_element(self._locators["h1_label"])
@@ -99,7 +105,9 @@ class StorePage(BasePage):
         log_data(book_name, msg="purchase book title= ")
         with allure.step(f"purchase {book_name} from the store"):
             self._purchase_handler(book)
-            self._scanner_()
+            if not self._kill:
+                self._scanner_()
+            log_data(self._purchase_msg)
             return self._purchase_msg
 
 

@@ -90,7 +90,7 @@ class TestStore:
         book_ui = store_page.get_book(book.name)
         purchase_msg = store_page.purchase(book_ui)
         assert purchase_msg == "AxiosError: Request failed with status code 400"
-
+        api.authors.delete_author(id=author.id)
     @log_name
     def test_buy_book_no_stock_and_login(self):
         pytest.skip()

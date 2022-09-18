@@ -14,12 +14,15 @@ class PlayWright(Driver):
         self._dialog_msg_temp = None
 
     def switch_to_alert(self, input__=None):
-        btn = input__[0].query_selector(self.By(*input__[1]))
         def on_dialog(dialog):
             self._dialog_msg_temp = dialog.message
             dialog.accept()
-        self._driver.on("dialog",on_dialog)
-        btn.click()
+        if not input__:
+            self._driver.on("dialog", on_dialog)
+        else:
+            btn = input__[0].query_selector(self.By(*input__[1]))
+            self._driver.on("dialog",on_dialog)
+            btn.click()
         return self._dialog_msg_temp
 
 
