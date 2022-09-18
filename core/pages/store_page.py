@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from commons.utils import log_data
 import threading
 
+
 class StorePage(BasePage):
 
     def __init__(self, driver):
@@ -14,6 +15,7 @@ class StorePage(BasePage):
         self._scanner.setDaemon(True)
         self._purchase_msg = ""
         self._kill = False
+
     _locators = {
 
         "h1_label": (By.TAG_NAME, 'h1'),
@@ -27,26 +29,23 @@ class StorePage(BasePage):
     }
 
     def _scan_for_alerts(self):
-        is_alive = True
+        keep_going = True
         start = time.time()
         end = 0
-        while end - start < 1.5 and is_alive:
+        while end - start < 1.5 and keep_going:
             try:
                 self._purchase_msg = self._driver.switch_to_alert()
-                is_alive = False
+                keep_going = False
             except Exception as e:
                 log_data(e)
                 time.sleep(0.25)
             end = time.time()
-
 
     def _scanner_(self):
         if not self._scanner.is_alive():
             self._scanner.start()
             self._scanner.join(1)
             self._kill = True
-
-
 
     def get_label_h1_text(self) -> str:
         label = self._driver.locate_element(self._locators["h1_label"])
@@ -85,7 +84,7 @@ class StorePage(BasePage):
         with allure.step(f"get book title is - {txt}"):
             return txt
 
-    def _purchase_handler(self,book):
+    def _purchase_handler(self, book):
         if self._driver.type.lower() == "selenium":
             buy_btn = self._driver.locate_element(self._locators['buy_btn'], book)
             try:
@@ -99,7 +98,6 @@ class StorePage(BasePage):
             self.page_resize(0.8)
             self._purchase_msg = str(self._driver.switch_to_alert((book, self._locators['buy_btn'])))
 
-
     def purchase(self, book) -> str:
         book_name = self.get_book_title(book)
         log_data(book_name, msg="purchase book title= ")
@@ -109,9 +107,6 @@ class StorePage(BasePage):
                 self._scanner_()
             log_data(self._purchase_msg)
             return self._purchase_msg
-
-
-
 
     def get_book_author(self, book) -> str:
         text = self._driver.locate_element(self._locators["book_author"], book)
