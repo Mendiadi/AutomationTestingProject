@@ -29,6 +29,7 @@ class TestStore:
         assert self.book.amountInStock == api.books.get_book_by_id(id=self.book.id).amountInStock
         assert "Must be signed in to purchase." in msg
 
+    @pytest.mark.regression
     @log_name
     @allure.title("get books by author")
     def test_update_and_get_books_by_author(self, main_page, api, data):
@@ -54,9 +55,10 @@ class TestStore:
         amount_in_stock_api = api.books.get_book_by_id(id=self.book.id).amountInStock
         book_after_buy = store_page.get_book(title=self.book.name)
         amount_in_stock_ui = store_page.get_book_stock(book_after_buy)
+        assert f"Thank you for your purchase of {self.book.name}" in msg
         assert str(self.book.amountInStock - 1) in amount_in_stock_ui
         assert self.book.amountInStock - 1 == amount_in_stock_api
-        assert f"Thank you for your purchase of {self.book.name}" in msg
+
 
     @log_name
     @allure.title("case buy book from api and check for update")

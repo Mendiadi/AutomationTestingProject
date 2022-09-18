@@ -3,6 +3,7 @@ from core.pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 from commons.utils import log_data
 
+
 class StorePage(BasePage):
 
     def __init__(self, driver):
@@ -59,7 +60,7 @@ class StorePage(BasePage):
 
     def purchase(self, book) -> str:
         book_name = self.get_book_title(book)
-        log_data(book_name,msg="purchase book title= ")
+        log_data(book_name, msg="purchase book title= ")
         with allure.step(f"purchase {book_name} from the store"):
             if self._driver.type.lower() == "selenium":
                 buy_btn = self._driver.locate_element(self._locators['buy_btn'], book)
@@ -73,17 +74,10 @@ class StorePage(BasePage):
                 self.page_resize(1.0)
                 return alert_var
             else:
-                try:
-                    self.page_resize(0.8)
-                    alert_var = self._driver.switch_to_alert((book, self._locators['buy_btn']))
-                    return str(alert_var.message)
-                except:
-                    self.page_resize(0.7)
-                    self._driver.move_to_element(self._locators['buy_btn'])
-                    alert_var = self._driver.switch_to_alert((book, self._locators['buy_btn']))
-                    return str(alert_var.message)
-                finally:
-                    self.page_resize(1.0)
+
+                self.page_resize(0.8)
+                alert_var = self._driver.switch_to_alert((book, self._locators['buy_btn']))
+                return str(alert_var)
 
     def get_book_author(self, book) -> str:
         text = self._driver.locate_element(self._locators["book_author"], book)

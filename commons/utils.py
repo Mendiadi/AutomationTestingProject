@@ -34,9 +34,13 @@ logger = logging.getLogger(__name__)
 
 
 def log_data(*args:[...],msg:str="") -> None:
-    logger.info(f"""
+    try:logger.info(f"""
        {msg} -> {" | ".join(args)}
     """)
+    except TypeError:
+        logger.info(f"""
+               {msg} -> {args}
+            """)
 
 def log_name(func:Callable) -> Callable[...,None]:
     @functools.wraps(func)

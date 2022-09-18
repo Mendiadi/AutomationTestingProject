@@ -1,3 +1,4 @@
+import time
 from core.drivers import Driver
 from playwright.sync_api import Locator, ElementHandle, FrameLocator
 from commons import LocatorWithError
@@ -10,15 +11,17 @@ class PlayWright(Driver):
     def __init__(self, driver, type_):
         super().__init__(driver, type_)
         self._driver_temp = None
+        self._dialog_msg_temp = None
 
     def switch_to_alert(self, input__=None):
         btn = input__[0].query_selector(self.By(*input__[1]))
-        with self._driver.expect_event("dialog") as dialog:
-            self._driver.on("dialog", lambda dialog: dialog.accept())
-            btn.click()
-            dialog.is_done()
-            txt = dialog.value
-            return txt
+        def on_dialog(dialog):
+            self._dialog_msg_temp = dialog.message
+            dialog.accept()
+        self._driver.on("dialog",on_dialog)
+        btn.click()
+        return self._dialog_msg_temp
+
 
     def switch_to_tab(self, val: int):
         log_data(msg=" switching tab current url" + self._driver.url)

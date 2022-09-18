@@ -29,11 +29,12 @@ class Session(SessionContextManager):
         to make some operations on session
 
     """
+    # HEADERS = {"accept": "application/json", 'Authorization': f'Bearer %'}
 
     def __init__(self, headers: {...} = ""):
         super().__init__(headers)
         self._headers = headers
-        self._login_url: str
+        self._login_url = 0
 
     def set_login_url(self, url: str) -> None:
         self._login_url = url
@@ -71,7 +72,6 @@ class Session(SessionContextManager):
             user["main_user_id"] = res.json()["userId"]
             user_dict = {"id": res.json()["userId"]}
             utils.write_to_json(user_dict, r"tests\user_id.json")
-
         try:
             token = res.json()['token']
         except KeyError:
