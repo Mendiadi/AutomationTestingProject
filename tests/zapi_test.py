@@ -146,6 +146,14 @@ class TestBook:
         api.authors.delete_author(id=author.id)
 
     @log_name
+    @allure.title("case post book with not exists author")
+    def test_post_book_with_not_exists_author(self,api,data):
+        book = api.books.post_books(data.generate_book(price=-100,authorid=90))
+        books = api.books.get_books()
+        assert book not in books
+
+
+    @log_name
     @allure.title("case delete book invalid id")
     def test_delete_book_invalid_id(self, api, data):
         res = api.books.delete_book(id="sds")
@@ -183,6 +191,7 @@ class TestBook:
         api.authors.delete_author(id=100)
         res = api.books.post_books(data.generate_book(authorid=100))
         assert res['code'] == 400
+
 
     @log_name
     @allure.title("case post books")
@@ -244,11 +253,25 @@ class TestBook:
         assert book not in books
         api.authors.delete_author(id=author.id)
 
-    def test_purchase_book(self):
+
+    @log_name
+    @allure.title("verify purchase api works properly")
+    def test_purchase_book(self,api,data):
+        author = api.authors.post_authors(data.generate_author())
+        book = api.books.post_books(data.generate_book(authorid=author.id))
+        api.books.purchase_book(id=book.id)
+        book_after = api.books.get_book_by_id(id=book.id)
+        assert book_after.amountInStock == book.amountInStock - 1
+        api.authors.delete_author(id=author.id)
+    def test_purchase_book_invalid_id(self):
         ...
 
-    def test_purchase_book_invalid(self):
+    def test_purchase_book_invalid_data(self):
         ...
+
+    def test_purchase_book_no_stock(self):
+        ...
+
 
     def test_find_book_by_author(self):
         ...
