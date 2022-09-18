@@ -17,7 +17,7 @@ class TestStore:
         assert self.author.name in store_page.get_book_author(book_elem)
         assert store_page.get_book_title(book_elem) == book.name
         assert book.description == store_page.get_book_decription(book_elem)
-        assert book.amountInStock == store_page.get_book_stock(book_elem)
+        assert str(book.amountInStock) in store_page.get_book_stock(book_elem)
         assert str(book.price) in store_page.get_book_price(book_elem)
         assert book.imageUrl == store_page.get_book_image_url(book_elem)
 

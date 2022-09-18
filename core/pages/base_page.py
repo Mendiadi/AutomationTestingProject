@@ -34,6 +34,7 @@ class BasePage:
             self._driver.send_keys(search_bar,query)
             btn = self._driver.locate_element(self._common_locators["search_btn"])
             btn.click()
+            time.sleep(0.25)
             btn.click()
         return SearchPage(self._driver)
 
