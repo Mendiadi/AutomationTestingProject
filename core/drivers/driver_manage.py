@@ -39,8 +39,6 @@ class DriverContextManager:
 
 
 
-
-
     def _on_selenium_grid(self):
         if self._config.browser == CHROME:
             chrome_options = webdriver.ChromeOptions()
@@ -75,7 +73,5 @@ class DriverContextManager:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._page.close()
-        try:
+        if self._async_eventloop:
             self._async_eventloop.stop()
-        except AttributeError:
-            pass

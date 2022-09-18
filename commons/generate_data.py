@@ -55,11 +55,15 @@ class RandomData:
             name: str = None,
             imageUrl: str = None
     ) -> CreateBookDto:
+        if price is None:
+            price = 10
+        if amount is None:
+            amount = 10
         book = {
             "name": name if name else self._faker.name(),
             "description": description if description else "description",
-            "price": price if price else 50,
-            "amountInStock": amount if amount else 10,
+            "price": price,
+            "amountInStock": amount,
             "imageUrl": images.IMAGES[self._faker.random.randint(0, len(images.IMAGES) - 1)] if imageUrl else None,
             "authorId": authorid if authorid else self._faker.random.randint(4, 200)
         }
