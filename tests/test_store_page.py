@@ -17,7 +17,7 @@ class TestStore:
         assert self.author.name in store_page.get_book_author(book_elem)
         assert store_page.get_book_title(book_elem) == book.name
         assert book.description == store_page.get_book_decription(book_elem)
-        assert str(book.amountInStock) in store_page.get_book_stock(book_elem)
+        assert book.amountInStock == store_page.get_book_stock(book_elem)
         assert str(book.price) in store_page.get_book_price(book_elem)
         assert book.imageUrl == store_page.get_book_image_url(book_elem)
 
@@ -31,19 +31,7 @@ class TestStore:
         assert self.book.amountInStock == api.books.get_book_by_id(id=self.book.id).amountInStock
         assert "Must be signed in to purchase." in msg
 
-    @pytest.mark.regression
-    @log_name
-    @allure.title("get books by author")
-    def test_update_and_get_books_by_author(self, main_page, api, data):
-        author = api.authors.post_authors(data.generate_author(name="dor david"))
-        book_ = api.books.post_books(data.generate_book(authorid=author.id))
-        store_page = main_page.click_bookstore()
-        store_page.reload()
-        books = store_page.get_books_by_author("dor david")
-        for book in books:
-            book_title = store_page.get_book_title(book)
-            assert book_title == "1984" or "Animal Farm"
-        api.authors.delete_author(id=author.id)
+
 
     @log_name
     @allure.title("case buy book with login and created book")
@@ -74,13 +62,7 @@ class TestStore:
         book_element_stock_after = store_page.get_book_stock(book_element_after)
         assert book_element_stock_before != book_element_stock_after
 
-    @log_name
-    @allure.title("case post books and see if they apear at screen")
-    def test_books_updated(self, main_page):
-        store_page = main_page.click_bookstore()
-        book = store_page.get_book(self.book.name)
-        text = store_page.get_book_title(book)
-        assert self.book.name == text
+
 
     @log_name
     @allure.title("check if all the books in db are visible")
