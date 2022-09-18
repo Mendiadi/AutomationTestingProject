@@ -93,7 +93,7 @@ class StorePage(BasePage):
                 self._driver.move_to_element(buy_btn)
                 self._purchase_msg = self._driver.switch_to_alert()
             except:
-                self.page_resize(0.75)
+                self.page_resize(0.8)
                 buy_btn.click()
                 self._purchase_msg = self._driver.switch_to_alert()
         else:

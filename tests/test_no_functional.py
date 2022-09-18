@@ -1,10 +1,11 @@
-
 import allure
+import pytest
 from commons.utils import log_name
-import  pytest
+
 
 @allure.epic("UI Readability of buttons tests")
 class TestReadability:
+
     @log_name
     @allure.title("verify login section buttons readability")
     def test_readability_of_buttons_login(self, main_page):
@@ -28,20 +29,36 @@ class TestReadability:
 
     @log_name
     @allure.title("check login page placeholders for entries")
-    def test_read_placeholder_login_page(self,main_page):
+    def test_read_placeholder_login_page(self, main_page):
         assert main_page.get_email_placeholder() == "Enter email"
         assert main_page.get_password_placeholder() == "Password"
 
     @log_name
-    def test_readability_of_buttons_store(self):
-        pytest.skip()
+    @allure.title("readability of buttons in base layer")
+    def test_readability_of_buttons_author_page(self, main_page):
+        assert main_page.get_login_btn_text() == "Log In"
+        assert main_page.get_book_store_btn_text() == "Book Store"
+        assert main_page.get_store_btn_text() == "Store"
+        assert main_page.get_authors_btn_text() == "Authors"
+        assert main_page.get_search_btn_text() == "Search"
 
+
+@allure.epic("UI Loading tests")
+@pytest.mark.smoke
+class TestSmoke:
+    @log_name
+    @allure.title("verify open page")
+    def test_page_open(self, main_page):
+        excepted_title = "React App"
+        assert main_page.title == excepted_title
 
     @log_name
-    def test_readability_of_buttons_authors(self):
-        pytest.skip()
-
-    @log_name
-    def test_readability_of_buttons_author_page(self):
-        pytest.skip()
-
+    @allure.title("sanity login page nad register load properly")
+    def test_login_page_loading_elements(self, main_page):
+        login_result = main_page.elements_visible_login()
+        register_page = main_page.click_register()
+        register_result = register_page.element_visible_register()
+        results = (register_result, login_result)
+        for result in results:
+            for element_is_found in result:
+                assert element_is_found

@@ -31,8 +31,6 @@ class TestStore:
         assert self.book.amountInStock == api.books.get_book_by_id(id=self.book.id).amountInStock
         assert "Must be signed in to purchase." in msg
 
-
-
     @log_name
     @allure.title("case buy book with login and created book")
     def test_case_buy_book(self, main_page, api, data, configuration):
@@ -49,7 +47,6 @@ class TestStore:
         assert str(self.book.amountInStock - 1) in amount_in_stock_ui
         assert self.book.amountInStock - 1 == amount_in_stock_api
 
-
     @log_name
     @allure.title("case buy book from api and check for update")
     def test_buy_book_from_api_to_ui(self, api, main_page):
@@ -61,8 +58,6 @@ class TestStore:
         book_element_after = store_page.get_book(self.book.name)
         book_element_stock_after = store_page.get_book_stock(book_element_after)
         assert book_element_stock_before != book_element_stock_after
-
-
 
     @log_name
     @allure.title("check if all the books in db are visible")
@@ -77,23 +72,17 @@ class TestStore:
             assert result[i] == result_book_ui[i]
 
     @log_name
-    def test_finish_book_stock(self):
-        pytest.skip()
-
-    @log_name
     @allure.title("case buy book that no in stock")
-    def test_buy_book_that_no_stock(self,api,data,main_page,configuration):
+    def test_buy_book_that_no_stock(self, api, data, main_page, configuration):
         author = api.authors.post_authors(data.generate_author())
-        book = api.books.post_books(data.generate_book(authorid=author.id,amount=0))
-        store_page = main_page.login(configuration.email,configuration.password)
+        book = api.books.post_books(data.generate_book(authorid=author.id, amount=0))
+        store_page = main_page.login(configuration.email, configuration.password)
         store_page.reload()
         book_ui = store_page.get_book(book.name)
         purchase_msg = store_page.purchase(book_ui)
         assert purchase_msg == "AxiosError: Request failed with status code 400"
         api.authors.delete_author(id=author.id)
-    @log_name
-    def test_buy_book_no_stock_and_login(self):
-        pytest.skip()
+
 
     @log_name
     @allure.title("post 10 new books and buy all the books in the store once ")
@@ -150,13 +139,11 @@ class TestStore:
         book_after = store_page.get_book(title=book_.name)
         assert store_page.get_book_decription(book_after) == "im love you"
 
-
-
-    def test_author_delete(self,api,data,main_page):
+    def test_author_delete(self, api, data, main_page):
         author = api.authors.post_authors(data.generate_author(name="dani"))
         author = api.authors.get_author_by_id(id=author.id)
         for i in range(3):
-            api.books.post_books(data.generate_book(authorid=author.id,name=f"the jelly ep {i}"))
+            api.books.post_books(data.generate_book(authorid=author.id, name=f"the jelly ep {i}"))
         store_page = main_page.click_bookstore()
         store_page.reload()
         books_ui = store_page.get_books()

@@ -27,6 +27,7 @@ class BasePage:
         time.sleep(0.25)
         self._driver.refresh()
 
+    @allure.step("click log out!")
     def click_logout(self):
         layer = self._driver.locate_element(self._common_locators['btns_layer'])
         self._driver.locate_element(self._common_locators['log_out_btn'],layer).click()
@@ -77,6 +78,15 @@ class BasePage:
         layer = self._driver.locate_element(self._common_locators['btns_layer'])
         txt = self._driver.locate_element(self._common_locators['log_out_btn'], layer)
         return self._driver.text(txt)
+
+    def get_search_btn_text(self) -> str:
+        btn = self._driver.locate_element(self._common_locators["search_btn"])
+        return self._driver.text(btn)
+
+    def get_authors_btn_text(self) ->str:
+        btn = self._driver.locate_element(self._common_locators["author_btn"])
+        return self._driver.text(btn)
+
 
     @property
     def title(self) -> str:
