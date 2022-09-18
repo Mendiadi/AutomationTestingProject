@@ -1,14 +1,17 @@
+import time
+
 import allure
 from core.pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 from commons.utils import log_data
-
+import threading
 
 class StorePage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-
+        self._scanner = threading.Thread(target=self._scan_for_alerts)
+        self._purchase_msg = None
     _locators = {
 
         "h1_label": (By.TAG_NAME, 'h1'),
@@ -20,6 +23,24 @@ class StorePage(BasePage):
         "description": (By.CLASS_NAME, 'card-text'),
         "image_url": (By.TAG_NAME, "img")
     }
+
+    def _scan_for_alerts(self):
+        is_alive = True
+        start = time.time()
+        end = 0
+        while end - start < 1 and is_alive:
+            try:
+                self._purchase_msg =  self._driver.switch_to_alert()
+                is_alive = False
+            except Exception as e:
+                log_data(e)
+                time.sleep(0.5)
+            end = time.time()
+
+
+    def _scanner_(self):
+        self._scanner.start()
+        self._scanner.join()
 
     def get_label_h1_text(self) -> str:
         label = self._driver.locate_element(self._locators["h1_label"])
@@ -58,26 +79,31 @@ class StorePage(BasePage):
         with allure.step(f"get book title is - {txt}"):
             return txt
 
+    def _purchase_handler(self,book):
+        if self._driver.type.lower() == "selenium":
+            buy_btn = self._driver.locate_element(self._locators['buy_btn'], book)
+            try:
+                self._driver.move_to_element(buy_btn)
+                self._purchase_msg = self._driver.switch_to_alert()
+            except:
+                self.page_resize(0.75)
+                buy_btn.click()
+                self._purchase_msg = self._driver.switch_to_alert()
+        else:
+            self.page_resize(0.8)
+            self._purchase_msg = str(self._driver.switch_to_alert((book, self._locators['buy_btn'])))
+
+
     def purchase(self, book) -> str:
         book_name = self.get_book_title(book)
         log_data(book_name, msg="purchase book title= ")
         with allure.step(f"purchase {book_name} from the store"):
-            if self._driver.type.lower() == "selenium":
-                buy_btn = self._driver.locate_element(self._locators['buy_btn'], book)
-                try:
-                    self._driver.move_to_element(buy_btn)
-                    alert_var = self._driver.switch_to_alert()
-                except:
-                    self.page_resize(0.75)
-                    buy_btn.click()
-                    alert_var = self._driver.switch_to_alert()
-                self.page_resize(1.0)
-                return alert_var
-            else:
+            self._purchase_handler(book)
+            self._scanner_()
+            return self._purchase_msg
 
-                self.page_resize(0.8)
-                alert_var = self._driver.switch_to_alert((book, self._locators['buy_btn']))
-                return str(alert_var)
+
+
 
     def get_book_author(self, book) -> str:
         text = self._driver.locate_element(self._locators["book_author"], book)
@@ -104,3 +130,6 @@ class StorePage(BasePage):
         txt = self._driver.text(text)
         with allure.step(f"get book decription is - {txt}"):
             return txt
+
+    def __del__(self):
+        print(f"is alive {self._scanner.is_alive()}")

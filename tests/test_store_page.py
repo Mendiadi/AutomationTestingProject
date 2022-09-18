@@ -81,8 +81,15 @@ class TestStore:
         pytest.skip()
 
     @log_name
-    def test_buy_book_that_no_stock(self):
-        pytest.skip()
+    @allure.title("case buy book that no in stock")
+    def test_buy_book_that_no_stock(self,api,data,main_page,configuration):
+        author = api.authors.post_authors(data.generate_author())
+        book = api.books.post_books(data.generate_book(authorid=author.id,amount=0))
+        store_page = main_page.login(configuration.email,configuration.password)
+        store_page.reload()
+        book_ui = store_page.get_book(book.name)
+        purchase_msg = store_page.purchase(book_ui)
+        assert purchase_msg == "AxiosError: Request failed with status code 400"
 
     @log_name
     def test_buy_book_no_stock_and_login(self):
