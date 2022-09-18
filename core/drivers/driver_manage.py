@@ -76,5 +76,7 @@ class DriverContextManager:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self._page.close()
-        if not self._async_eventloop:
+        try:
             self._async_eventloop.stop()
+        except AttributeError:
+            pass

@@ -3,7 +3,7 @@
   "email": "adii@sela.co.il",
   "password": "string11",
   "browser": "chrome",
-  "lib": "playwright",
+  "lib": "selenium",
   "selenium_grid":false,
   "driver_path" : "C:\\dri\\chromedriver.exe"
 }
