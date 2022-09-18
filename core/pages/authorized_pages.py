@@ -12,6 +12,7 @@ class AuthenticationPage(BasePage):
         "email_entry": (By.ID, 'email'),
         "password_entry": (By.ID, 'password'),
         "submit": (By.XPATH, '//*[@id="root"]/div/form/button'),
+
     }
 
     @allure.step("Sending Email")
@@ -32,9 +33,17 @@ class AuthenticationPage(BasePage):
         btn = self._driver.locate_element(self._au_locators['submit'])
         return self._driver.text(btn)
 
-    def elements_visible(self):
+    def elements_visible(self) -> list[...]:
         results = []
         for locator in self._au_locators.values():
             is_found = self._driver.element_is_visible(locator)
             results.append(is_found)
         return results
+
+    def get_email_placeholder(self) -> str:
+        field = self._driver.locate_element(self._au_locators['email_entry'])
+        return self._driver.get_attribute(field,"placeholder")
+
+    def get_password_placeholder(self) -> str:
+        field = self._driver.locate_element(self._au_locators['password_entry'])
+        return self._driver.get_attribute(field, "placeholder")

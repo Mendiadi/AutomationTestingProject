@@ -27,6 +27,12 @@ class TestReadability:
         assert "Store" in store_btn_txt
 
     @log_name
+    @allure.title("check login page placeholders for entries")
+    def test_read_placeholder_login_page(self,main_page):
+        assert main_page.get_email_placeholder() == "Enter email"
+        assert main_page.get_password_placeholder() == "Password"
+
+    @log_name
     def test_readability_of_buttons_store(self):
         pytest.skip()
 

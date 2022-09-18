@@ -41,7 +41,9 @@ class StorePage(BasePage):
             end = time.time()
 
     def _scanner_(self):
-
+        if self._scanner is None:
+            self._scanner = threading.Thread(target=self._scan_for_alerts)
+            self._scanner.setDaemon(True)
         if not self._scanner.is_alive():
             self._scanner.start()
             self._scanner.join(1)
@@ -104,9 +106,7 @@ class StorePage(BasePage):
         with allure.step(f"purchase {book_name} from the store"):
             self._purchase_handler(book)
             if not self._kill:
-                if self._scanner is None:
-                    self._scanner = threading.Thread(target=self._scan_for_alerts)
-                    self._scanner.setDaemon(True)
+
                 self._scanner_()
             log_data(self._purchase_msg)
             return self._purchase_msg

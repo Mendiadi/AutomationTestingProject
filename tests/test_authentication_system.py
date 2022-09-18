@@ -1,3 +1,5 @@
+import time
+
 import pytest
 import allure
 from commons.utils import log_name
@@ -102,8 +104,16 @@ class TestAuthenticationAPI:
 @allure.epic("UI Authentication system")
 class TestAuthenticationUI:
     @log_name
-    def test_logout(self):
-        pytest.skip()
+    @allure.title("case logout")
+    def test_logout(self,main_page,configuration,book_setup):
+        store_page = main_page.login(configuration.email,configuration.password)
+        assert store_page.get_logout_btn_text() == "Log Out"
+        store_page.click_logout()
+        assert store_page.get_login_btn_text() == "Log In"
+        store_page = main_page.click_bookstore()
+        books = store_page.get_books()
+        msg = store_page.purchase(books[0])
+        assert "Must be signed in to purchase." in msg
 
     @log_name
     @pytest.mark.regression
@@ -113,10 +123,15 @@ class TestAuthenticationUI:
         store_page = main_page.login(configuration.email, configuration.password)
         text = store_page.get_label_h1_text()
         assert text == 'Welcome to our store'
+        assert store_page.get_login_btn_text() == "Log Out"
 
     @log_name
-    def test_login_invalid_cases(self):
-        pytest.skip()
+    @allure.title("case login from ui invalid ")
+    @pytest.mark.parametrize("email,password",[("","12345"),("aaaaa@aa","")])
+    def test_login_invalid_cases(self,email,password,main_page):
+        main_page.login(email,password)
+        assert main_page.url == "http://localhost/"
+        assert main_page.get_login_btn_text() == "Log in"
 
     @log_name
     def test_register_invalid_cases(self):
