@@ -142,3 +142,25 @@ class TestStore:
         store_page.reload()
         book_after = store_page.get_book(title=book_.name)
         assert store_page.get_book_decription(book_after) == "im love you"
+
+
+
+    def test_author_delete(self,api,data,main_page):
+        author = api.authors.post_authors(data.generate_author(name="dani"))
+        author = api.authors.get_author_by_id(id=author.id)
+        for i in range(3):
+            api.books.post_books(data.generate_book(authorid=author.id,name=f"the jelly ep {i}"))
+        store_page = main_page.click_bookstore()
+        store_page.reload()
+        books_ui = store_page.get_books()
+        books_ui = [store_page.get_book_title(book_) for book_ in books_ui]
+        amount_of_books = len(books_ui)
+        for i in range(len(author.books)):
+            assert f"the jelly ep {i}" in books_ui
+        api.authors.delete_author(id=author.id)
+        store_page.reload()
+        books_ui = store_page.get_books()
+        books_ui = [store_page.get_book_title(book_) for book_ in books_ui]
+        amount_of_books_after = len(books_ui)
+        assert "the jelly ep" not in books_ui
+        assert amount_of_books - 3 == amount_of_books_after
