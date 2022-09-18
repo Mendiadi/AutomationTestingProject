@@ -123,7 +123,7 @@ class TestAuthenticationUI:
         store_page = main_page.login(configuration.email, configuration.password)
         text = store_page.get_label_h1_text()
         assert text == 'Welcome to our store'
-        assert store_page.get_login_btn_text() == "Log Out"
+        assert store_page.get_logout_btn_text() == "Log Out"
 
     @log_name
     @allure.title("case login from ui invalid ")
@@ -131,7 +131,7 @@ class TestAuthenticationUI:
     def test_login_invalid_cases(self,email,password,main_page):
         main_page.login(email,password)
         assert main_page.url == "http://localhost/"
-        assert main_page.get_login_btn_text() == "Log in"
+        assert main_page.get_login_btn_text() == "Log In"
 
     @log_name
     def test_register_invalid_cases(self):
