@@ -13,7 +13,7 @@ class DriverContextManager:
         self._config = configuration
 
 
-    def init(self) -> Driver:
+    def activate(self) -> Driver:
         from core.drivers.driver_p import PlayWright
         from core.drivers.driver_s import Selenium
         DRIVERS = {

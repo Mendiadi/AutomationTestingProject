@@ -44,5 +44,4 @@ class TestsData:
         return TestsData(**json_read(path))
 
 
-def load_test_data() -> TestsData:
-    return TestsData.load(DATA_FILE)
+

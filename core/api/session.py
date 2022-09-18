@@ -70,7 +70,7 @@ class Session(SessionContextManager):
         if is_created_now:
             user["main_user_id"] = res.json()["userId"]
             user_dict = {"id": res.json()["userId"]}
-            utils.write_to_json(user_dict, r"user_id.json")
+            utils.write_to_json(user_dict, r"tests\user_id.json")
 
         try:
             token = res.json()['token']

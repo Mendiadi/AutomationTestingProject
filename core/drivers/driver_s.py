@@ -1,5 +1,3 @@
-import keyboard
-
 from core.drivers import Driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC

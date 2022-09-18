@@ -4,6 +4,7 @@ import allure
 import pytest
 from commons.utils import log_name
 
+
 @pytest.mark.usefixtures("author_setup")
 @allure.epic("UI Author Page")
 class TestAuthorPage:
@@ -39,7 +40,7 @@ class TestAuthorPage:
         pass
 
     @log_name
-    def test_validate_map_cordinate(self,main_page, api,data):
+    def test_validate_map_cordinate(self, main_page, api, data):
         authors_page = main_page.click_authors_btn()
         author = authors_page.find_author_by_name(name=self.author.name)
         author_page = authors_page.go_to_author(author)
@@ -50,10 +51,8 @@ class TestAuthorPage:
         assert author.homeLatitude == la
         assert author.homeLongitude == lo
 
-
-
     @log_name
-    def test_map_change_look(self, main_page,data,api):
+    def test_map_change_look(self, main_page, data, api):
         authors_page = main_page.click_authors_btn()
         author = authors_page.find_author_by_name(name=self.author.name)
         author_page = authors_page.go_to_author(author)
@@ -64,4 +63,3 @@ class TestAuthorPage:
         assert change_look_style != "Show street map"
         change_look_style_again = map.change_look_style()
         assert change_look_style_again != "Show satellite imagery"
-

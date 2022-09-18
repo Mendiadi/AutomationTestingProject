@@ -2,6 +2,7 @@ import pytest
 import allure
 from commons.utils import log_name
 
+
 @pytest.mark.usefixtures("safe_load")
 @allure.epic("API Authentication system")
 class TestAuthenticationAPI:
@@ -17,13 +18,10 @@ class TestAuthenticationAPI:
         assert f"Username \'{user.email}\' is already taken." in after_res['msg']
 
     @log_name
-    def test_register_invalid_data(self):...
-
+    def test_register_invalid_data(self): ...
 
     @log_name
-    def test_login_invalid_email(self):...
-
-
+    def test_login_invalid_email(self): ...
 
     @log_name
     @allure.feature("Feature: Register")
@@ -32,7 +30,6 @@ class TestAuthenticationAPI:
         user = fix_user['user']
         res = api.account.register(user)
         assert res['code'] == 400 and "DuplicateUserName" in res['msg']
-
 
     @log_name
     @allure.feature("Feature: Login")
@@ -52,7 +49,6 @@ class TestAuthenticationAPI:
             "password": data.password()
         })
         assert res['code'] == 400 and "The Email field is required" in res['msg']
-
 
     @log_name
     @allure.feature("Feature: Login")
@@ -86,7 +82,6 @@ class TestAuthenticationAPI:
         assert user.userId == excepted_userid
         assert user.token is not None
 
-
     @log_name
     @allure.title("Refresh token valid")
     def test_refresh_token(self, api, fix_user):
@@ -110,36 +105,30 @@ class TestAuthenticationUI:
     def test_logout(self):
         pytest.skip()
 
-
     @log_name
     @pytest.mark.regression
     @allure.feature("Feature: Login")
     @allure.title("verify Login valid")
-    def test_login_valid(self, main_page, get_test_data):
-        store_page = main_page.login(get_test_data.email, get_test_data.password)
+    def test_login_valid(self, main_page, configuration):
+        store_page = main_page.login(configuration.email, configuration.password)
         text = store_page.get_label_h1_text()
         assert text == 'Welcome to our store'
-
 
     @log_name
     def test_login_invalid_cases(self):
         pytest.skip()
 
-
     @log_name
     def test_register_invalid_cases(self):
         pytest.skip()
-
 
     @log_name
     def test_register_exists(self):
         pytest.skip()
 
-
     @log_name
     def test_register_and_login(self):
         pytest.skip()
-
 
     @log_name
     @allure.feature("Feature: Register")

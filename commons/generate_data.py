@@ -33,7 +33,12 @@ class RandomData:
             user['password'] = self.password()
         return ApiUserDto(**user)
 
-    def generate_author(self, name: str = None,la:float=None,lo:float=None) -> CreateAuthorDto:
+    def generate_author(
+            self,
+            name: str = None
+            ,la:float=None
+            ,lo:float=None
+    ) -> CreateAuthorDto:
         name = name if name else self.firstname() + self.lastname()
         homelo = self._faker.random.randint(-180, 180) if not lo else lo
         homala = self._faker.random.randint(-90, 90) if not la else la
@@ -41,8 +46,15 @@ class RandomData:
         homelo *= math.sin(homelo)
         return CreateAuthorDto(name, homala, homelo)
 
-    def generate_book(self, authorid:int=None, price: int = None, amount: int = None, description: str = None,
-                      name: str = None, imageUrl: str = None) -> CreateBookDto:
+    def generate_book(
+            self,
+            authorid:int=None,
+            price: int = None,
+            amount: int = None,
+            description: str = None,
+            name: str = None,
+            imageUrl: str = None
+    ) -> CreateBookDto:
         book = {
             "name": name if name else self._faker.name(),
             "description": description if description else "description",

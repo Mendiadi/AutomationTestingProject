@@ -11,7 +11,7 @@ def pytest_runtest_makereport(item, call):
 
 
 def pytest_addoption(parser):
-    data = load_test_data()
+    data = TestsData.load(DATA_FILE)
     parser.addoption("--url", action="store", default=data.url)
     parser.addoption("--lib", action="store", default=data.lib)
     parser.addoption("--browser", action="store", default=data.browser)

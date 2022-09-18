@@ -4,49 +4,62 @@ from abc import ABC, abstractmethod
 from commons.constant import *
 
 
-
 class Driver(ABC):
 
     def __init__(self, driver, type_):
         self._driver = driver
         self._type = type_
 
-
+    @abstractmethod
+    def locate_element(
+            self,
+            locator: tuple[[],str],
+            driver: [] = None
+    ) -> []:
+        ...
 
     @abstractmethod
-    def locate_element(self, locator: tuple[[], str], driver: [] = None) -> []:
-        pass
+    def locate_elements(
+            self,
+            locator: tuple[..., str]
+    ) -> []:
+        ...
 
     @abstractmethod
-    def locate_elements(self, locator: tuple[[], str]) -> []:
-        pass
+    def locate_frame(
+            self,
+            locator: tuple[[], str]
+    ) -> []:
+        ...
 
     @abstractmethod
-    def locate_frame(self, locator: tuple[[], str]) -> []:
-        pass
+    def get_attribute(
+            self,
+            element,
+            name: str
+    ) -> [str]:
+        ...
 
     @abstractmethod
-    def get_attribute(self, element, name: str) -> [str]:
-        pass
-
-    @abstractmethod
-    def switch_to_tab(self, val: int):
-        pass
-
+    def switch_to_tab(
+            self,
+            val: int
+    ):
+        ...
 
     def url(self) -> str:
-        pass
+        ...
 
     @abstractmethod
     def script_execute(self, __script: str):
-        pass
+        ...
 
     @abstractmethod
     def get_screenshot(self) -> bytes:
-        pass
+        ...
 
     def switch_to_default(self):
-        pass
+        ...
 
     @property
     def title(self) -> str:
@@ -56,7 +69,7 @@ class Driver(ABC):
             return self._driver.title()
 
     def element_is_visible(self, locator) -> bool:
-        pass
+        ...
 
     @property
     def type(self) -> str:
@@ -78,21 +91,21 @@ class Driver(ABC):
             try:
                 return locator.text_content()
             except:
-                return
+                pass
         elif self._type == SELENIUM:
             return locator.text
 
     def alert_text(self, alert_var) -> str:
-        pass
+        ...
 
     def move_to_element(self, element):
-        pass
+        ...
 
     def switch_to_alert(self, input__=""):
-        pass
+        ...
 
     def alert_accepted(self, alert_var):
-        pass
+        ...
 
     def refresh(self):
         if self._type.lower() == PLAYWRIGHT:

@@ -3,7 +3,7 @@ from playwright.sync_api import Locator, ElementHandle, FrameLocator
 from commons import LocatorWithError
 from commons.utils import log_data
 import os
-import logging
+
 
 
 class PlayWright(Driver):
