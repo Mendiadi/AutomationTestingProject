@@ -32,7 +32,7 @@ class TestAuthorsPage:
     @log_name
     @allure.title("case delete author and see if its deleted in ui")
     def test_delete_author_apear(self, main_page, api, data):
-        author = api.authors.post_authors(data.generate_author(name="adi"))
+        author = api.authors.post_authors(data.generate_author(name="dvir"))
         authors_page = main_page.click_authors_btn()
         authors_page.reload()
         authors = authors_page.get_authors()
@@ -40,7 +40,7 @@ class TestAuthorsPage:
         api.authors.delete_author(id=author.id)
         authors_page.reload()
         authors = authors_page.get_authors()
-        assert "adi" not in [authors_page.get_author_name(author) for author in authors]
+        assert "dvir" not in [authors_page.get_author_name(author) for author in authors]
 
     @log_name
     @allure.title("case check if ui show all authors properly")
