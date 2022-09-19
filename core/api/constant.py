@@ -9,6 +9,7 @@ api_links = {
     "token": '/refreshtoken',
     "findbyAuthor": "/findauthor/",
     "purchaseBook": "/purchase/"
+    ,"search": '/search/'
 }
 ENDPOINTS = {
     "_books_": URL_SWAGGER + BOOKS_URL,

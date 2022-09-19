@@ -49,7 +49,8 @@ def safe_load(api):
     print("done")
     authors = api.authors.get_authors()
     for author in authors:
-        api.authors.delete_author(id=author.id)
+        if author.id > 5:
+            api.authors.delete_author(id=author.id)
 
 
 @pytest.fixture(scope="class")

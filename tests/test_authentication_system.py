@@ -2,6 +2,15 @@ import pytest
 import allure
 from commons.utils import log_name
 
+register__all_invalid_msg = 'Email":["The Email field is required."],"LastName":["The LastName field is required."]' \
+                            ',"Password":["The Password field is required."],"FirstName":["The FirstName field is required."'
+register_password_msg = "The Password field is required."
+register_email_msg = "The Email field is required."
+register_first_name_msg = "The FirstName field is required."
+register_last_name_msg = "The LastName field is required."
+register_password_len__msg = "Your password is limited to 4 to 15 characters"
+register_email_not_valid_msg = "The Email field is not a valid e-mail address."
+
 
 @pytest.mark.usefixtures("safe_load")
 @allure.epic("API Authentication system")
@@ -18,10 +27,36 @@ class TestAuthenticationAPI:
         assert f"Username \'{user.email}\' is already taken." in after_res['msg']
 
     @log_name
-    def test_register_invalid_data(self): ...
+    @allure.feature("Feature: Register")
+    @allure.title("case register from api with invalid data")
+    @pytest.mark.parametrize("data_,expected", [({}, register__all_invalid_msg),
+                                                ({"email": "", "password": "12345", "firstname": "string",
+                                                  "lastname": "string"}, register_email_msg),
+                                                ({"email": "aa@aa.cm", "password": "12345", "firstname": "string",
+                                                  "lastname": ""}, register_last_name_msg),
+                                                ({"email": "aa@aa.cm", "password": "12345", "firstname": "",
+                                                  "lastname": "string"}, register_first_name_msg),
+                                                ({"email": "aa@aa.cm", "password": "", "firstname": "string",
+                                                  "lastname": "string"}, register_password_msg),
+                                                ({"email": "aa@aa.cm", "password": "123", "firstname": "string",
+                                                  "lastname": "string"}, register_password_len__msg),
+                                                ({"email": "aa@aa.cm", "password": "1266776544563666",
+                                                  "firstname": "string", "lastname": "string"},
+                                                 register_password_len__msg),
+                                                ({"email": "aaaa.cm", "password": "126677", "firstname": "string",
+                                                  "lastname": "string"}, register_email_not_valid_msg)])
+    def test_register_invalid_data(self, api, expected, data_):
+        res = api.account.register(data_)
+        assert res['code'] == 400
+        assert expected in res['msg']
 
     @log_name
-    def test_login_invalid_email(self): ...
+    @allure.feature("Feature: Login")
+    @allure.title("case login from api with invalid email")
+    def test_login_invalid_email(self, api):
+        res = api.account.login({"email": "wrong-email", "password": "123456"})
+        assert res['code'] == 400
+        assert "The Email field is not a valid e-mail address." in res['msg']
 
     @log_name
     @allure.feature("Feature: Register")
@@ -103,8 +138,8 @@ class TestAuthenticationAPI:
 class TestAuthenticationUI:
     @log_name
     @allure.title("case logout")
-    def test_logout(self,main_page,configuration,book_setup):
-        store_page = main_page.login(configuration.email,configuration.password)
+    def test_logout(self, main_page, configuration, book_setup):
+        store_page = main_page.login(configuration.email, configuration.password)
         assert store_page.get_logout_btn_text() == "Log Out"
         store_page.click_logout()
         assert store_page.get_login_btn_text() == "Log In"
@@ -125,28 +160,30 @@ class TestAuthenticationUI:
 
     @log_name
     @allure.title("case login from ui invalid ")
-    @pytest.mark.parametrize("email,password",[("","12345"),("aaaaa@aa","")])
-    def test_login_invalid_cases(self,email,password,main_page):
-        main_page.login(email,password)
+    @pytest.mark.parametrize("email,password", [("", "12345"), ("aaaaa@aa", "")])
+    def test_login_invalid_cases(self, email, password, main_page):
+        main_page.login(email, password)
         assert main_page.url == "http://localhost/"
         assert main_page.get_login_btn_text() == "Log In"
 
     @log_name
     def test_register_invalid_cases(self):
-        pytest.skip()
+        pytest.skip("not implemented")
 
     @log_name
     def test_register_exists(self):
-        pytest.skip()
-
-    @log_name
-    def test_register_and_login(self):
-        pytest.skip()
+        pytest.skip("not implemented")
 
     @log_name
     @allure.feature("Feature: Register")
     @allure.title("verify register")
-    def test_register(self, main_page, data):
+    def test_register(self, main_page, data, api):
+        email = data.email()
+        password = data.password()
         register_page = main_page.click_register()
-        register_page.register(data.email(), data.password(), data.firstname(),
+        register_page.register(email, password, data.firstname(),
                                data.lastname())
+        login_page = register_page.click_back_login()
+        store_page = login_page.login(email, password)
+        assert api.account.login({"email": email, "password": password})['code'] == 200
+        assert store_page.get_logout_btn_text() == "Log Out"

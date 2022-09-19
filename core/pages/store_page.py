@@ -29,8 +29,7 @@ class StorePage(BasePage):
 
     def _scan_for_alerts(self):
         keep_going = True
-        start = time.time()
-        end = 0
+        end = start = time.time()
         while end - start < 1.5 and keep_going:
             try:
                 self._purchase_msg = self._driver.switch_to_alert()
@@ -131,10 +130,10 @@ class StorePage(BasePage):
             return txt[txt.find("L"):]
 
     @allure.step("read book description")
-    def get_book_decription(self, book) -> str:
+    def get_book_description(self, book) -> str:
         text = self._driver.locate_element(self._locators["description"], book)
         txt = self._driver.text(text)
-        with allure.step(f"get book decription is - {txt}"):
+        with allure.step(f"get book description is - {txt}"):
             return txt
 
 

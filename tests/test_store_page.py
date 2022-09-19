@@ -16,7 +16,7 @@ class TestStore:
         book_elem = store_page.get_book(title=book.name)
         assert self.author.name in store_page.get_book_author(book_elem)
         assert store_page.get_book_title(book_elem) == book.name
-        assert book.description == store_page.get_book_decription(book_elem)
+        assert book.description == store_page.get_book_description(book_elem)
         assert str(book.amountInStock) in store_page.get_book_stock(book_elem)
         assert str(book.price) in store_page.get_book_price(book_elem)
         assert book.imageUrl == store_page.get_book_image_url(book_elem)
@@ -128,7 +128,7 @@ class TestStore:
         book = store_page.get_book(title="im happy")
         b_title = store_page.get_book_title(book)
         b_author = store_page.get_book_author(book)
-        b_desc = store_page.get_book_decription(book)
+        b_desc = store_page.get_book_description(book)
         b_price = store_page.get_book_price(book)
         b_stock = store_page.get_book_stock(book)
         assert "im happy" == b_title and self.author.name in b_author and \
@@ -137,8 +137,11 @@ class TestStore:
         api.books.put_book(book_.convert_to_book_dto(), id=book_.id)
         store_page.reload()
         book_after = store_page.get_book(title=book_.name)
-        assert store_page.get_book_decription(book_after) == "im love you"
+        assert store_page.get_book_description(book_after) == "im love you"
 
+
+    @log_name
+    @allure.title("case delete author and see if all is books is deleted too")
     def test_author_delete(self, api, data, main_page):
         author = api.authors.post_authors(data.generate_author(name="dani"))
         author = api.authors.get_author_by_id(id=author.id)

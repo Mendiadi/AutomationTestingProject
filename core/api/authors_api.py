@@ -6,7 +6,7 @@ from core.models import Author
 from core.models import GetAuthorDto
 from core.models import Book
 from typing import Iterable
-
+from core.api.constant import api_links
 
 class AuthorsAPI(BaseAPI):
     def __init__(
@@ -83,7 +83,7 @@ class AuthorsAPI(BaseAPI):
             return self.as_dict(author)
 
     @rest.get(
-        url='/search/',
+        url=api_links['search'],
         param="query"
     )
     def search(

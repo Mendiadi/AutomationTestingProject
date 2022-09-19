@@ -18,7 +18,7 @@ class TestSearchPage:
     @allure.title("case search query gives also substring cases")
     def test_search_and_also_sub_string_apear(self, api, data, main_page):
         author = api.authors.post_authors(data.generate_author(name="oren"))
-        book = api.books.post_books(data.generate_book(authorid=author.id, name="oren domi"))
+        api.books.post_books(data.generate_book(authorid=author.id, name="oren domi"))
         search_page = main_page.search("or")
         search_page.reload()
         books, authors = search_page.get_books(), search_page.get_authors()

@@ -1,4 +1,3 @@
-import time
 from core.drivers import Driver
 from playwright.sync_api import Locator, ElementHandle, FrameLocator
 from commons import LocatorWithError
