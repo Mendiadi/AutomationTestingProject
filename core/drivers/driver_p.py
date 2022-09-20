@@ -2,7 +2,6 @@ from core.drivers import Driver
 from playwright.sync_api import Locator, ElementHandle, FrameLocator
 from commons import LocatorWithError
 from commons.utils import log_data
-import os
 
 
 
@@ -16,14 +15,14 @@ class PlayWright(Driver):
         def on_dialog(dialog):
             self._dialog_msg_temp = dialog.message
             dialog.accept()
+
         if not input__:
             self._driver.on("dialog", on_dialog)
         else:
             btn = input__[0].query_selector(self.By(*input__[1]))
-            self._driver.on("dialog",on_dialog)
+            self._driver.on("dialog", on_dialog)
             btn.click()
         return self._dialog_msg_temp
-
 
     def switch_to_tab(self, val: int):
         log_data(msg=" switching tab current url" + self._driver.url)
@@ -38,7 +37,6 @@ class PlayWright(Driver):
         except TimeoutError:
             self.refresh()
             return element.get_attribute(name)
-
 
     def url(self) -> str:
         return self._driver.url
@@ -138,7 +136,3 @@ class PlayWright(Driver):
         """
         image = f"img.png"
         return self._driver.screenshot(path=fr"{image}")
-
-
-    def alert(self):
-        self._driver.on("dialog", lambda dialog: dialog.accept())

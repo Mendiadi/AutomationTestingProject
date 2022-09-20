@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 import allure
 
 
-
 class AuthenticationPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
@@ -42,7 +41,7 @@ class AuthenticationPage(BasePage):
 
     def get_email_placeholder(self) -> str:
         field = self._driver.locate_element(self._au_locators['email_entry'])
-        return self._driver.get_attribute(field,"placeholder")
+        return self._driver.get_attribute(field, "placeholder")
 
     def get_password_placeholder(self) -> str:
         field = self._driver.locate_element(self._au_locators['password_entry'])

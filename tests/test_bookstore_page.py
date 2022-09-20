@@ -83,7 +83,6 @@ class TestStore:
         assert purchase_msg == "AxiosError: Request failed with status code 400"
         api.authors.delete_author(id=author.id)
 
-
     @log_name
     @allure.title("post 10 new books and buy all the books in the store once ")
     def test_buy_multiple(self, main_page, configuration, data, api):
@@ -138,7 +137,6 @@ class TestStore:
         store_page.reload()
         book_after = store_page.get_book(title=book_.name)
         assert store_page.get_book_description(book_after) == "im love you"
-
 
     @log_name
     @allure.title("case delete author and see if all is books is deleted too")

@@ -12,7 +12,8 @@ class TestAuthors:
     @allure.title("case post author invalid")
     @pytest.mark.parametrize("data,excepted", [({}, "The Name field is required."),
                                                (
-                                               {"name": 2}, "The JSON value could not be converted to System.String.")])
+                                                       {"name": 2},
+                                                       "The JSON value could not be converted to System.String.")])
     def test_post_author_invalid_data(self, api, data, excepted):
         res = api.authors.post_authors(data)
         assert res['code'] == 400

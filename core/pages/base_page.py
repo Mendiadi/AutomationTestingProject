@@ -16,7 +16,7 @@ class BasePage:
         "search_bar": (By.ID, 'searchtext'),
         "search_btn": (By.XPATH, '//*[@id="root"]/nav/div/form/button'),
         "log_out_btn": (By.TAG_NAME, 'button'),
-        "btns_layer":(By.CLASS_NAME,'navbar-nav')
+        "btns_layer": (By.CLASS_NAME, 'navbar-nav')
 
     }
 
@@ -30,7 +30,7 @@ class BasePage:
     @allure.step("click log out!")
     def click_logout(self):
         layer = self._driver.locate_element(self._common_locators['btns_layer'])
-        self._driver.locate_element(self._common_locators['log_out_btn'],layer).click()
+        self._driver.locate_element(self._common_locators['log_out_btn'], layer).click()
 
     def search(self, query: str):
         from core.pages.search_page import SearchPage
@@ -83,10 +83,9 @@ class BasePage:
         btn = self._driver.locate_element(self._common_locators["search_btn"])
         return self._driver.text(btn)
 
-    def get_authors_btn_text(self) ->str:
+    def get_authors_btn_text(self) -> str:
         btn = self._driver.locate_element(self._common_locators["author_btn"])
         return self._driver.text(btn)
-
 
     @property
     def title(self) -> str:

@@ -36,8 +36,8 @@ class RandomData:
     def generate_author(
             self,
             name: str = None
-            ,la:float=None
-            ,lo:float=None
+            , la: float = None
+            , lo: float = None
     ) -> CreateAuthorDto:
         name = name if name else self.firstname() + self.lastname()
         homelo = self._faker.random.randint(-180, 180) if not lo else lo
@@ -48,7 +48,7 @@ class RandomData:
 
     def generate_book(
             self,
-            authorid:int=None,
+            authorid: int = None,
             price: int = None,
             amount: int = None,
             description: str = None,

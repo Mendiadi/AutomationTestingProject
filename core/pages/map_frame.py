@@ -52,7 +52,7 @@ class MapFrame:
         btn = self._driver.locate_element(self._locators["map_change_look"], self._frame)
         txt = self._driver.get_attribute(btn, "title")
         btn.click()
-        log_data(txt,msg="map style changed ->")
+        log_data(txt, msg="map style changed ->")
         with allure.step(f"change map look style = {txt}"):
             return txt
 

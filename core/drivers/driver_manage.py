@@ -6,9 +6,11 @@ from core.drivers import Driver
 from commons import LibNotSupport
 from selenium.webdriver.chrome.service import Service as Cservice
 from selenium.webdriver.firefox.service import Service as Fservice
+
+
 class DriverContextManager:
 
-    def __init__(self,configuration):
+    def __init__(self, configuration):
         self._page = None
         self._config = configuration
         self._async_eventloop = None
@@ -23,7 +25,6 @@ class DriverContextManager:
             raise LibNotSupport(f"lib must be {SELENIUM} or {PLAYWRIGHT} not {type(self._config.lib)}")
         return DRIVERS[self._config.lib](self._page, self._config.lib)
 
-
     def _on_playwright(self):
         user32 = ctypes.windll.user32
         self._async_eventloop = sync_playwright().start()
@@ -36,8 +37,6 @@ class DriverContextManager:
         self._page.goto(self._config.url)
         screensize = {"width": user32.GetSystemMetrics(0), "height": user32.GetSystemMetrics(1)}
         self._page.set_viewport_size(viewport_size=screensize)
-
-
 
     def _on_selenium_grid(self):
         if self._config.browser == CHROME:
@@ -64,7 +63,6 @@ class DriverContextManager:
                 self._page = webdriver.Firefox(service=ser)
         self._page.get(self._config.url)
         self._page.maximize_window()
-
 
     def __enter__(self):
         if self._config.lib == PLAYWRIGHT:

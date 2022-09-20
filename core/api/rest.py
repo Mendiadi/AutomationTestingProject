@@ -173,7 +173,7 @@ class HTTP:
             kw: dict,
             param: str,
             self: [],
-            args: ... ,
+            args: ...,
             func: [Callable[..., __name__], __name__]
     ) -> tuple[..., str]:
         """
@@ -212,7 +212,7 @@ class HTTP:
         :param data_t: data type json or data
         """
 
-        def decorate(func: [Callable[..., __name__]],**kwargs:...) -> {...}:
+        def decorate(func: [Callable[..., __name__]], **kwargs: ...) -> {...}:
             def wrapper(self: ..., *args: ..., **kwargs: ...) -> {...}:
                 data, url_ = HTTP.parse(url, kwargs, param, self, args, func)
                 self._response = HTTP.get_response(type_, self._session, url_, data, data_t)
@@ -287,6 +287,5 @@ def put(
         :rtype: Any
     """
     return HTTP.request(Req.PUT, url, param, data_t)
-
 
 #####################################################

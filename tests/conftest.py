@@ -1,7 +1,6 @@
 from fixtures import *
 
 
-
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
@@ -15,6 +14,4 @@ def pytest_addoption(parser):
     parser.addoption("--url", action="store", default=data.url)
     parser.addoption("--lib", action="store", default=data.lib)
     parser.addoption("--browser", action="store", default=data.browser)
-    parser.addoption("--grid",action="store",default=data.selenium_grid)
-
-
+    parser.addoption("--grid", action="store", default=data.selenium_grid)

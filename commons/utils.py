@@ -5,6 +5,7 @@ import logging
 import functools
 from typing import Callable
 
+
 def json_read(path: str) -> json:
     try:
         with open(path, "r") as json_file:
@@ -30,11 +31,13 @@ def write_to_json(data: dict, path: str, indent: int = 1) -> None:
     with open(os.path.abspath(path), "w") as outfile:
         outfile.write(json_object)
 
+
 logger = logging.getLogger(__name__)
 
 
-def log_data(*args:[...],msg:str="") -> None:
-    try:logger.info(f"""
+def log_data(*args: [...], msg: str = "") -> None:
+    try:
+        logger.info(f"""
        {msg} -> {" | ".join(args)}
     """)
     except TypeError:
@@ -42,9 +45,11 @@ def log_data(*args:[...],msg:str="") -> None:
                {msg} -> {args}
             """)
 
-def log_name(func:Callable) -> Callable[...,None]:
+
+def log_name(func: Callable) -> Callable[..., None]:
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         logger.info(f"Executing {func.__name__}\n")
         func(*args, **kwargs)
+
     return wrapper

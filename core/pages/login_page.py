@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from core.pages.store_page import StorePage
 from commons.utils import log_data
 
+
 class LoginPage(AuthenticationPage):
     def __init__(self, driver):
         super().__init__(driver)
@@ -13,7 +14,7 @@ class LoginPage(AuthenticationPage):
     }
 
     def login(self, email: str, password: str) -> StorePage:
-        log_data(email,password,msg="perform login")
+        log_data(email, password, msg="perform login")
         self.send_email(email)
         self.send_password(password)
         self.on_submit()

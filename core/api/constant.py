@@ -9,11 +9,10 @@ api_links = {
     "token": '/refreshtoken',
     "findbyAuthor": "/findauthor/",
     "purchaseBook": "/purchase/"
-    ,"search": '/search/'
+    , "search": '/search/'
 }
 ENDPOINTS = {
     "_books_": URL_SWAGGER + BOOKS_URL,
-    "_account_":URL_SWAGGER + ACCOUNT_URL,
-    "_authors_":URL_SWAGGER + AUTHORS_URL
+    "_account_": URL_SWAGGER + ACCOUNT_URL,
+    "_authors_": URL_SWAGGER + AUTHORS_URL
 }
-

@@ -73,7 +73,7 @@ def author_setup(api, data, request):
 
 
 @pytest.fixture(scope="class")
-def author_setup2(api, data, request,fix_user):
+def author_setup2(api, data, request, fix_user):
     res = api.account.login(fix_user['user'].to_json())
     api.session.update_token(res.token)
     author = api.authors.post_authors(data.generate_author(name="mr no name"))
@@ -83,7 +83,7 @@ def author_setup2(api, data, request,fix_user):
 
 
 @pytest.fixture(scope="class")
-def author_setup1(api, data, request,fix_user):
+def author_setup1(api, data, request, fix_user):
     res = api.account.login(fix_user['user'].to_json())
     api.session.update_token(res.token)
     author = api.authors.post_authors(data.generate_author())

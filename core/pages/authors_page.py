@@ -15,6 +15,7 @@ class AuthorsPage(BasePage):
         "go_to_author_btn": (By.CLASS_NAME, 'btn')
     }
 
+    @allure.step("get authors")
     def get_authors(self):
         return self._driver.locate_elements(self._locators['author_cont'])
 
@@ -23,12 +24,14 @@ class AuthorsPage(BasePage):
         return self._driver.text(txt)
 
     def find_author_by_name(self, name: str):
-        authors = self.get_authors()
-        for author in authors:
-            if self.get_author_name(author) == name:
-                return author
-        return None
+        with allure.step(f"find author - {name}"):
+            authors = self.get_authors()
+            for author in authors:
+                if self.get_author_name(author) == name:
+                    return author
+            return None
 
+    @allure.step("go to author")
     def go_to_author(self, author):
         from core.pages import author_page
         if author:

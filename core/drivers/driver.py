@@ -13,7 +13,7 @@ class Driver(metaclass=ABCMeta):
     @abstractmethod
     def locate_element(
             self,
-            locator: tuple[[],str],
+            locator: tuple[[], str],
             driver: [] = None
     ) -> []:
         ...

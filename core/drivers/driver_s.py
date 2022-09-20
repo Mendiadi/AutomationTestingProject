@@ -6,6 +6,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import selenium.common.exceptions as se
 from commons.utils import log_data
 
+
 class Selenium(Driver):
     def __init__(self, driver, type_):
         self.wait = 15
@@ -25,7 +26,6 @@ class Selenium(Driver):
         except Exception as e:
             log_data(e)
             actions.move_to_element(element)
-
 
     def element_is_visible(self, locator):
         try:
@@ -51,7 +51,7 @@ class Selenium(Driver):
             log_data(f"log msg from Driver - {e}")
 
             element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(locator))
-        except (se.StaleElementReferenceException,se.TimeoutException) as e:
+        except (se.StaleElementReferenceException, se.TimeoutException) as e:
             log_data(f"log msg from Driver - {e}")
             self.refresh()
             element = driver.find_element(*locator)
@@ -65,7 +65,6 @@ class Selenium(Driver):
 
     def get_attribute(self, element, name: str) -> [str]:
         return element.get_attribute(name)
-
 
     def url(self) -> str:
         return self._driver.current_url

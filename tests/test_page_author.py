@@ -84,10 +84,10 @@ class TestAuthorPage:
         authors_page = main_page.click_authors_btn()
         author = authors_page.find_author_by_name(name=self.author1.name)
         author_page = authors_page.go_to_author(author)
-        map = author_page.on_map()
-        map_cor = map.get_map_details()
-        change_look_style = map.change_look_style()
+        map_ = author_page.on_map()
+        map_cor = map_.get_map_details()
+        change_look_style = map_.change_look_style()
         api.authors.delete_author(id=self.author1.id)
         assert change_look_style != "Show street map"
-        change_look_style_again = map.change_look_style()
+        change_look_style_again = map_.change_look_style()
         assert change_look_style_again != "Show satellite imagery"

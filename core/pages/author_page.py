@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 from core.pages.map_frame import MapFrame
 from commons.utils import log_data
 import allure
+
+
 class AuthorPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
@@ -16,7 +18,7 @@ class AuthorPage(BasePage):
         "book_price_cap": (By.CLASS_NAME, 'card-footer'),
         "description": (By.CLASS_NAME, 'card-text'),
         "image_url": (By.TAG_NAME, "img"),
-        "headline":(By.CLASS_NAME,"badge")
+        "headline": (By.CLASS_NAME, "badge")
 
     }
 
@@ -34,7 +36,6 @@ class AuthorPage(BasePage):
         self._driver.switch_to_default()
         log_data(msg="out from map")
         return self._driver.url
-
 
     def on_map(self) -> MapFrame:
         log_data(msg="entering to the map")
