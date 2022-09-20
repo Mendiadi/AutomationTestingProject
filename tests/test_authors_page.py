@@ -49,3 +49,4 @@ class TestAuthorsPage:
         authors_page = main_page.click_authors_btn()
         authors__names_ui = [authors_page.get_author_name(author) for author in authors_page.get_authors()]
         assert all(map(lambda author: author.name in authors__names_ui, authors_api))
+

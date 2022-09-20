@@ -1,10 +1,10 @@
-class BrowserNotSupport(Exception):
-    pass
+class BrowserNotSupport(Exception):...
 
 
-class LibNotSupport(Exception):
-    pass
+
+class LibNotSupport(Exception):...
 
 
-class LocatorWithError(Exception):
-    pass
+
+class LocatorWithError(Exception):...
+
