@@ -37,7 +37,7 @@ class TestReadability:
     @allure.title("readability of buttons in base layer")
     def test_readability_of_buttons_author_page(self, main_page):
         assert main_page.get_login_btn_text() == "Log In"
-        assert main_page.get_book_store_btn_text() == "Book Store"
+        assert "Book Store" in main_page.get_book_store_btn_text()
         assert main_page.get_store_btn_text() == "Store"
         assert main_page.get_authors_btn_text() == "Authors"
         assert main_page.get_search_btn_text() == "Search"

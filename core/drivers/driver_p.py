@@ -33,7 +33,11 @@ class PlayWright(Driver):
         return val
 
     def get_attribute(self, element, name: str) -> [str]:
-        return element.get_attribute(name)
+        try:
+            return element.get_attribute(name)
+        except TimeoutError:
+            self.refresh()
+            return element.get_attribute(name)
 
 
     def url(self) -> str:

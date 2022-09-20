@@ -1,25 +1,27 @@
 import pytest
 import allure
 from core.models import GetAuthorDto
-from commons.utils import log_name,log_data
+from commons.utils import log_name, log_data
 
 
+@pytest.mark.usefixtures("safe_load")
 @allure.epic("Authors testing from api")
 class TestAuthors:
 
     @log_name
     @allure.title("case post author invalid")
-    @pytest.mark.parametrize("data,excepted",[({},"The Name field is required."),
-                                              ({"name":2},"The JSON value could not be converted to System.String.")])
-    def test_post_author_invalid_data(self,api,data,excepted):
+    @pytest.mark.parametrize("data,excepted", [({}, "The Name field is required."),
+                                               (
+                                               {"name": 2}, "The JSON value could not be converted to System.String.")])
+    def test_post_author_invalid_data(self, api, data, excepted):
         res = api.authors.post_authors(data)
         assert res['code'] == 400
         assert res['reason'] == "Bad Request"
         assert excepted in res['msg']
 
-    def test_put_author_invalid_data(self):
-        pytest.skip()
-        pass
+    # def test_put_author_invalid_data(self):
+    #     pytest.skip()
+    #     pass
 
     @log_name
     @pytest.mark.regression
@@ -32,14 +34,12 @@ class TestAuthors:
 
     @log_name
     @pytest.mark.parametrize("id,excepted", [("2", "Not Found"),
-                            (-9, "Not Found")])
+                                             (-9, "Not Found")])
     @allure.title("case delete author by id")
-    def test_delete_author_by_id_invalid(self,api,id,excepted):
+    def test_delete_author_by_id_invalid(self, api, id, excepted):
         res = api.authors.delete_author(id=id)
         assert res['code'] == 404
         assert res['reason'] == excepted
-
-
 
     @log_name
     @pytest.mark.smoke
@@ -90,9 +90,11 @@ class TestAuthors:
         else:
             assert [query not in author.name for author in authors_get]
 
-    def test_get_author_by_id_invalid(self):...
+    def test_get_author_by_id_invalid(self):
+        ...
 
 
+@pytest.mark.usefixtures("safe_load")
 @allure.epic("books from api")
 class TestBook:
 
@@ -147,11 +149,10 @@ class TestBook:
 
     @log_name
     @allure.title("case post book with not exists author")
-    def test_post_book_with_not_exists_author(self,api,data):
-        api.books.post_books(data.generate_book(name="adi",price=-100,authorid=90))
+    def test_post_book_with_not_exists_author(self, api, data):
+        api.books.post_books(data.generate_book(name="adi", price=-100, authorid=90))
         books = api.books.get_books()
         assert [book.name != "adi" for book in books] if len(books) != 0 else True
-
 
     @log_name
     @allure.title("case delete book invalid id")
@@ -189,17 +190,16 @@ class TestBook:
     @allure.title("case post book with no exists author id")
     def test_post_book_no_exists_author(self, api, data):
         api.authors.delete_author(id=100)
-        res = api.books.post_books(data.generate_book(name="adi",authorid=100))
+        res = api.books.post_books(data.generate_book(name="adi", authorid=100))
         books = api.books.get_books()
         assert [book.name != "adi" for book in books] if len(books) != 0 else True
         assert res['code'] == 400
 
-
     @log_name
     @allure.title("case post book with negtive stock and price")
-    def test_post_book_negative_stock_and_price(self,api,data):
+    def test_post_book_negative_stock_and_price(self, api, data):
         author = api.authors.post_authors(data.generate_author())
-        api.books.post_books(data.generate_book(name="adi",authorid=author.id,amount=-10,price=-10))
+        api.books.post_books(data.generate_book(name="adi", authorid=author.id, amount=-10, price=-10))
         books = api.books.get_books()
         assert [book.name != "adi" for book in books] if len(books) != 0 else True
 
@@ -263,10 +263,9 @@ class TestBook:
         assert book not in books
         api.authors.delete_author(id=author.id)
 
-
     @log_name
     @allure.title("verify purchase api works properly")
-    def test_purchase_book(self,api,data):
+    def test_purchase_book(self, api, data):
         author = api.authors.post_authors(data.generate_author())
         book = api.books.post_books(data.generate_book(authorid=author.id))
         api.books.purchase_book(id=book.id)
@@ -276,31 +275,28 @@ class TestBook:
 
     @log_name
     @allure.title("case purchase book with invalid id")
-    def test_purchase_book_invalid_id(self,api,data):
+    def test_purchase_book_invalid_id(self, api, data):
         res = api.books.purchase_book(id=10)
         assert res['code'] == 400
         assert "purchase unsucessful" in res['msg']
 
-
     @log_name
     @allure.title("case purchase book with invalid data")
-    def test_purchase_book_invalid_data(self,api,data):
+    def test_purchase_book_invalid_data(self, api, data):
         res = api.books.purchase_book(id="sss")
         assert res['code'] == 400
 
-
-
     @log_name
     @allure.title("case purchase book with no stock")
-    def test_purchase_book_no_stock(self,api,data):
+    def test_purchase_book_no_stock(self, api, data):
         author = api.authors.post_authors(data.generate_author())
-        book = api.books.post_books(data.generate_book(authorid=author.id,amount=0))
+        book = api.books.post_books(data.generate_book(authorid=author.id, amount=0))
         res = api.books.purchase_book(id=book.id)
         assert res['code'] == 400 and "purchase unsucessful" in res['msg']
 
     @log_name
     @allure.title("case find book by author")
-    def test_find_book_by_author(self,api,data):
+    def test_find_book_by_author(self, api, data):
         author = api.authors.post_authors(data.generate_author())
         book1 = api.books.post_books(data.generate_book(authorid=author.id))
         book2 = api.books.post_books(data.generate_book(authorid=author.id))
@@ -308,12 +304,12 @@ class TestBook:
         assert book1.convert_to_book_dto() in books
         assert book2.convert_to_book_dto() in books
 
-
     @log_name
     @allure.title("case find book by author invalid")
-    def test_find_book_by_author_invalid(self,api):
+    def test_find_book_by_author_invalid(self, api):
         books = api.books.find_book_by_author_id(authorId=-11)
         assert len(books) == 0
+
 
 @allure.epic("API verify authorized required")
 class TestAPISUnauthorized:

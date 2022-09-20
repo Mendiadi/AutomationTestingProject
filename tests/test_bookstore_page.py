@@ -51,7 +51,7 @@ class TestStore:
     @allure.title("case buy book from api and check for update")
     def test_buy_book_from_api_to_ui(self, api, main_page):
         store_page = main_page.click_bookstore()
-        book_element = store_page.get_book(title="waves of sea")
+        book_element = store_page.get_book(title=self.book.name)
         book_element_stock_before = store_page.get_book_stock(book_element)
         api.books.purchase_book(id=self.book.id)
         store_page.reload()

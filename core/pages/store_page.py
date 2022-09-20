@@ -27,9 +27,16 @@ class StorePage(BasePage):
         "image_url": (By.TAG_NAME, "img")
     }
 
-    def _scan_for_alerts(self):
+    def _alert_listener(self):
+        """
+        this function run  life time is 1.5 seconds from first calling
+        and every 0.25 seconds this function checks if alert is pop up
+        and in case alert pop up function will handle it and process will get terminated
+        otherwise process will down after 1.5 seconds
+        """
         keep_going = True
-        end = start = time.time()
+        start = time.time()
+        end = 0
         while end - start < 1.5 and keep_going:
             try:
                 self._purchase_msg = self._driver.switch_to_alert()
@@ -40,8 +47,11 @@ class StorePage(BasePage):
             end = time.time()
 
     def _scanner_(self):
+        """
+        runs the process
+        """
         if self._scanner is None:
-            self._scanner = threading.Thread(target=self._scan_for_alerts)
+            self._scanner = threading.Thread(target=self._alert_listener)
             self._scanner.setDaemon(True)
         if not self._scanner.is_alive():
             self._scanner.start()

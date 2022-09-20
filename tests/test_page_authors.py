@@ -1,7 +1,9 @@
 import allure
+import pytest
+
 from commons.utils import log_name
 
-
+@pytest.mark.usefixtures("author_setup2")
 @allure.epic("UI Authors Page")
 class TestAuthorsPage:
     @log_name
@@ -15,16 +17,16 @@ class TestAuthorsPage:
     def test_add_author_apear(self, author_setup, main_page):
         authors_page = main_page.click_authors_btn()
         authors = authors_page.get_authors()
-        assert self.author.name in [authors_page.get_author_name(author) for author in authors]
+        assert self.author2.name in [authors_page.get_author_name(author) for author in authors]
 
     @log_name
     @allure.title("case change author name and see if ui update ")
     def test_update_author_apear(self, author_setup, main_page, api):
         authors_page = main_page.click_authors_btn()
         authors = authors_page.get_authors()
-        assert self.author.name in [authors_page.get_author_name(author) for author in authors]
-        self.author.name = "adi"
-        api.authors.put_author_by_id(self.author, id=self.author.id)
+        assert self.author2.name in [authors_page.get_author_name(author) for author in authors]
+        self.author2.name = "adi"
+        api.authors.put_author_by_id(self.author2, id=self.author2.id)
         authors_page.reload()
         authors = authors_page.get_authors()
         assert "adi" in [authors_page.get_author_name(author) for author in authors]

@@ -4,8 +4,8 @@ import ctypes
 from commons.constant import *
 from core.drivers import Driver
 from commons import LibNotSupport
-
-
+from selenium.webdriver.chrome.service import Service as Cservice
+from selenium.webdriver.firefox.service import Service as Fservice
 class DriverContextManager:
 
     def __init__(self,configuration):
@@ -57,9 +57,11 @@ class DriverContextManager:
             self._on_selenium_grid()
         else:
             if self._config.browser == CHROME:
-                self._page = webdriver.Chrome(self._config.driver_path)
+                ser = Cservice(self._config.driver_path)
+                self._page = webdriver.Chrome(service=ser)
             elif self._config.browser == FIREFOX:
-                self._page = webdriver.Firefox(self._config.driver_path)
+                ser = Fservice(self._config.driver_path)
+                self._page = webdriver.Firefox(service=ser)
         self._page.get(self._config.url)
         self._page.maximize_window()
 
