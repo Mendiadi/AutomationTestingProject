@@ -137,10 +137,8 @@ class PlayWright(Driver):
         :rtype: bytes
         """
         image = f"img.png"
-        if "reports" in os.listdir('/practice_automation'):
-            img__ = self._driver.screenshot(
-                path=fr"{image}")
-            return img__
+        return self._driver.screenshot(path=fr"{image}")
+
 
     def alert(self):
         self._driver.on("dialog", lambda dialog: dialog.accept())

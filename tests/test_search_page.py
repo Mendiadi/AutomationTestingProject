@@ -1,6 +1,5 @@
 import allure
 import pytest
-
 from commons.utils import log_name
 
 @allure.epic("verify search page works properly")

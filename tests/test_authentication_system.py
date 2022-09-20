@@ -157,6 +157,7 @@ class TestAuthenticationUI:
         text = store_page.get_label_h1_text()
         assert text == 'Welcome to our store'
         assert store_page.get_logout_btn_text() == "Log Out"
+        assert False
 
     @log_name
     @allure.title("case login from ui invalid ")
