@@ -1,0 +1,10 @@
+2022-09-21 09:32:01 [32mINFO[0m Executing test_delete_book_invalid_id
+
+2022-09-21 09:32:01 [32mINFO[0m 
+        -> 
+REQUEST: delete_book
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 403, 'reason': 'Forbidden', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Books/sds

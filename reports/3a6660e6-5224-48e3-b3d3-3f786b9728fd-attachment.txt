@@ -1,0 +1,19 @@
+2022-09-21 09:32:00 [32mINFO[0m Executing test_put_author_by_id
+
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'BrandonWard', 'homeLatitude': 4.598906191031523, 'homeLongitude': 80.37425027131539}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2403,"name":"BrandonWard","homeLatitude":4.598906,"homeLongitude":80.37425,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: put_author_by_id
+TYPE: Req.PUT -> 
+BODY: {'name': 'eyal', 'homeLatitude': 4.598906, 'homeLongitude': 80.37425, 'id': 2403}
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2403

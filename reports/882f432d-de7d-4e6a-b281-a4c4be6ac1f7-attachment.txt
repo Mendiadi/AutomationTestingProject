@@ -1,0 +1,46 @@
+2022-09-21 09:32:00 [32mINFO[0m Executing test_get_authors
+
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'JefferyJimenez', 'homeLatitude': 0.4233600241796016, 'homeLongitude': 156.20840977315984}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2401,"name":"JefferyJimenez","homeLatitude":0.42336002,"homeLongitude":156.2084,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 404, 'reason': 'Not Found', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-8e1c7d174b2329dba1869c6ceb6b43c6-bb65a6774c45311f-00"}', 'obj': None}
+URL: http://localhost:7017/api/Authors/17 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2396,"name":"oren","homeLatitude":-79.51109,"homeLongitude":-9.535732},{"id":2401,"name":"JefferyJimenez","homeLatitude":0.42336002,"homeLongitude":156.2084}]', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2401 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2396,"name":"oren","homeLatitude":-79.51109,"homeLongitude":-9.535732}]', 'obj': None}
+URL: http://localhost:7017/api/Authors

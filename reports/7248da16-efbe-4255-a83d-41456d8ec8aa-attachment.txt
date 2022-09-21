@@ -1,0 +1,10 @@
+2022-09-21 09:54:42 [32mINFO[0m Executing test_post_book_no_name
+
+2022-09-21 09:54:42 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 3, 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 14}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-6c76a124e51eed2e65843849f4707c2a-bbeee2586a742733-00","errors":{"$.name":["The JSON value could not be converted to System.String. Path: $.name | LineNumber: 0 | BytePositionInLine: 10."]}}', 'obj': None}
+URL: http://localhost:7017/api/Books

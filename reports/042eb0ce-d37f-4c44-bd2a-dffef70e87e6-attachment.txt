@@ -1,0 +1,10 @@
+2022-09-21 09:32:02 [32mINFO[0m Executing test_purchase_book_invalid_data
+
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: purchase_book
+TYPE: Req.PUT -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-f5d9b0ee878fa57648d7a9346119e221-610a2d428a56ded4-00","errors":{"id":["The value \'sss\' is not valid."]}}', 'obj': None}
+URL: http://localhost:7017/api/Books/purchase/sss

@@ -1,0 +1,10 @@
+2022-09-21 09:54:44 [32mINFO[0m Executing test_register_invalid_data
+
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: register
+TYPE: Req.POST -> 
+BODY: {'email': 'aa@aa.cm', 'password': '1266776544563666', 'firstname': 'string', 'lastname': 'string'}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-8ae66065fe806c74f2d745a1010ad51a-cc732a0d079be15e-00","errors":{"Password":["Your password is limited to 4 to 15 characters"]}}', 'obj': None}
+URL: http://localhost:7017/api/Account/register

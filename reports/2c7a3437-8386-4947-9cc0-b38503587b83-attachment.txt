@@ -1,0 +1,10 @@
+2022-09-21 09:33:04 [32mINFO[0m Executing test_verify_books
+
+2022-09-21 09:33:04 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2526,"name":"Christina Campbell","description":"description","price":10,"amountInStock":9,"imageUrl":"https://webdrop.co.il/sites/default/files/pixabay.jpg","authorId":2419},{"id":2527,"name":"Isabel Rowe","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2418}]', 'obj': None}
+URL: http://localhost:7017/api/Books

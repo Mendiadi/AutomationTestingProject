@@ -1,0 +1,67 @@
+2022-09-21 09:32:02 [32mINFO[0m Executing test_delete_book_from_admin
+
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'DylanHo', 'homeLatitude': -4.606453066641045, 'homeLongitude': -10.999892272057739}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2413,"name":"DylanHo","homeLatitude":-4.606453,"homeLongitude":-10.999892,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: get_author_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2413,"name":"DylanHo","homeLatitude":-4.606453,"homeLongitude":-10.999892,"books":[]}', 'obj': None}
+URL: http://localhost:7017/api/Authors/2413 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'shay', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2413}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2520,"name":"shay","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2413,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: login
+TYPE: Req.POST -> 
+BODY: {'email': 'admin@sela.co.il', 'password': 'string'}
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"userId":"5189cba6-876e-4735-9326-c0cfa51b68b6","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBzZWxhLmNvLmlsIiwianRpIjoiNzI1MDE2YzctYzhhNi00NjM3LThiZDktMjY3NGU4YjIxNWQ0IiwiZW1haWwiOiJhZG1pbkBzZWxhLmNvLmlsIiwidWlkIjoiNTE4OWNiYTYtODc2ZS00NzM1LTkzMjYtYzBjZmE1MWI2OGI2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY2Mzc0MjUyMiwiaXNzIjoiQm9va1N0b3JlQVBJIiwiYXVkIjoiQm9va1N0b3JlQVBJQ2xpZW50In0.JQl0KWQ_BeTVLfQ1mFZoWMRDPS6rS_Y4jI1XL5VLVH8","refreshToken":"CfDJ8AQ/5u4YjjBPkAdUlLdqmJ9DK6CRF6MvNwRHSmOzSnIMdkUdAls08U+DT16SEQ9LBketOa16UH9rg8XorXRuVt+e1q9gGbvDCTQyxGJaOW6hn4ysjMp+sjQnS4j4b1aXcanQtRo/TRh/M8TW7Y9dVe02roEpgzJB0/YknUkTFTY6nFP3nklYKRkOnnxAjRdfk6NRw+6+Gbs3NkNr51nZX1um8wIWPUsaLAomHa0BJLFD"}', 'obj': None}
+URL: http://localhost:7017/api/Account/login 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> session token updated with account eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBzZWxhLmNvLmlsIiwianRpIjoiNzI1MDE2YzctYzhhNi00NjM3LThiZDktMjY3NGU4YjIxNWQ0IiwiZW1haWwiOiJhZG1pbkBzZWxhLmNvLmlsIiwidWlkIjoiNTE4OWNiYTYtODc2ZS00NzM1LTkzMjYtYzBjZmE1MWI2OGI2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY2Mzc0MjUyMiwiaXNzIjoiQm9va1N0b3JlQVBJIiwiYXVkIjoiQm9va1N0b3JlQVBJQ2xpZW50In0.JQl0KWQ_BeTVLfQ1mFZoWMRDPS6rS_Y4jI1XL5VLVH8
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: delete_book
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Books/2520 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2514,"name":"adi","description":"description","price":-10,"amountInStock":-10,"imageUrl":null,"authorId":2407}]', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2413

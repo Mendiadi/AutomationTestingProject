@@ -1,0 +1,10 @@
+2022-09-21 09:54:44 [32mINFO[0m Executing test_unauthorized_put_author
+
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: put_author_by_id
+TYPE: Req.PUT -> 
+BODY: {'name': 'TheresaRogers', 'homeLatitude': -72.9008232746503, 'homeLongitude': -115.87035594720186}
+ARGS: id
+RESPONSE: {'code': 401, 'reason': 'Unauthorized', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/4

@@ -1,0 +1,18 @@
+2022-09-21 09:32:04 [32mINFO[0m Executing test_refresh_invalid_token
+
+2022-09-21 09:32:04 [32mINFO[0m 
+        -> 
+REQUEST: refresh_token
+TYPE: Req.POST -> 
+BODY: i
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-4c45e0162a859fad60279d567e1d5028-677d89972ae50bc6-00","errors":{"$":["The JSON value could not be converted to BookStore_API.Models.Users.AuthResponseDto. Path: $ | LineNumber: 0 | BytePositionInLine: 3."]}}', 'obj': None}
+URL: http://localhost:7017/api/Account/refreshtoken
+2022-09-21 09:32:04 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[]', 'obj': None}
+URL: http://localhost:7017/api/Authors

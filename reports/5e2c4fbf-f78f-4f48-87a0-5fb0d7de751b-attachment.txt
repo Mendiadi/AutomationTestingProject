@@ -1,0 +1,10 @@
+2022-09-21 09:32:03 [32mINFO[0m Executing test_login_no_password
+
+2022-09-21 09:32:03 [32mINFO[0m 
+        -> 
+REQUEST: login
+TYPE: Req.POST -> 
+BODY: {'email': 'ecasey@example.net'}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-6abc0899d5ead531387e0f795ddc386d-91b4010411dc7b18-00","errors":{"Password":["The Password field is required."]}}', 'obj': None}
+URL: http://localhost:7017/api/Account/login

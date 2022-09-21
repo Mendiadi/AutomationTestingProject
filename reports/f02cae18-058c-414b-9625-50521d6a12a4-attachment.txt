@@ -1,0 +1,19 @@
+2022-09-21 09:54:40 [32mINFO[0m Executing test_author_by_id
+
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'AaronCarpenter', 'homeLatitude': 9.754317602356753, 'homeLongitude': -49.40435285277346}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2433,"name":"AaronCarpenter","homeLatitude":9.754317,"homeLongitude":-49.404354,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: get_author_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2433,"name":"AaronCarpenter","homeLatitude":9.754317,"homeLongitude":-49.404354,"books":[]}', 'obj': None}
+URL: http://localhost:7017/api/Authors/2433

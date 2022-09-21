@@ -1,0 +1,19 @@
+2022-09-21 09:35:34 [32mINFO[0m Executing test_delete_author_apear
+
+2022-09-21 09:35:34 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'dvir', 'homeLatitude': 40.09031956702775, 'homeLongitude': 37.58802006507943}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2426,"name":"dvir","homeLatitude":40.09032,"homeLongitude":37.58802,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:35:35 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2426

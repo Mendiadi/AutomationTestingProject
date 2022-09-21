@@ -1,0 +1,37 @@
+2022-09-21 09:32:00 [32mINFO[0m Executing test_get_books
+
+2022-09-21 09:32:01 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'mr sami', 'homeLatitude': 3.7090663671758093, 'homeLongitude': 11.262005990956641}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2405,"name":"mr sami","homeLatitude":3.7090664,"homeLongitude":11.262006,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:01 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Melissa Bailey', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2405}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2510,"name":"Melissa Bailey","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2405,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:01 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2510,"name":"Melissa Bailey","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2405}]', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:01 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2405

@@ -1,0 +1,10 @@
+2022-09-21 09:54:44 [32mINFO[0m Executing test_unauthorized_purchase_book
+
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: purchase_book
+TYPE: Req.PUT -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 401, 'reason': 'Unauthorized', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Books/purchase/3

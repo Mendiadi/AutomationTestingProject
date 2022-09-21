@@ -1,0 +1,19 @@
+2022-09-21 09:33:30 [32mINFO[0m Executing test_book_image_change
+
+2022-09-21 09:33:31 [32mINFO[0m 
+        -> 
+REQUEST: put_book
+TYPE: Req.PUT -> 
+BODY: {'name': 'Christina Campbell', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBP2SSE41hS1_ks3Ql2W10nOhqGLe3qWQP4sM-go2d&s', 'authorId': 2419, 'id': 2526}
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Books/2526 
+    
+2022-09-21 09:33:32 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 404, 'reason': 'Not Found', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-5004ff909cc88a1e163f351f1b917acf-c580b21547d2e9a5-00"}', 'obj': None}
+URL: http://localhost:7017/api/Authors/2526

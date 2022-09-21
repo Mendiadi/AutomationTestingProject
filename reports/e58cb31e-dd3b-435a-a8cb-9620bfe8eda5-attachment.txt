@@ -1,0 +1,1 @@
+2022-09-21 09:55:14 [32mINFO[0m Executing test_register_exists

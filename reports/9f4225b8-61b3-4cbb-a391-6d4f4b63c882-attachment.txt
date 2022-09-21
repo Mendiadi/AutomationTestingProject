@@ -1,0 +1,10 @@
+2022-09-21 09:55:52 [32mINFO[0m Executing test_verify_books
+
+2022-09-21 09:55:52 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2561,"name":"Sarah Martinez","description":"description","price":10,"amountInStock":8,"imageUrl":"https://hacol-lamesiba.co.il/wp-content/uploads/2017/12/600x338-frozen-characters.jpg","authorId":2450},{"id":2562,"name":"Julie Willis","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2449}]', 'obj': None}
+URL: http://localhost:7017/api/Books

@@ -1,0 +1,37 @@
+2022-09-21 09:32:02 [32mINFO[0m Executing test_put_book_invalid_id
+
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'DavidOrr', 'homeLatitude': 0.7788847046381974, 'homeLongitude': -145.2226485660797}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2411,"name":"DavidOrr","homeLatitude":0.7788847,"homeLongitude":-145.22264,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Tammy Valencia', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2411}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2518,"name":"Tammy Valencia","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2411,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: put_book
+TYPE: Req.PUT -> 
+BODY: {'id': 2518, 'name': 'Tammy Valencia', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2411, 'author': None}
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"Bad Request","status":400,"traceId":"00-0028b5f957c58562a1c2cc28bbd95217-a934a2349423ef29-00"}', 'obj': None}
+URL: http://localhost:7017/api/Books/-20 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2411

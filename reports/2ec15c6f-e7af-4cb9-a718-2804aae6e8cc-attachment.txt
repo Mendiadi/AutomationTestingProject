@@ -1,0 +1,10 @@
+2022-09-21 09:55:45 [32mINFO[0m Executing test_buy_book_from_api_to_ui
+
+2022-09-21 09:55:46 [32mINFO[0m 
+        -> 
+REQUEST: purchase_book
+TYPE: Req.PUT -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2561,"name":"Sarah Martinez","description":"description","price":10,"amountInStock":8,"imageUrl":"https://hacol-lamesiba.co.il/wp-content/uploads/2017/12/600x338-frozen-characters.jpg","authorId":2450,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books/purchase/2561

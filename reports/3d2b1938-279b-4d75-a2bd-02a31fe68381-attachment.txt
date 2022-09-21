@@ -1,0 +1,46 @@
+2022-09-21 09:32:01 [32mINFO[0m Executing test_post_book
+
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'HaleyDuncan', 'homeLatitude': 11.262005990956641, 'homeLongitude': 13.868502979728184}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2408,"name":"HaleyDuncan","homeLatitude":11.262006,"homeLongitude":13.868503,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Amy Kelly', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2408}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2515,"name":"Amy Kelly","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2408,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2514,"name":"adi","description":"description","price":-10,"amountInStock":-10,"imageUrl":null,"authorId":2407},{"id":2515,"name":"Amy Kelly","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2408}]', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: get_author_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2408,"name":"HaleyDuncan","homeLatitude":11.262006,"homeLongitude":13.868503,"books":[{"id":2515,"name":"Amy Kelly","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2408,"author":null}]}', 'obj': None}
+URL: http://localhost:7017/api/Authors/2408 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2408

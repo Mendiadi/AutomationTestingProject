@@ -1,0 +1,36 @@
+2022-09-21 09:32:34 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'AliciaLewis', 'homeLatitude': -2.2837109224252887, 'homeLongitude': 31.22767101152174}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2418,"name":"AliciaLewis","homeLatitude":-2.283711,"homeLongitude":31.22767,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:34 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'RobertMyers', 'homeLatitude': -79.41742644234914, 'homeLongitude': -77.07710500857037}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2419,"name":"RobertMyers","homeLatitude":-79.41743,"homeLongitude":-77.0771,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:34 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Christina Campbell', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': 'https://webdrop.co.il/sites/default/files/pixabay.jpg', 'authorId': 2419}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2526,"name":"Christina Campbell","description":"description","price":10,"amountInStock":10,"imageUrl":"https://webdrop.co.il/sites/default/files/pixabay.jpg","authorId":2419,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books
+2022-09-21 09:32:37 [32mINFO[0m Executing test_add_book_apear
+
+2022-09-21 09:32:38 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Isabel Rowe', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2418}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2527,"name":"Isabel Rowe","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2418,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books

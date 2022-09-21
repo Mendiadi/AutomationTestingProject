@@ -1,0 +1,24 @@
+2022-09-21 09:55:16 [32mINFO[0m Executing test_register
+
+2022-09-21 09:55:16 [32mINFO[0m 
+       perform register ->  -> ujones@example.net | i2knPW7G%# | Chad | Nguyen
+    
+2022-09-21 09:55:17 [32mINFO[0m 
+       perform login -> ujones@example.net | i2knPW7G%#
+    
+2022-09-21 09:55:17 [32mINFO[0m 
+        -> 
+REQUEST: login
+TYPE: Req.POST -> 
+BODY: {'email': 'ujones@example.net', 'password': 'i2knPW7G%#'}
+ARGS: None
+RESPONSE: {'code': 401, 'reason': 'Unauthorized', 'msg': '{"type":"https://tools.ietf.org/html/rfc7235#section-3.1","title":"Unauthorized","status":401,"traceId":"00-2f5623733dbb8f8e280ac0d355b876c2-09276409c76a96c4-00"}', 'obj': None}
+URL: http://localhost:7017/api/Account/login
+2022-09-21 09:55:18 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2448

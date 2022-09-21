@@ -1,0 +1,27 @@
+2022-09-21 09:58:30 [32mINFO[0m Executing test_validate_authors_vs_database
+
+2022-09-21 09:58:30 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2455,"name":"adi","homeLatitude":61.587986,"homeLongitude":3.7090664},{"id":2456,"name":"BrandiMendez","homeLatitude":-2.283711,"homeLongitude":31.22767}]', 'obj': None}
+URL: http://localhost:7017/api/Authors
+2022-09-21 09:58:31 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2455 
+    
+2022-09-21 09:58:31 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2456

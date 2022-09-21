@@ -1,0 +1,37 @@
+2022-09-21 09:33:11 [32mINFO[0m Executing test_buy_book_that_no_stock
+
+2022-09-21 09:33:11 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'JenniferJackson', 'homeLatitude': -3.3087937524443256, 'homeLongitude': 7.585362072620333}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2420,"name":"JenniferJackson","homeLatitude":-3.3087938,"homeLongitude":7.585362,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:33:11 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'David Anderson', 'description': 'description', 'price': 10, 'amountInStock': 0, 'imageUrl': None, 'authorId': 2420}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2528,"name":"David Anderson","description":"description","price":10,"amountInStock":0,"imageUrl":null,"authorId":2420,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:33:11 [32mINFO[0m 
+       perform login -> adii@sela.co.il | string11
+    
+2022-09-21 09:33:13 [32mINFO[0m 
+       purchase book title=  -> David Anderson
+    
+2022-09-21 09:33:13 [32mINFO[0m 
+        -> AxiosError: Request failed with status code 400
+    
+2022-09-21 09:33:13 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2420

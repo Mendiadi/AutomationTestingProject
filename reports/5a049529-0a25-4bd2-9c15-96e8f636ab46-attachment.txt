@@ -1,0 +1,4 @@
+2022-09-21 09:32:25 [32mINFO[0m Executing test_login_invalid_cases
+
+2022-09-21 09:32:25 [32mINFO[0m 
+       perform login -> aaaaa@aa |

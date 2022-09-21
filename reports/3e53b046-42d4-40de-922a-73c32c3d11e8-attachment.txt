@@ -1,0 +1,10 @@
+2022-09-21 09:32:03 [32mINFO[0m Executing test_register_invalid_data
+
+2022-09-21 09:32:03 [32mINFO[0m 
+        -> 
+REQUEST: register
+TYPE: Req.POST -> 
+BODY: {'email': 'aa@aa.cm', 'password': '12345', 'firstname': 'string', 'lastname': ''}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-008b49ed918032d782bda64c9bb5becd-de5f6f8b296b4e7d-00","errors":{"LastName":["The LastName field is required."]}}', 'obj': None}
+URL: http://localhost:7017/api/Account/register

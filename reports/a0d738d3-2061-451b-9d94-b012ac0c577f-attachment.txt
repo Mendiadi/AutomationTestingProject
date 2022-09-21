@@ -1,0 +1,46 @@
+2022-09-21 09:54:42 [32mINFO[0m Executing test_post_book
+
+2022-09-21 09:54:42 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'CheyenneRoberts', 'homeLatitude': -3.3087937524443256, 'homeLongitude': 7.007033503279688}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2439,"name":"CheyenneRoberts","homeLatitude":-3.3087938,"homeLongitude":7.0070333,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:42 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Kimberly Schultz', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2439}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2550,"name":"Kimberly Schultz","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2439,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:42 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2549,"name":"adi","description":"description","price":-10,"amountInStock":-10,"imageUrl":null,"authorId":2438},{"id":2550,"name":"Kimberly Schultz","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2439}]', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:42 [32mINFO[0m 
+        -> 
+REQUEST: get_author_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2439,"name":"CheyenneRoberts","homeLatitude":-3.3087938,"homeLongitude":7.0070333,"books":[{"id":2550,"name":"Kimberly Schultz","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2439,"author":null}]}', 'obj': None}
+URL: http://localhost:7017/api/Authors/2439 
+    
+2022-09-21 09:54:42 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2439

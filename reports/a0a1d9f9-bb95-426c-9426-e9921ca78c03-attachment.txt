@@ -1,0 +1,28 @@
+2022-09-21 09:32:00 [32mINFO[0m Executing test_delete_author
+
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'JoshuaDay', 'homeLatitude': 0.8414709848078965, 'homeLongitude': -61.059082286871806}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2400,"name":"JoshuaDay","homeLatitude":0.84147096,"homeLongitude":-61.059082,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2400 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2396,"name":"oren","homeLatitude":-79.51109,"homeLongitude":-9.535732}]', 'obj': None}
+URL: http://localhost:7017/api/Authors

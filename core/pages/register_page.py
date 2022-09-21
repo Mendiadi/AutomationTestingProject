@@ -27,12 +27,14 @@ class RegisterPage(AuthenticationPage):
 
     def register(self, email: str, password: str, firstname: str, lastname: str):
         log_data(email, password, firstname, lastname, msg="perform register -> ")
-        self.send_email(email)
-        self.send_password(password)
-        self.send_firstname(firstname)
-        self.send_lastname(lastname)
-        self.on_submit()
+        with allure.step(f" register with - {email},{password},{firstname},{lastname}"):
+            self.send_email(email)
+            self.send_password(password)
+            self.send_firstname(firstname)
+            self.send_lastname(lastname)
+            self.on_submit()
 
+    @allure.step("click back to login")
     def click_back_login(self):
         from core.pages.login_page import LoginPage
         btn = self._driver.locate_element(self._locators["back_login"])

@@ -1,0 +1,28 @@
+2022-09-21 09:32:02 [32mINFO[0m Executing test_purchase_book_no_stock
+
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'CherylBrown', 'homeLatitude': 19.82651971246967, 'homeLongitude': 7.914865972987054}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2415,"name":"CherylBrown","homeLatitude":19.826519,"homeLongitude":7.914866,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Christine Fisher DDS', 'description': 'description', 'price': 10, 'amountInStock': 0, 'imageUrl': None, 'authorId': 2415}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2522,"name":"Christine Fisher DDS","description":"description","price":10,"amountInStock":0,"imageUrl":null,"authorId":2415,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: purchase_book
+TYPE: Req.PUT -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"message":"400 Bad Request - purchase unsucessful","currentDate":"2022-09-21T06:32:02.9804962+00:00"}', 'obj': None}
+URL: http://localhost:7017/api/Books/purchase/2522

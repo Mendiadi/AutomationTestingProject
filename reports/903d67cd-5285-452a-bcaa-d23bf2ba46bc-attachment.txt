@@ -1,0 +1,37 @@
+2022-09-21 09:32:02 [32mINFO[0m Executing test_put_book_invalid_id
+
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'AudreyLang', 'homeLatitude': -16.343757361952466, 'homeLongitude': 89.52947121684399}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2410,"name":"AudreyLang","homeLatitude":-16.343758,"homeLongitude":89.52947,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Deborah Howard DDS', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2410}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2517,"name":"Deborah Howard DDS","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2410,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: put_book
+TYPE: Req.PUT -> 
+BODY: {'id': 2517, 'name': 'Deborah Howard DDS', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2410, 'author': None}
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"Bad Request","status":400,"traceId":"00-c7dc5a182d5805e6d8319332e7b11c24-828dd83e92794fa3-00"}', 'obj': None}
+URL: http://localhost:7017/api/Books/10 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2410

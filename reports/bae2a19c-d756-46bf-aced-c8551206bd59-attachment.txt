@@ -1,0 +1,10 @@
+2022-09-21 09:32:00 [32mINFO[0m Executing test_get_book_by_id_invalid
+
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: get_book_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 404, 'reason': 'Not Found', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-08b18618ffa8b567b189702273bfcc6a-d70c5e381ace129a-00"}', 'obj': None}
+URL: http://localhost:7017/api/Books/-7

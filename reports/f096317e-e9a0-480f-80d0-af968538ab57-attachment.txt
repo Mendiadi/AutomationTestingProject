@@ -1,0 +1,1 @@
+2022-09-21 09:56:48 [32mINFO[0m Executing test_readability_of_buttons_login

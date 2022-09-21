@@ -1,0 +1,10 @@
+2022-09-21 09:54:44 [32mINFO[0m Executing test_login_user_not_exists
+
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: login
+TYPE: Req.POST -> 
+BODY: {'email': 'rodriguezalex@example.com', 'password': 'i6UR$cQ%^x'}
+ARGS: None
+RESPONSE: {'code': 401, 'reason': 'Unauthorized', 'msg': '{"type":"https://tools.ietf.org/html/rfc7235#section-3.1","title":"Unauthorized","status":401,"traceId":"00-cbf3947f5a80e60ea5f52a23b5e309eb-09dca34a2e8ff8d0-00"}', 'obj': None}
+URL: http://localhost:7017/api/Account/login

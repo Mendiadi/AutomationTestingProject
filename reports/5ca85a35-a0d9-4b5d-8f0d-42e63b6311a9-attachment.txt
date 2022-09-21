@@ -1,0 +1,10 @@
+2022-09-21 09:32:03 [32mINFO[0m Executing test_login_invalid_password
+
+2022-09-21 09:32:03 [32mINFO[0m 
+        -> 
+REQUEST: login
+TYPE: Req.POST -> 
+BODY: {'email': 'millerwilliam@example.com', 'password': 'asdfdsasdfdsdfss'}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-477b7b417d72d304a388e1db9fe47aec-37f6f753fc7ca776-00","errors":{"Password":["Your password is limited to 4 to 15 characters"]}}', 'obj': None}
+URL: http://localhost:7017/api/Account/login

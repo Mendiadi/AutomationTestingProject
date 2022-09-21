@@ -1,0 +1,19 @@
+2022-09-21 09:54:41 [32mINFO[0m Executing test_search
+
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2433,"name":"AaronCarpenter","homeLatitude":9.754317,"homeLongitude":-49.404354},{"id":2434,"name":"eyal","homeLatitude":5.4621716,"homeLongitude":-137.5584}]', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: search
+TYPE: Req.GET -> 
+BODY: None
+ARGS: query
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[]', 'obj': None}
+URL: http://localhost:7017/api/Authors/search/m

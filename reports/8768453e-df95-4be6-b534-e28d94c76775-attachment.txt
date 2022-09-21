@@ -1,0 +1,37 @@
+2022-09-21 09:54:41 [32mINFO[0m Executing test_get_books
+
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'mr sami', 'homeLatitude': 80.45969972405021, 'homeLongitude': 11.929772624040194}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2436,"name":"mr sami","homeLatitude":80.4597,"homeLongitude":11.929772,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Joann Watson', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2436}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2545,"name":"Joann Watson","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2436,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2545,"name":"Joann Watson","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2436}]', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2436

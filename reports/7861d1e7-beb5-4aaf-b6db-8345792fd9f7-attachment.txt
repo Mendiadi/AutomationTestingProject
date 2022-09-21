@@ -1,0 +1,21 @@
+2022-09-21 09:35:16 [32mINFO[0m 
+        -> 
+REQUEST: login
+TYPE: Req.POST -> 
+BODY: {'email': 'adii@sela.co.il', 'password': 'string11', 'firstName': 'adi', 'lastName': 'mendel'}
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"userId":"949454eb-4be6-4d3b-b343-ba7127848760","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZGlpQHNlbGEuY28uaWwiLCJqdGkiOiJlOGZkM2ZiYS1iMTdiLTQ3NzctODUxOC01NDU2NDJmNzdlMGUiLCJlbWFpbCI6ImFkaWlAc2VsYS5jby5pbCIsInVpZCI6Ijk0OTQ1NGViLTRiZTYtNGQzYi1iMzQzLWJhNzEyNzg0ODc2MCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE2NjM3NDI3MTYsImlzcyI6IkJvb2tTdG9yZUFQSSIsImF1ZCI6IkJvb2tTdG9yZUFQSUNsaWVudCJ9.s_6lSnrOr8fw35J8fKQK5Huf38tpWHy-zcQ5cmF220M","refreshToken":"CfDJ8AQ/5u4YjjBPkAdUlLdqmJ+FpGe0rqM/NVGZOpW/z5PzgVzmtgOiCIEw/pkaMtrfrtpw9J2iibObIVljvzkmfly2ivFYi83weVlD0JQm5yyOFysMFXvPjHwyXCjy7nEzJiGCy1dfB+W4lRS0ffQynvpxsJd48PNAriCYr8kiwzWDcyeuZwBv7sa7QVddyMFzJTKhdNrCpslMNkawklJOhCG7ktbirr3LbmReX+WCKA/1"}', 'obj': None}
+URL: http://localhost:7017/api/Account/login 
+    
+2022-09-21 09:35:16 [32mINFO[0m 
+        -> session token updated with account eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZGlpQHNlbGEuY28uaWwiLCJqdGkiOiJlOGZkM2ZiYS1iMTdiLTQ3NzctODUxOC01NDU2NDJmNzdlMGUiLCJlbWFpbCI6ImFkaWlAc2VsYS5jby5pbCIsInVpZCI6Ijk0OTQ1NGViLTRiZTYtNGQzYi1iMzQzLWJhNzEyNzg0ODc2MCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE2NjM3NDI3MTYsImlzcyI6IkJvb2tTdG9yZUFQSSIsImF1ZCI6IkJvb2tTdG9yZUFQSUNsaWVudCJ9.s_6lSnrOr8fw35J8fKQK5Huf38tpWHy-zcQ5cmF220M
+    
+2022-09-21 09:35:16 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'mr no name', 'homeLatitude': 25.684760159512983, 'homeLongitude': 54.17234770905224}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2424,"name":"mr no name","homeLatitude":25.684761,"homeLongitude":54.172348,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors
+2022-09-21 09:35:18 [32mINFO[0m Executing test_url

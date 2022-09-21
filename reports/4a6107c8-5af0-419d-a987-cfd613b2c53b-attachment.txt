@@ -1,0 +1,37 @@
+2022-09-21 09:32:02 [32mINFO[0m Executing test_find_book_by_author
+
+2022-09-21 09:32:03 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'AndresBailey', 'homeLatitude': -10.999892272057739, 'homeLongitude': 12.659267935779432}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2416,"name":"AndresBailey","homeLatitude":-10.999892,"homeLongitude":12.659268,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:03 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Maria Rodriguez', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2416}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2523,"name":"Maria Rodriguez","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2416,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:03 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Matthew Rivera', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2416}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2524,"name":"Matthew Rivera","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2416,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:03 [32mINFO[0m 
+        -> 
+REQUEST: find_book_by_author_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: authorId
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2523,"name":"Maria Rodriguez","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2416},{"id":2524,"name":"Matthew Rivera","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2416}]', 'obj': None}
+URL: http://localhost:7017/api/Books/findauthor/2416

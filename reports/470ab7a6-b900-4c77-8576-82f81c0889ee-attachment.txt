@@ -1,0 +1,10 @@
+2022-09-21 09:54:40 [32mINFO[0m Executing test_post_author_invalid_data
+
+2022-09-21 09:54:40 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 2}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-91970a4117bb7a6b72ac6f0b057078c0-02d3c44ab017b47d-00","errors":{"$.name":["The JSON value could not be converted to System.String. Path: $.name | LineNumber: 0 | BytePositionInLine: 10."]}}', 'obj': None}
+URL: http://localhost:7017/api/Authors

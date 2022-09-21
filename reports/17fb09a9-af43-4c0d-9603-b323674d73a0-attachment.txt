@@ -1,0 +1,10 @@
+2022-09-21 09:54:44 [32mINFO[0m Executing test_login_invalid_email
+
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: login
+TYPE: Req.POST -> 
+BODY: {'email': 'wrong-email', 'password': '123456'}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-09b02637d035f6ab0d781a19f6f57ef0-6ca6aaf078b7dd73-00","errors":{"Email":["The Email field is not a valid e-mail address."]}}', 'obj': None}
+URL: http://localhost:7017/api/Account/login

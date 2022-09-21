@@ -1,0 +1,28 @@
+2022-09-21 09:32:01 [32mINFO[0m Executing test_post_book_negative_stock_and_price
+
+2022-09-21 09:32:01 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'MarkEvans', 'homeLatitude': 0.4233600241796016, 'homeLongitude': 76.96305221071631}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2407,"name":"MarkEvans","homeLatitude":0.42336002,"homeLongitude":76.96305,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:01 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'adi', 'description': 'description', 'price': -10, 'amountInStock': -10, 'imageUrl': None, 'authorId': 2407}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2514,"name":"adi","description":"description","price":-10,"amountInStock":-10,"imageUrl":null,"authorId":2407,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:01 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2514,"name":"adi","description":"description","price":-10,"amountInStock":-10,"imageUrl":null,"authorId":2407}]', 'obj': None}
+URL: http://localhost:7017/api/Books

@@ -1,0 +1,64 @@
+2022-09-21 09:54:41 [32mINFO[0m Executing test_delete_book_normal_user
+
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'DaleWilson', 'homeLatitude': 5.807936769025528, 'homeLongitude': 58.93040743449515}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2437,"name":"DaleWilson","homeLatitude":5.8079367,"homeLongitude":58.93041,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: get_author_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2437,"name":"DaleWilson","homeLatitude":5.8079367,"homeLongitude":58.93041,"books":[]}', 'obj': None}
+URL: http://localhost:7017/api/Authors/2437 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'shay', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2437}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2546,"name":"shay","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2437,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2546,"name":"shay","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2437}]', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: delete_book
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 403, 'reason': 'Forbidden', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Books/2546 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2546,"name":"shay","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2437}]', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2437

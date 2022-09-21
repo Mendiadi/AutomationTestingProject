@@ -1,0 +1,18 @@
+2022-09-21 09:54:40 [32mINFO[0m 
+        -> session started... ItemsView({'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'})
+    
+2022-09-21 09:54:40 [32mINFO[0m 
+        -> session token updated with account {'user': {'email': 'adii@sela.co.il', 'password': 'string11', 'firstName': 'adi', 'lastName': 'mendel'}, 'main_user_id': '949454eb-4be6-4d3b-b343-ba7127848760'}
+    
+2022-09-21 09:54:40 [32mINFO[0m 
+        -> api services: ['_books_ : API http://localhost:7017/api/Books service', '_account_ : API http://localhost:7017/api/Account service', '_authors_ : API http://localhost:7017/api/Authors service', '_session_ : <core.api.session.Session object at 0x000001D70E424DC0>']
+2022-09-21 09:54:40 [32mINFO[0m Executing test_post_author_invalid_data
+
+2022-09-21 09:54:40 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-550a54134446fa605bfbff1d840535c3-a35efd18087f779f-00","errors":{"Name":["The Name field is required."]}}', 'obj': None}
+URL: http://localhost:7017/api/Authors

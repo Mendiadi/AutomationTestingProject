@@ -1,0 +1,36 @@
+2022-09-21 09:55:18 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'MissSmith', 'homeLatitude': -2.2837109224252887, 'homeLongitude': 31.22767101152174}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2449,"name":"MissSmith","homeLatitude":-2.283711,"homeLongitude":31.22767,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:55:18 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'RichardLogan', 'homeLatitude': 17.6456537997341, 'homeLongitude': 58.93040743449515}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2450,"name":"RichardLogan","homeLatitude":17.645655,"homeLongitude":58.93041,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:55:18 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Sarah Martinez', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': 'https://hacol-lamesiba.co.il/wp-content/uploads/2017/12/600x338-frozen-characters.jpg', 'authorId': 2450}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2561,"name":"Sarah Martinez","description":"description","price":10,"amountInStock":10,"imageUrl":"https://hacol-lamesiba.co.il/wp-content/uploads/2017/12/600x338-frozen-characters.jpg","authorId":2450,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books
+2022-09-21 09:55:21 [32mINFO[0m Executing test_add_book_apear
+
+2022-09-21 09:55:21 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Julie Willis', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2449}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2562,"name":"Julie Willis","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2449,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books

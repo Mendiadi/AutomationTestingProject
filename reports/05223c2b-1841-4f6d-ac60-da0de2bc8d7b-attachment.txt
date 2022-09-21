@@ -1,0 +1,1 @@
+2022-09-21 09:32:28 [32mINFO[0m Executing test_register_invalid_cases

@@ -1,0 +1,45 @@
+2022-09-21 09:54:44 [32mINFO[0m Executing test_find_book_by_author_invalid
+
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: find_book_by_author_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: authorId
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[]', 'obj': None}
+URL: http://localhost:7017/api/Books/findauthor/-11
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2438,"name":"BrittneyCurtis","homeLatitude":58.881668,"homeLongitude":7.0070333},{"id":2446,"name":"ShawnMassey","homeLatitude":-0.1947288,"homeLongitude":155.33339},{"id":2447,"name":"HunterRivera","homeLatitude":-13.118743,"homeLongitude":11.929772}]', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2438 
+    
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2446 
+    
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2447

@@ -1,0 +1,19 @@
+2022-09-21 09:56:27 [32mINFO[0m Executing test_book_data_same_as_db
+
+2022-09-21 09:56:27 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'im happy', 'description': 'My first day in earth', 'price': '30', 'amountInStock': '5', 'imageUrl': 'https://img.mako.co.il/2019/03/14/edenfines_47320326_131089084560901_6286957563736903368_n_i.jpg', 'authorId': 2449}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2569,"name":"im happy","description":"My first day in earth","price":30,"amountInStock":5,"imageUrl":"https://img.mako.co.il/2019/03/14/edenfines_47320326_131089084560901_6286957563736903368_n_i.jpg","authorId":2449,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:56:34 [32mINFO[0m 
+        -> 
+REQUEST: put_book
+TYPE: Req.PUT -> 
+BODY: {'name': 'im happy', 'description': 'im love you', 'price': 30, 'amountInStock': 5, 'imageUrl': 'https://img.mako.co.il/2019/03/14/edenfines_47320326_131089084560901_6286957563736903368_n_i.jpg', 'authorId': 2449, 'id': 2569}
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Books/2569

@@ -1,0 +1,10 @@
+2022-09-21 09:32:01 [32mINFO[0m Executing test_post_book_invalid_id
+
+2022-09-21 09:32:01 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Frederick Mcdaniel', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 'sfsf'}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-bf527ce04365e5422b87a0930212d269-520fea522e4bdac6-00","errors":{"$.authorId":["The JSON value could not be converted to System.Int32. Path: $.authorId | LineNumber: 0 | BytePositionInLine: 131."]}}', 'obj': None}
+URL: http://localhost:7017/api/Books

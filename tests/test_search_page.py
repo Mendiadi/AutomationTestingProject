@@ -1,5 +1,4 @@
 import allure
-import pytest
 from commons.utils import log_name
 
 @allure.epic("verify search page works properly")
@@ -27,6 +26,3 @@ class TestSearchPage:
             assert "or" in b_name
 
 
-    def test_search_for_book(self):
-        pytest.skip("not implemented")
-        ...

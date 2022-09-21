@@ -1,0 +1,46 @@
+2022-09-21 09:32:02 [32mINFO[0m Executing test_put_book
+
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'RonnieKing', 'homeLatitude': 18.258905014552553, 'homeLongitude': -9.535731937432827}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2409,"name":"RonnieKing","homeLatitude":18.258905,"homeLongitude":-9.535732,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Dean Leach MD', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2409}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2516,"name":"Dean Leach MD","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2409,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: put_book
+TYPE: Req.PUT -> 
+BODY: {'id': 2516, 'name': 'adi hagever', 'description': 'description', 'price': 10, 'amountInStock': 5, 'imageUrl': None, 'authorId': 2409, 'author': None}
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Books/2516 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: get_book_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2516,"name":"adi hagever","description":"description","price":10,"amountInStock":5,"imageUrl":null,"authorId":2409}', 'obj': None}
+URL: http://localhost:7017/api/Books/2516 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2409

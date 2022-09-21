@@ -1,0 +1,19 @@
+2022-09-21 09:54:44 [32mINFO[0m Executing test_register
+
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: register
+TYPE: Req.POST -> 
+BODY: {'email': 'greenealexander@example.org', 'password': '8ZCG4W4f7!', 'firstName': 'Amber', 'lastName': 'Lopez'}
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Account/register 
+    
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: register
+TYPE: Req.POST -> 
+BODY: {'email': 'greenealexander@example.org', 'password': '8ZCG4W4f7!', 'firstName': 'Amber', 'lastName': 'Lopez'}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"DuplicateUserName":["Username \'greenealexander@example.org\' is already taken."]}', 'obj': None}
+URL: http://localhost:7017/api/Account/register

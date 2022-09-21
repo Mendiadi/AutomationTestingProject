@@ -1,0 +1,10 @@
+2022-09-21 09:32:02 [32mINFO[0m Executing test_put_book_invalid_data
+
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: put_book
+TYPE: Req.PUT -> 
+BODY: {}
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-968f71386a5181a672c57edc998e9b43-20999cc691218340-00","errors":{"Name":["The Name field is required."],"AuthorId":["The field AuthorId must be between 1 and 2147483647."]}}', 'obj': None}
+URL: http://localhost:7017/api/Books/4

@@ -1,0 +1,10 @@
+2022-09-21 09:32:03 [32mINFO[0m Executing test_unauthorized_post_author
+
+2022-09-21 09:32:03 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'MatthewHowe', 'homeLatitude': 7.914865972987054, 'homeLongitude': -36.47022219403227}
+ARGS: None
+RESPONSE: {'code': 401, 'reason': 'Unauthorized', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors

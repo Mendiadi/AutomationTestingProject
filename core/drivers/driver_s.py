@@ -1,3 +1,5 @@
+import time
+
 from core.drivers import Driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -53,6 +55,7 @@ class Selenium(Driver):
             element = WebDriverWait(driver, self.wait).until(EC.presence_of_element_located(locator))
         except (se.StaleElementReferenceException, se.TimeoutException) as e:
             log_data(f"log msg from Driver - {e}")
+            time.sleep(0.5)
             self.refresh()
             element = driver.find_element(*locator)
         return element
@@ -76,8 +79,14 @@ class Selenium(Driver):
        :return: the element that found
        :rtype: [WebElement]
         """
+        try:
 
-        elements = WebDriverWait(self._driver, self.wait).until(EC.presence_of_all_elements_located(locator))
+            elements = WebDriverWait(self._driver, self.wait).until(EC.presence_of_all_elements_located(locator))
+        except Exception as e:
+            log_data(e)
+            time.sleep(0.5)
+            self.refresh()
+            elements = WebDriverWait(self._driver, self.wait).until(EC.presence_of_all_elements_located(locator))
         return elements
 
     def locate_frame(self, locator: tuple[[], str]):

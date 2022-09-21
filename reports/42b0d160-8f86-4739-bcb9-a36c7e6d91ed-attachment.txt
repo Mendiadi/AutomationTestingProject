@@ -1,0 +1,37 @@
+2022-09-21 09:54:43 [32mINFO[0m Executing test_put_book_invalid_id
+
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'CurtisYoung', 'homeLatitude': 76.54617711730833, 'homeLongitude': 137.23355232164363}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2443,"name":"CurtisYoung","homeLatitude":76.54618,"homeLongitude":137.23355,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Mark Vaughn', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2443}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2554,"name":"Mark Vaughn","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2443,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: put_book
+TYPE: Req.PUT -> 
+BODY: {'id': 2554, 'name': 'Mark Vaughn', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2443, 'author': None}
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-4a70eaa3227be0dc7ceadadf51c90b35-cb256996396f2eee-00","errors":{"id":["The value \'ss\' is not valid."]}}', 'obj': None}
+URL: http://localhost:7017/api/Books/ss 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2443

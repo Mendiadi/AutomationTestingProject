@@ -1,0 +1,46 @@
+2022-09-21 09:54:43 [32mINFO[0m Executing test_purchase_book
+
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'KarenThompson', 'homeLatitude': 34.18168796801211, 'homeLongitude': 76.54617711730833}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2445,"name":"KarenThompson","homeLatitude":34.181686,"homeLongitude":76.54618,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Debbie Stout', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2445}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2556,"name":"Debbie Stout","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2445,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: purchase_book
+TYPE: Req.PUT -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2556,"name":"Debbie Stout","description":"description","price":10,"amountInStock":9,"imageUrl":null,"authorId":2445,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books/purchase/2556 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: get_book_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2556,"name":"Debbie Stout","description":"description","price":10,"amountInStock":9,"imageUrl":null,"authorId":2445}', 'obj': None}
+URL: http://localhost:7017/api/Books/2556 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2445

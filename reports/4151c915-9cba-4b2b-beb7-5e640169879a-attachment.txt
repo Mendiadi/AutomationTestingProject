@@ -1,0 +1,46 @@
+2022-09-21 09:32:00 [32mINFO[0m Executing test_get_book_by_id_valid
+
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'sami', 'homeLatitude': 25.82215006692158, 'homeLongitude': 60.84300477536008}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2404,"name":"sami","homeLatitude":25.82215,"homeLongitude":60.843006,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'my sami book', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2404}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2509,"name":"my sami book","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2404,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: get_book_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2509,"name":"my sami book","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2404}', 'obj': None}
+URL: http://localhost:7017/api/Books/2509 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2404 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: get_book_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 404, 'reason': 'Not Found', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-0f9af90d8a398ce2d30ce6b018451350-b32ed1d8f3541352-00"}', 'obj': None}
+URL: http://localhost:7017/api/Books/2509

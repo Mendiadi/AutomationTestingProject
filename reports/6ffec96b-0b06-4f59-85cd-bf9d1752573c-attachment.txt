@@ -1,0 +1,9 @@
+2022-09-21 09:58:08 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'BrandiMendez', 'homeLatitude': -2.2837109224252887, 'homeLongitude': 31.22767101152174}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2456,"name":"BrandiMendez","homeLatitude":-2.283711,"homeLongitude":31.22767,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors
+2022-09-21 09:58:10 [32mINFO[0m Executing test_add_author_apear

@@ -1,0 +1,37 @@
+2022-09-21 09:56:02 [32mINFO[0m Executing test_buy_book_that_no_stock
+
+2022-09-21 09:56:02 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'RyanWalker', 'homeLatitude': -4.606453066641045, 'homeLongitude': -38.49390501245662}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2451,"name":"RyanWalker","homeLatitude":-4.606453,"homeLongitude":-38.493904,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:56:02 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Paul Lambert', 'description': 'description', 'price': 10, 'amountInStock': 0, 'imageUrl': None, 'authorId': 2451}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2563,"name":"Paul Lambert","description":"description","price":10,"amountInStock":0,"imageUrl":null,"authorId":2451,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:56:02 [32mINFO[0m 
+       perform login -> adii@sela.co.il | string11
+    
+2022-09-21 09:56:03 [32mINFO[0m 
+       purchase book title=  -> Paul Lambert
+    
+2022-09-21 09:56:03 [32mINFO[0m 
+        -> AxiosError: Request failed with status code 400
+    
+2022-09-21 09:56:03 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2451

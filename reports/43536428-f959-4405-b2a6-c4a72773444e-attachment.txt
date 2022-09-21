@@ -1,0 +1,45 @@
+2022-09-21 09:58:33 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'KimberlyJohnson', 'homeLatitude': 37.58802006507943, 'homeLongitude': 51.30463478610524}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2458,"name":"KimberlyJohnson","homeLatitude":37.58802,"homeLongitude":51.304634,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:58:33 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Jennifer Cowan', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': 'https://hacol-lamesiba.co.il/wp-content/uploads/2017/12/600x338-frozen-characters.jpg', 'authorId': 2458}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2577,"name":"Jennifer Cowan","description":"description","price":10,"amountInStock":10,"imageUrl":"https://hacol-lamesiba.co.il/wp-content/uploads/2017/12/600x338-frozen-characters.jpg","authorId":2458,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:58:33 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'LeahLewis', 'homeLatitude': -2.2837109224252887, 'homeLongitude': 31.22767101152174}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2459,"name":"LeahLewis","homeLatitude":-2.283711,"homeLongitude":31.22767,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors
+2022-09-21 09:58:36 [32mINFO[0m Executing test_search_empty_query
+
+2022-09-21 09:58:37 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2577,"name":"Jennifer Cowan","description":"description","price":10,"amountInStock":10,"imageUrl":"https://hacol-lamesiba.co.il/wp-content/uploads/2017/12/600x338-frozen-characters.jpg","authorId":2458}]', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:58:37 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2458,"name":"KimberlyJohnson","homeLatitude":37.58802,"homeLongitude":51.304634},{"id":2459,"name":"LeahLewis","homeLatitude":-2.283711,"homeLongitude":31.22767}]', 'obj': None}
+URL: http://localhost:7017/api/Authors

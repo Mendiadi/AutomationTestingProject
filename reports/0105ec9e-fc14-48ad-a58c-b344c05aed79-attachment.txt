@@ -1,0 +1,45 @@
+2022-09-21 09:35:42 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'KatrinaLloyd', 'homeLatitude': 51.30463478610524, 'homeLongitude': -162.9443835197111}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2427,"name":"KatrinaLloyd","homeLatitude":51.304634,"homeLongitude":-162.94438,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:35:42 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Jenna David', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': 'https://www.photo-art.co.il/wp-content/uploads/2017/07/BY1A2760.jpg', 'authorId': 2427}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2542,"name":"Jenna David","description":"description","price":10,"amountInStock":10,"imageUrl":"https://www.photo-art.co.il/wp-content/uploads/2017/07/BY1A2760.jpg","authorId":2427,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:35:43 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'RayAnderson', 'homeLatitude': -2.2837109224252887, 'homeLongitude': 31.22767101152174}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2428,"name":"RayAnderson","homeLatitude":-2.283711,"homeLongitude":31.22767,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors
+2022-09-21 09:35:45 [32mINFO[0m Executing test_search_empty_query
+
+2022-09-21 09:35:46 [32mINFO[0m 
+        -> 
+REQUEST: get_books
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2542,"name":"Jenna David","description":"description","price":10,"amountInStock":10,"imageUrl":"https://www.photo-art.co.il/wp-content/uploads/2017/07/BY1A2760.jpg","authorId":2427}]', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:35:46 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2427,"name":"KatrinaLloyd","homeLatitude":51.304634,"homeLongitude":-162.94438},{"id":2428,"name":"RayAnderson","homeLatitude":-2.283711,"homeLongitude":31.22767}]', 'obj': None}
+URL: http://localhost:7017/api/Authors

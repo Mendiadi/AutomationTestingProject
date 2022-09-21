@@ -1,0 +1,19 @@
+2022-09-21 09:32:00 [32mINFO[0m Executing test_search
+
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2396,"name":"oren","homeLatitude":-79.51109,"homeLongitude":-9.535732},{"id":2402,"name":"StephanieJohnson","homeLatitude":-54.986534,"homeLongitude":-1.676493},{"id":2403,"name":"eyal","homeLatitude":4.598906,"homeLongitude":80.37425}]', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: search
+TYPE: Req.GET -> 
+BODY: None
+ARGS: query
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[]', 'obj': None}
+URL: http://localhost:7017/api/Authors/search/m

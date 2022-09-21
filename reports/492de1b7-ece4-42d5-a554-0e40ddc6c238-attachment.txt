@@ -1,0 +1,10 @@
+2022-09-21 09:54:44 [32mINFO[0m Executing test_login_no_email
+
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: login
+TYPE: Req.POST -> 
+BODY: {'password': '(7b*1BSgt7'}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-2791c3c176ebe0d793afec3f6faef98a-54c05403d9a536fd-00","errors":{"Email":["The Email field is required."]}}', 'obj': None}
+URL: http://localhost:7017/api/Account/login

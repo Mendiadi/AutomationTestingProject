@@ -1,0 +1,37 @@
+2022-09-21 09:32:02 [32mINFO[0m Executing test_put_book_invalid_id
+
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'AmandaJames', 'homeLatitude': -79.41742644234914, 'homeLongitude': 3.11505064056214}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2412,"name":"AmandaJames","homeLatitude":-79.41743,"homeLongitude":3.1150506,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Jordan Walters', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2412}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2519,"name":"Jordan Walters","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2412,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: put_book
+TYPE: Req.PUT -> 
+BODY: {'id': 2519, 'name': 'Jordan Walters', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2412, 'author': None}
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-7830235e67d231308c8a3c5fdb22fa81-2bb03c34b439d6be-00","errors":{"id":["The value \'ss\' is not valid."]}}', 'obj': None}
+URL: http://localhost:7017/api/Books/ss 
+    
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2412

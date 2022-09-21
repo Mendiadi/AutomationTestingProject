@@ -1,0 +1,10 @@
+2022-09-21 09:58:14 [32mINFO[0m Executing test_update_author_apear
+
+2022-09-21 09:58:15 [32mINFO[0m 
+        -> 
+REQUEST: put_author_by_id
+TYPE: Req.PUT -> 
+BODY: {'id': 2455, 'name': 'adi', 'homeLatitude': 61.587986, 'homeLongitude': 3.7090664, 'books': None}
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2455

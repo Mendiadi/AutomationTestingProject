@@ -1,0 +1,44 @@
+2022-09-21 09:35:51 [32mINFO[0m Executing test_search_and_also_sub_string_apear
+
+2022-09-21 09:35:51 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'oren', 'homeLatitude': 32.99709138353982, 'homeLongitude': 0.8414709848078965}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2429,"name":"oren","homeLatitude":32.997093,"homeLongitude":0.84147096,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:35:51 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'oren domi', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2429}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2543,"name":"oren domi","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2429,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:36:07 [32mINFO[0m 
+                -> (TimeoutException('', None, None),)
+2022-09-21 09:36:23 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2428 
+    
+2022-09-21 09:36:23 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2427 
+    
+2022-09-21 09:36:23 [32mINFO[0m 
+        -> session closed.. cookies = []
+                       auth = None headers = ItemsView({'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZGlpQHNlbGEuY28uaWwiLCJqdGkiOiJlOGZkM2ZiYS1iMTdiLTQ3NzctODUxOC01NDU2NDJmNzdlMGUiLCJlbWFpbCI6ImFkaWlAc2VsYS5jby5pbCIsInVpZCI6Ijk0OTQ1NGViLTRiZTYtNGQzYi1iMzQzLWJhNzEyNzg0ODc2MCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE2NjM3NDI3MTYsImlzcyI6IkJvb2tTdG9yZUFQSSIsImF1ZCI6IkJvb2tTdG9yZUFQSUNsaWVudCJ9.s_6lSnrOr8fw35J8fKQK5Huf38tpWHy-zcQ5cmF220M'})
+                         exe_type: None,exe_val None, exe_tb None

@@ -1,0 +1,27 @@
+2022-09-21 09:35:40 [32mINFO[0m Executing test_validate_authors_vs_database
+
+2022-09-21 09:35:40 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[{"id":2424,"name":"adi","homeLatitude":25.684761,"homeLongitude":54.172348},{"id":2425,"name":"GinaGlover","homeLatitude":-2.283711,"homeLongitude":31.22767}]', 'obj': None}
+URL: http://localhost:7017/api/Authors
+2022-09-21 09:35:40 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2424 
+    
+2022-09-21 09:35:40 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2425

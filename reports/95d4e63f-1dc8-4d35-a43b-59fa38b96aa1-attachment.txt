@@ -1,0 +1,1 @@
+2022-09-21 09:57:27 [32mINFO[0m Executing test_validate_data_vs_database

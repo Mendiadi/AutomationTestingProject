@@ -1,0 +1,28 @@
+2022-09-21 09:54:40 [32mINFO[0m Executing test_delete_author
+
+2022-09-21 09:54:40 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'NathanielFrancis', 'homeLatitude': 0.8414709848078965, 'homeLongitude': 17.6456537997341}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2431,"name":"NathanielFrancis","homeLatitude":0.84147096,"homeLongitude":17.645655,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:40 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2431 
+    
+2022-09-21 09:54:40 [32mINFO[0m 
+        -> 
+REQUEST: get_authors
+TYPE: Req.GET -> 
+BODY: None
+ARGS: None
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '[]', 'obj': None}
+URL: http://localhost:7017/api/Authors

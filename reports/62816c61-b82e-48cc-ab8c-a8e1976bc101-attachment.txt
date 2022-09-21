@@ -1,0 +1,10 @@
+2022-09-21 09:54:42 [32mINFO[0m Executing test_post_book_invalid_id
+
+2022-09-21 09:54:42 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Robert Elliott', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': -1}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-b3ab21b09b0d7e9c2cb169741e6a6fa8-cca1448c7f6ec198-00","errors":{"AuthorId":["The field AuthorId must be between 1 and 2147483647."]}}', 'obj': None}
+URL: http://localhost:7017/api/Books

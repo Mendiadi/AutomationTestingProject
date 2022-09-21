@@ -1,0 +1,10 @@
+2022-09-21 09:32:02 [32mINFO[0m Executing test_purchase_book_invalid_id
+
+2022-09-21 09:32:02 [32mINFO[0m 
+        -> 
+REQUEST: purchase_book
+TYPE: Req.PUT -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"message":"400 Bad Request - purchase unsucessful","currentDate":"2022-09-21T06:32:02.8721537+00:00"}', 'obj': None}
+URL: http://localhost:7017/api/Books/purchase/10

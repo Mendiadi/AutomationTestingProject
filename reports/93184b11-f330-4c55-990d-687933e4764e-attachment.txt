@@ -1,0 +1,7 @@
+2022-09-21 09:57:10 [32mINFO[0m Executing test_login_page_loading_elements
+
+2022-09-21 09:57:11 [32mINFO[0m 
+       elements visible login page -> [True, True, True, 'True'] -> 
+    
+2022-09-21 09:57:11 [32mINFO[0m 
+       elements visible register -> [True, True, True, 'True', 'True', 'True'] ->

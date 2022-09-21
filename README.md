@@ -89,8 +89,14 @@ run with allure
 ```commandline
         pytest tests --alluredir=reports --lib selenium --grid true
 ```
+
+you can run directly the last reports 
+```commandline
+        allure serve reports
+```
+
 default arguments values 
-config file if not specify argument it will take from here
+config file if not specify argument it will take from here (config_test.json)
 ```json
 {
   "url": "http://localhost/",

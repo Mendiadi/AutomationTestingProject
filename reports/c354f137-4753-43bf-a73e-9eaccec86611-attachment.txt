@@ -1,0 +1,19 @@
+2022-09-21 09:32:00 [32mINFO[0m Executing test_author_by_id
+
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'StephanieJohnson', 'homeLatitude': -54.98653453472409, 'homeLongitude': -1.6764929891935552}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2402,"name":"StephanieJohnson","homeLatitude":-54.986534,"homeLongitude":-1.676493,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: get_author_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2402,"name":"StephanieJohnson","homeLatitude":-54.986534,"homeLongitude":-1.676493,"books":[]}', 'obj': None}
+URL: http://localhost:7017/api/Authors/2402

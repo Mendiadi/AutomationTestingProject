@@ -1,0 +1,10 @@
+2022-09-21 09:54:41 [32mINFO[0m Executing test_get_book_by_id_invalid
+
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: get_book_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-01d779dc240779878aa69b1ef048e142-0174f915f46287a0-00","errors":{"id":["The value \'df\' is not valid."]}}', 'obj': None}
+URL: http://localhost:7017/api/Books/df

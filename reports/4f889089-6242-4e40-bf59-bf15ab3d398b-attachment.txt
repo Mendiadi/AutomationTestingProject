@@ -1,0 +1,28 @@
+2022-09-21 09:34:44 [32mINFO[0m Executing test_data_updated_in_books
+
+2022-09-21 09:34:44 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Robert Barber', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2423}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2541,"name":"Robert Barber","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2423,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:34:46 [32mINFO[0m 
+        -> 
+REQUEST: get_book_by_id
+TYPE: Req.GET -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 200, 'reason': 'OK', 'msg': '{"id":2541,"name":"Robert Barber","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2423}', 'obj': None}
+URL: http://localhost:7017/api/Books/2541 
+    
+2022-09-21 09:34:46 [32mINFO[0m 
+        -> 
+REQUEST: put_book
+TYPE: Req.PUT -> 
+BODY: {'name': 'yossi', 'description': 'description', 'price': 10, 'amountInStock': 100, 'imageUrl': None, 'authorId': 2423, 'id': 2541}
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Books/2541

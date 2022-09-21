@@ -1,0 +1,37 @@
+2022-09-21 09:54:43 [32mINFO[0m Executing test_put_book_invalid_id
+
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'CrystalWall', 'homeLatitude': 53.743864166856724, 'homeLongitude': -3.3087937524443256}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2441,"name":"CrystalWall","homeLatitude":53.743866,"homeLongitude":-3.3087938,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Melinda Pena', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2441}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2552,"name":"Melinda Pena","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2441,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: put_book
+TYPE: Req.PUT -> 
+BODY: {'id': 2552, 'name': 'Melinda Pena', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2441, 'author': None}
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"Bad Request","status":400,"traceId":"00-13b0cfa7118276e8fd0885590fe92ea8-f912c793e519e6fa-00"}', 'obj': None}
+URL: http://localhost:7017/api/Books/10 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2441

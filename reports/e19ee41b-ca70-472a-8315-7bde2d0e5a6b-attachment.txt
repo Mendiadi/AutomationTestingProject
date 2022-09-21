@@ -1,0 +1,129 @@
+2022-09-21 09:33:19 [32mINFO[0m Executing test_buy_multiple
+
+2022-09-21 09:33:19 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'JamesHumphrey', 'homeLatitude': 18.258905014552553, 'homeLongitude': 37.56754242120913}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2421,"name":"JamesHumphrey","homeLatitude":18.258905,"homeLongitude":37.567543,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:33:19 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'James Martin', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2421}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2529,"name":"James Martin","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2421,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:33:19 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Donald Simon', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2421}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2530,"name":"Donald Simon","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2421,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:33:19 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Jason Brown', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2421}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2531,"name":"Jason Brown","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2421,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:33:19 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Belinda Kim', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2421}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2532,"name":"Belinda Kim","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2421,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:33:19 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Kevin Bolton', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2421}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2533,"name":"Kevin Bolton","description":"description","price":10,"amountInStock":10,"imageUrl":null,"authorId":2421,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:33:19 [32mINFO[0m 
+       perform login -> adii@sela.co.il | string11
+    
+2022-09-21 09:33:21 [32mINFO[0m 
+       purchase book title=  -> Christina Campbell
+    
+2022-09-21 09:33:21 [32mINFO[0m 
+                -> (NoAlertPresentException('no such alert\n  (Session info: chrome=105.0.5195.127)', None, ['Backtrace:', '\tOrdinal0 [0x008E78B3+2193587]', '\tOrdinal0 [0x00880681+1771137]', '\tOrdinal0 [0x00794070+802928]', '\tOrdinal0 [0x0078D5A8+775592]', '\tOrdinal0 [0x007A5BD8+875480]', '\tOrdinal0 [0x007DD824+1103908]', '\tOrdinal0 [0x007A5A62+875106]', '\tOrdinal0 [0x007DD5C6+1103302]', '\tOrdinal0 [0x007B77E0+948192]', '\tOrdinal0 [0x007B86E6+952038]', '\tGetHandleVerifier [0x00B90CB2+2738370]', '\tGetHandleVerifier [0x00B821B8+2678216]', '\tGetHandleVerifier [0x009717AA+512954]', '\tGetHandleVerifier [0x00970856+509030]', '\tOrdinal0 [0x0088743B+1799227]', '\tOrdinal0 [0x0088BB68+1817448]', '\tOrdinal0 [0x0088BC55+1817685]', '\tOrdinal0 [0x00895230+1856048]', '\tBaseThreadInitThunk [0x764CFA29+25]', '\tRtlGetAppContainerNamedObjectPath [0x77277B5E+286]', '\tRtlGetAppContainerNamedObjectPath [0x77277B2E+238]', '']),)
+            
+2022-09-21 09:33:21 [32mINFO[0m 
+                -> (NoAlertPresentException('no such alert\n  (Session info: chrome=105.0.5195.127)', None, ['Backtrace:', '\tOrdinal0 [0x008E78B3+2193587]', '\tOrdinal0 [0x00880681+1771137]', '\tOrdinal0 [0x00794070+802928]', '\tOrdinal0 [0x0078D5A8+775592]', '\tOrdinal0 [0x007A5BD8+875480]', '\tOrdinal0 [0x007DD824+1103908]', '\tOrdinal0 [0x007A5A62+875106]', '\tOrdinal0 [0x007DD5C6+1103302]', '\tOrdinal0 [0x007B77E0+948192]', '\tOrdinal0 [0x007B86E6+952038]', '\tGetHandleVerifier [0x00B90CB2+2738370]', '\tGetHandleVerifier [0x00B821B8+2678216]', '\tGetHandleVerifier [0x009717AA+512954]', '\tGetHandleVerifier [0x00970856+509030]', '\tOrdinal0 [0x0088743B+1799227]', '\tOrdinal0 [0x0088BB68+1817448]', '\tOrdinal0 [0x0088BC55+1817685]', '\tOrdinal0 [0x00895230+1856048]', '\tBaseThreadInitThunk [0x764CFA29+25]', '\tRtlGetAppContainerNamedObjectPath [0x77277B5E+286]', '\tRtlGetAppContainerNamedObjectPath [0x77277B2E+238]', '']),)
+            
+2022-09-21 09:33:21 [32mINFO[0m 
+                -> (NoAlertPresentException('no such alert\n  (Session info: chrome=105.0.5195.127)', None, ['Backtrace:', '\tOrdinal0 [0x008E78B3+2193587]', '\tOrdinal0 [0x00880681+1771137]', '\tOrdinal0 [0x00794070+802928]', '\tOrdinal0 [0x0078D5A8+775592]', '\tOrdinal0 [0x007A5BD8+875480]', '\tOrdinal0 [0x007DD824+1103908]', '\tOrdinal0 [0x007A5A62+875106]', '\tOrdinal0 [0x007DD5C6+1103302]', '\tOrdinal0 [0x007B77E0+948192]', '\tOrdinal0 [0x007B86E6+952038]', '\tGetHandleVerifier [0x00B90CB2+2738370]', '\tGetHandleVerifier [0x00B821B8+2678216]', '\tGetHandleVerifier [0x009717AA+512954]', '\tGetHandleVerifier [0x00970856+509030]', '\tOrdinal0 [0x0088743B+1799227]', '\tOrdinal0 [0x0088BB68+1817448]', '\tOrdinal0 [0x0088BC55+1817685]', '\tOrdinal0 [0x00895230+1856048]', '\tBaseThreadInitThunk [0x764CFA29+25]', '\tRtlGetAppContainerNamedObjectPath [0x77277B5E+286]', '\tRtlGetAppContainerNamedObjectPath [0x77277B2E+238]', '']),)
+            
+2022-09-21 09:33:21 [32mINFO[0m 
+                -> (NoAlertPresentException('no such alert\n  (Session info: chrome=105.0.5195.127)', None, ['Backtrace:', '\tOrdinal0 [0x008E78B3+2193587]', '\tOrdinal0 [0x00880681+1771137]', '\tOrdinal0 [0x00794070+802928]', '\tOrdinal0 [0x0078D5A8+775592]', '\tOrdinal0 [0x007A5BD8+875480]', '\tOrdinal0 [0x007DD824+1103908]', '\tOrdinal0 [0x007A5A62+875106]', '\tOrdinal0 [0x007DD5C6+1103302]', '\tOrdinal0 [0x007B77E0+948192]', '\tOrdinal0 [0x007B86E6+952038]', '\tGetHandleVerifier [0x00B90CB2+2738370]', '\tGetHandleVerifier [0x00B821B8+2678216]', '\tGetHandleVerifier [0x009717AA+512954]', '\tGetHandleVerifier [0x00970856+509030]', '\tOrdinal0 [0x0088743B+1799227]', '\tOrdinal0 [0x0088BB68+1817448]', '\tOrdinal0 [0x0088BC55+1817685]', '\tOrdinal0 [0x00895230+1856048]', '\tBaseThreadInitThunk [0x764CFA29+25]', '\tRtlGetAppContainerNamedObjectPath [0x77277B5E+286]', '\tRtlGetAppContainerNamedObjectPath [0x77277B2E+238]', '']),)
+            
+2022-09-21 09:33:22 [32mINFO[0m 
+        -> Thank you for your purchase of Christina Campbell
+    
+2022-09-21 09:33:22 [32mINFO[0m 
+       purchase book title=  -> Isabel Rowe
+    
+2022-09-21 09:33:22 [32mINFO[0m 
+                -> (NoAlertPresentException('no such alert\n  (Session info: chrome=105.0.5195.127)', None, ['Backtrace:', '\tOrdinal0 [0x008E78B3+2193587]', '\tOrdinal0 [0x00880681+1771137]', '\tOrdinal0 [0x00794070+802928]', '\tOrdinal0 [0x0078D5A8+775592]', '\tOrdinal0 [0x007A5BD8+875480]', '\tOrdinal0 [0x007DD824+1103908]', '\tOrdinal0 [0x007A5A62+875106]', '\tOrdinal0 [0x007DD5C6+1103302]', '\tOrdinal0 [0x007B77E0+948192]', '\tOrdinal0 [0x007B86E6+952038]', '\tGetHandleVerifier [0x00B90CB2+2738370]', '\tGetHandleVerifier [0x00B821B8+2678216]', '\tGetHandleVerifier [0x009717AA+512954]', '\tGetHandleVerifier [0x00970856+509030]', '\tOrdinal0 [0x0088743B+1799227]', '\tOrdinal0 [0x0088BB68+1817448]', '\tOrdinal0 [0x0088BC55+1817685]', '\tOrdinal0 [0x00895230+1856048]', '\tBaseThreadInitThunk [0x764CFA29+25]', '\tRtlGetAppContainerNamedObjectPath [0x77277B5E+286]', '\tRtlGetAppContainerNamedObjectPath [0x77277B2E+238]', '']),)
+            
+2022-09-21 09:33:22 [33mWARNING[0m Connection pool is full, discarding connection: localhost
+2022-09-21 09:33:22 [32mINFO[0m 
+        -> Thank you for your purchase of Isabel Rowe
+    
+2022-09-21 09:33:22 [32mINFO[0m 
+       purchase book title=  -> James Martin
+    
+2022-09-21 09:33:22 [33mWARNING[0m Connection pool is full, discarding connection: localhost
+2022-09-21 09:33:23 [32mINFO[0m 
+        -> Thank you for your purchase of James Martin
+    
+2022-09-21 09:33:23 [32mINFO[0m 
+       purchase book title=  -> Donald Simon
+    
+2022-09-21 09:33:23 [32mINFO[0m 
+        -> Thank you for your purchase of Donald Simon
+    
+2022-09-21 09:33:24 [32mINFO[0m 
+       purchase book title=  -> Jason Brown
+    
+2022-09-21 09:33:24 [32mINFO[0m 
+        -> Thank you for your purchase of Jason Brown
+    
+2022-09-21 09:33:24 [32mINFO[0m 
+       purchase book title=  -> Belinda Kim
+    
+2022-09-21 09:33:25 [32mINFO[0m 
+        -> Thank you for your purchase of Belinda Kim
+    
+2022-09-21 09:33:25 [32mINFO[0m 
+       purchase book title=  -> Kevin Bolton
+    
+2022-09-21 09:33:26 [32mINFO[0m 
+                -> (ElementClickInterceptedException('element click intercepted: Element is not clickable at point (971, 1320)\n  (Session info: chrome=105.0.5195.127)', None, ['Backtrace:', '\tOrdinal0 [0x008E78B3+2193587]', '\tOrdinal0 [0x00880681+1771137]', '\tOrdinal0 [0x007941A8+803240]', '\tOrdinal0 [0x007C8C84+1019012]', '\tOrdinal0 [0x007C6C48+1010760]', '\tOrdinal0 [0x007C493B+1001787]', '\tOrdinal0 [0x007C3699+997017]', '\tOrdinal0 [0x007B9223+954915]', '\tOrdinal0 [0x007DD7AC+1103788]', '\tOrdinal0 [0x007B8C04+953348]', '\tOrdinal0 [0x007DD9C4+1104324]', '\tOrdinal0 [0x007EDAE2+1170146]', '\tOrdinal0 [0x007DD5C6+1103302]', '\tOrdinal0 [0x007B77E0+948192]', '\tOrdinal0 [0x007B86E6+952038]', '\tGetHandleVerifier [0x00B90CB2+2738370]', '\tGetHandleVerifier [0x00B821B8+2678216]', '\tGetHandleVerifier [0x009717AA+512954]', '\tGetHandleVerifier [0x00970856+509030]', '\tOrdinal0 [0x0088743B+1799227]', '\tOrdinal0 [0x0088BB68+1817448]', '\tOrdinal0 [0x0088BC55+1817685]', '\tOrdinal0 [0x00895230+1856048]', '\tBaseThreadInitThunk [0x764CFA29+25]', '\tRtlGetAppContainerNamedObjectPath [0x77277B5E+286]', '\tRtlGetAppContainerNamedObjectPath [0x77277B2E+238]', '']),)
+            
+2022-09-21 09:33:26 [32mINFO[0m 
+        -> Thank you for your purchase of Kevin Bolton
+    
+2022-09-21 09:33:26 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2421

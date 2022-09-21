@@ -1,0 +1,10 @@
+2022-09-21 09:32:00 [32mINFO[0m Executing test_delete_author_by_id_invalid
+
+2022-09-21 09:32:00 [32mINFO[0m 
+        -> 
+REQUEST: delete_author
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 404, 'reason': 'Not Found', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.4","title":"Not Found","status":404,"traceId":"00-410ff4f173eba43df66a418f8eb98c09-04b309edff04dee9-00"}', 'obj': None}
+URL: http://localhost:7017/api/Authors/2

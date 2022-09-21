@@ -1,0 +1,10 @@
+2022-09-21 09:54:44 [32mINFO[0m Executing test_unauthorized_delete_book
+
+2022-09-21 09:54:44 [32mINFO[0m 
+        -> 
+REQUEST: delete_book
+TYPE: Req.DELETE -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 401, 'reason': 'Unauthorized', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Books/5

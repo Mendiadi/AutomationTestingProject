@@ -1,0 +1,10 @@
+2022-09-21 09:32:03 [32mINFO[0m Executing test_unauthorized_post_book
+
+2022-09-21 09:32:03 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Alexander Walker', 'description': 'description', 'price': 10, 'amountInStock': 10, 'imageUrl': None, 'authorId': 2}
+ARGS: None
+RESPONSE: {'code': 401, 'reason': 'Unauthorized', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Books

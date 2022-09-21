@@ -1,0 +1,28 @@
+2022-09-21 09:54:43 [32mINFO[0m Executing test_purchase_book_no_stock
+
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'ShawnMassey', 'homeLatitude': -0.1947288043888853, 'homeLongitude': 155.33339243654947}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2446,"name":"ShawnMassey","homeLatitude":-0.1947288,"homeLongitude":155.33339,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {'name': 'Ann Joseph', 'description': 'description', 'price': 10, 'amountInStock': 0, 'imageUrl': None, 'authorId': 2446}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2557,"name":"Ann Joseph","description":"description","price":10,"amountInStock":0,"imageUrl":null,"authorId":2446,"author":null}', 'obj': None}
+URL: http://localhost:7017/api/Books 
+    
+2022-09-21 09:54:43 [32mINFO[0m 
+        -> 
+REQUEST: purchase_book
+TYPE: Req.PUT -> 
+BODY: None
+ARGS: id
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"message":"400 Bad Request - purchase unsucessful","currentDate":"2022-09-21T06:54:43.863163+00:00"}', 'obj': None}
+URL: http://localhost:7017/api/Books/purchase/2557

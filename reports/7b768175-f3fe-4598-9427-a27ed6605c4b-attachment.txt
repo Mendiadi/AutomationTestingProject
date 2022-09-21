@@ -1,0 +1,19 @@
+2022-09-21 09:54:41 [32mINFO[0m Executing test_put_author_by_id
+
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: post_authors
+TYPE: Req.POST -> 
+BODY: {'name': 'VeronicaCraig', 'homeLatitude': 5.462171478746332, 'homeLongitude': -137.55840053510585}
+ARGS: None
+RESPONSE: {'code': 201, 'reason': 'Created', 'msg': '{"id":2434,"name":"VeronicaCraig","homeLatitude":5.4621716,"homeLongitude":-137.5584,"books":null}', 'obj': None}
+URL: http://localhost:7017/api/Authors 
+    
+2022-09-21 09:54:41 [32mINFO[0m 
+        -> 
+REQUEST: put_author_by_id
+TYPE: Req.PUT -> 
+BODY: {'name': 'eyal', 'homeLatitude': 5.4621716, 'homeLongitude': -137.5584, 'id': 2434}
+ARGS: id
+RESPONSE: {'code': 204, 'reason': 'No Content', 'msg': '', 'obj': None}
+URL: http://localhost:7017/api/Authors/2434

@@ -1,0 +1,10 @@
+2022-09-21 09:32:01 [32mINFO[0m Executing test_post_book_invalid_data
+
+2022-09-21 09:32:01 [32mINFO[0m 
+        -> 
+REQUEST: post_books
+TYPE: Req.POST -> 
+BODY: {moshe:123,tamir:adi}
+ARGS: None
+RESPONSE: {'code': 400, 'reason': 'Bad Request', 'msg': '{"type":"https://tools.ietf.org/html/rfc7231#section-6.5.1","title":"One or more validation errors occurred.","status":400,"traceId":"00-1197c5cf7b95b61f42795f9d43eb0e89-0936e8362e079d1c-00","errors":{"$":["The JSON value could not be converted to BookStore_API.Models.Book.CreateBookDto. Path: $ | LineNumber: 0 | BytePositionInLine: 23."]}}', 'obj': None}
+URL: http://localhost:7017/api/Books
